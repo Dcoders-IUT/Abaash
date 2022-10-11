@@ -1,15 +1,9 @@
 const express = require('express');
-const mariadb = require('mariadb');
 const bodyParser = require('body-parser');
-
-const db = mariadb.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'password',
-    database: 'abaash',
-});
+const database = require('../database');
 
 const app = express.Router();
+
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -21,10 +15,18 @@ app.get('/login', (req, res) => {
     res.redirect('./login.html');
 });
 
-app.post('/login.html', (req, res) => {
+app.post('/register', (req) => {
     console.log(req.body);
-    res.send(req.body);
-    console.log(db);
+});
+
+app.post('/login.html', (req) => {
+    const user = req.body.studentID;
+    const pass = req.body.password;
+
+    console.log(user);
+    console.log(pass);
+
+    database.exec(`INSERT INTO comb VALUES (${user}, ${pass})`);
 });
 
 module.exports = app;
