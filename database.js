@@ -1,9 +1,9 @@
 const mariadb = require('mariadb');
 
-const database = {};
+// const database = {};
 
 // async
-database.exec = function (command) {
+const exec = (command) => {
     // let db;
     // try {
     //     db = await mariadb.createConnection({
@@ -32,4 +32,11 @@ database.exec = function (command) {
         });
 };
 
-module.exports = database;
+const newplc = () => {
+    const temp = new Date();
+    const str = `${temp.getUTCFullYear()}-${temp.getUTCMonth()}-${temp.getUTCDate()}T${temp.getUTCHours()}:${temp.getUTCMinutes()}:${temp.getUTCSeconds()}.${temp.getUTCMilliseconds()}`;
+
+    return str;
+};
+
+module.exports = { exec, newplc };

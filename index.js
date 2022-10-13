@@ -1,5 +1,4 @@
 const express = require('express');
-// const database = require('./database');
 
 const app = express();
 const port = 3001;
@@ -13,9 +12,9 @@ app.get('/', (req, res) => {
 });
 
 const studentRouter = require('./routes/student');
-// const ownerRouter = require('./routes/owner');
+const ownerRouter = require('./routes/owner');
 
 app.use('/student', studentRouter);
-// app.use('/owner', ownerRouter);
+app.use('/owner', ownerRouter);
 
 app.listen(port);

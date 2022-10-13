@@ -11,9 +11,12 @@
     <link rel="stylesheet" href="../css/student-login-signup.css" />
   </head>
   <body>
+    <div class="mode-button">
+      <button><a href="../owner/login.html">Owner</a></button>
+    </div>
     <div class="container" id="container">
       <div class="form-container sign-up-container">
-        <form action="./register" method="post">
+        <form action="register" method="post">
           <h1>Create Account</h1>
           <div class="social-container">
             <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -31,8 +34,8 @@
           <input type="password" name="pass" placeholder="Password" />
           <input type="password" name="pass2" placeholder="Confirm Password" />
           <input type="number" name="phone" placeholder="Phone Number" />
-          <input type="email" name="email" placeholder="Email" />
-          <input type="number" name="nid" placeholder="NID" />
+          <input type="email" name="email" placeholder="Email Address" />
+          <input type="number" name="nid" placeholder="NID Number" />
           <label>Blood Group</label>
           <select name="blg">
             <option value="I don't know">I don't know</option>
@@ -50,7 +53,7 @@
         </form>
       </div>
       <div class="form-container sign-in-container">
-        <form method="post">
+        <form action="login" method="post">
           <h1>Sign in</h1>
           <div class="social-container">
             <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
