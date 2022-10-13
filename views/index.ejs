@@ -6,10 +6,18 @@
     <title>Abaash</title>
   </head>
   <body>
-    <% if(uid) { %>
-    <a href="./profile">My Profile</a>
-    <%} else{ %>
-    <a href="./student/login">Login</a>
-    <%} %>
+    <ul>
+      <li><a href="./">Home</a></li>
+
+      <% if(uid) { %>
+      <li><a href="profile"><%=uid%></a></li>
+      <%} else{ %>
+      <li><a href="student/login">Login</a></li>
+      <%} %>
+
+      <li><a href="map">Map</a></li>
+      <li><a href="notifications">Notifications</a></li>
+      <li><a href="sos">SOS</a></li>
+    </ul>
   </body>
 </html>

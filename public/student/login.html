@@ -12,7 +12,7 @@
   </head>
   <body>
     <div class="mode-button">
-      <button><a href="../owner/login.html">Owner</a></button>
+      <button><a href="../owner/login.html">Go to Owner Mode</a></button>
     </div>
     <div class="container" id="container">
       <div class="form-container sign-up-container">
@@ -48,6 +48,7 @@
             <option value="O+">O+</option>
             <option value="O-">O-</option>
           </select>
+          <input type="hidden" name="mode" value="student" />
           <br />
           <button>Sign Up</button>
         </form>
@@ -63,6 +64,7 @@
           <span>or use your account</span>
           <input type="number" name="studentID" placeholder="Student ID" />
           <input type="password" name="password" placeholder="Password" />
+          <input type="hidden" name="mode" value="student" />
           <a href="#">Forgot your password?</a>
           <button>Sign In</button>
         </form>
