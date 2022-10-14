@@ -79,6 +79,10 @@ button.ghost {
   text-decoration: none;
 }
 
+.mode-button > button > a {
+  color: white;
+}
+
 form {
   background-color: #ffffff;
   display: flex;

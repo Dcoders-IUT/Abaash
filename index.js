@@ -1,34 +1,52 @@
 const express = require('express');
+const store = require('store');
 
 const app = express();
 const port = 3001;
 
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    res.render('index', { uid: null, mode: null });
+    const userID = store.get('user');
+    const mode = store.get('mode');
+
+    res.render('home', { userID, mode });
 });
 
 app.post('/', (req, res) => {
-    if (req.body.mode === 'owner') {
-        res.render('index', { uid: req.body.username, mode: req.body.mode });
-    } else if (req.body.mode === 'student') {
-        res.render('index', { uid: req.body.studentID, mode: req.body.mode });
-    }
+    const userID = store.get('user');
+    const mode = store.get('mode');
+
+    res.render('home', { userID, mode });
+});
+
+app.get('/logout', (req, res) => {
+    store.remove('user');
+    store.remove('mode');
+    res.redirect('./');
 });
 
 app.get('/map', (req, res) => {
-    res.render('map', {});
+    const userID = store.get('user');
+    const mode = store.get('mode');
+
+    res.render('map', { userID, mode });
 });
 
 app.get('/notifications', (req, res) => {
-    res.render('notifications', {});
+    const userID = store.get('user');
+    const mode = store.get('mode');
+
+    res.render('notifications', { userID, mode });
 });
 
 app.get('/sos', (req, res) => {
-    res.render('sos', {});
+    const userID = store.get('user');
+    const mode = store.get('mode');
+
+    res.render('sos', { userID, mode });
 });
 
 const studentRouter = require('./routes/student');

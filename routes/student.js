@@ -1,4 +1,5 @@
 const express = require('express');
+const store = require('store');
 const database = require('../database');
 const util = require('../util');
 
@@ -15,7 +16,7 @@ app.get('/login', (req, res) => {
     res.redirect('./login.html');
 });
 
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
     const temp = req.body;
 
     const { name } = temp;
@@ -28,29 +29,49 @@ app.post('/register', (req, res) => {
     const nid = Number(temp.nid);
     const blg = temp.blg === "I don't know" ? ' ' : temp.blg;
 
-    // database.exec(
-    //     `INSERT INTO student VALUES ('${name}',
-    //     ${gender},
-    //     ${id},
-    //     '${pass}',
-    //     '${plc}',
-    //     ${phone},
-    //     '${email}',
-    //     ${nid},
-    //     '${blg}',
-    //     null)`,
-    // );
+    await database.exec(
+        `INSERT INTO student VALUES ('${name}',
+        ${gender},
+        ${id},
+        '${pass}',
+        '${plc}',
+        ${phone},
+        '${email}',
+        ${nid},
+        '${blg}',
+        null)`
+    );
 
-    res.redirect(307, '../');
+    store.set('user', id);
+    store.set('mode', req.body.mode);
+
+    res.redirect('../');
 });
 
-app.post('/login', (req, res) => {
-    // const user = req.body.studentID;
-    // const pass = req.body.password;
+app.post('/login', async (req, res) => {
+    const id = req.body.studentID;
+    let pass = req.body.password;
 
-    // database.exec(`INSERT INTO comb VALUES (${user}, ${pass})`);
+    try {
+        const record = await database.getUnique(
+            `SELECT studentID, password, plc FROM student WHERE studentID='${id}'`,
+        );
 
-    res.redirect(307, '../');
+        const { plc } = record;
+        pass = util.hash(`${pass + plc}Home Is Where The Start Is!`);
+        if (pass === record.password) {
+            store.set('user', id);
+            store.set('mode', req.body.mode);
+        } else {
+            res.send('WRONG PASSWORD!');
+            return;
+        }
+    } catch (err) {
+        res.send('USER NOT FOUND!');
+        return;
+    }
+
+    res.redirect('../');
 });
 
 module.exports = app;

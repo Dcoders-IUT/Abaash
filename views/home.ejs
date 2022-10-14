@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Home - Abaash</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Galada&family=Montserrat:ital,wght@0,600;1,500&family=Righteous&display=swap">
+  </head>
+  <body>
+    <div class="navbar-bottom">
+      <ul class="navbar-list">
+        <% if(userID) { %>
+          <li><a href="profile"><%=userID%></a></li>
+          <li><a href="logout">Log Out</a></li>
+  
+          <% if(mode==='owner') { %>
+            <li><a href="owner/myflats">My Flats</a></li>
+  
+          <% } else if(mode==='student') { %>
+            <li><a href=student/myflat">My Flat</a></li>
+            <li><a href="student/coupon">Coupon</a></li>
+          <% } %>
+  
+          <li><a href="map">Map</a></li>
+          <li><a href="notifications">Notifications</a></li>
+          <li><a href="sos">SOS</a></li> 
+        
+        <% } else { %>
+          <li><a href="student/login">Log In</a></li>
+        <% } %>
+      </ul>
+    </div>
+  </body>
+</html>

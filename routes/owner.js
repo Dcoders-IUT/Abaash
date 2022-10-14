@@ -1,4 +1,5 @@
 const express = require('express');
+const store = require('store');
 const database = require('../database');
 const util = require('../util');
 
@@ -15,7 +16,7 @@ app.get('/login', (req, res) => {
     res.redirect('./login.html');
 });
 
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
     const temp = req.body;
 
     const { name } = temp;
@@ -26,26 +27,46 @@ app.post('/register', (req, res) => {
     const { email } = temp;
     const nid = Number(temp.nid);
 
-    // database.exec(
-    //     `INSERT INTO owner VALUES ('${name}',
-    //     '${username}',
-    //     '${pass}',
-    //     '${plc}',
-    //     ${phone},
-    //     '${email}',
-    //     ${nid})`
-    // );
+    await database.exec(
+        `INSERT INTO owner VALUES ('${name}',
+        '${username}',
+        '${pass}',
+        '${plc}',
+        ${phone},
+        '${email}',
+        ${nid})`,
+    );
 
-    res.redirect(307, '../');
+    store.set('user', username);
+    store.set('mode', req.body.mode);
+
+    res.redirect('../');
 });
 
-app.post('/login', (req, res) => {
-    // const user = req.body.username;
-    // const pass = req.body.password;
+app.post('/login', async (req, res) => {
+    const user = req.body.username;
+    let pass = req.body.password;
 
-    // database.exec(`INSERT INTO comb VALUES (${user}, ${pass})`);
+    try {
+        const record = await database.getUnique(
+            `SELECT username, password, plc FROM owner WHERE username='${user}'`
+        );
 
-    res.redirect(307, '../');
+        const { plc } = record;
+        pass = util.hash(`${pass + plc}Home Is Where The Start Is!`);
+        if (pass === record.password) {
+            store.set('user', user);
+            store.set('mode', req.body.mode);
+        } else {
+            res.send('WRONG PASSWORD!');
+            return;
+        }
+    } catch (err) {
+        res.send('USER NOT FOUND!');
+        return;
+    }
+
+    res.redirect('../');
 });
 
 module.exports = app;
