@@ -1,5 +1,3 @@
-const { isNumber } = require("lodash");
-
 const signUpButton = document.getElementById('signUp');
 const signInButton = document.getElementById('signIn');
 const container = document.getElementById('container');
@@ -50,13 +48,13 @@ const validatePhoneNumber = phone => /^01[\d]{9}$/.test(phone)
 
 
 const validateRegisterOwner = () => {
-	const username = document.signUp.username.value
-	const fullname = document.signUp.name.value
-	const pass = document.signUp.pass.value
-	const pass2 = document.signUp.pass2.value
-	const phone = document.signUp.phone.value
-	const email = document.signUp.email.value
-	const nid = document.signUp.nid.value
+	const username = document.Register.username.value
+	const fullname = document.Register.name.value
+	const pass = document.Register.pass.value
+	const pass2 = document.Register.pass2.value
+	const phone = document.Register.phone.value
+	const email = document.Register.email.value
+	const nid = document.Register.nid.value
 
 	// TODO : figure out how to add +880 in the html (for tomorrow i feel sleepy)
 
@@ -66,7 +64,7 @@ const validateRegisterOwner = () => {
 	if (!validateNID(nid)) return false
 	if (!validatePhoneNumber(phone)) return false
 	if (passCheck(pass))
-		if (confirmPass) return false
+		if (confirmPass(pass, pass2)) return false
 
 	return true
 }
