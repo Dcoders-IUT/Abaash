@@ -19,7 +19,7 @@ app.route('/login')
 
         try {
             const record = await database.getUnique(
-                `SELECT username, password, plc FROM owner WHERE username='${id}' OR email='${id}' OR phone='${id}'`
+                `SELECT username, password, plc FROM owner WHERE username='${id}' OR email='${id}' OR phone='${id}'`,
             );
             id = record.username;
 
@@ -60,7 +60,7 @@ app.route('/register')
         '${plc}',
         ${phone},
         '${email}',
-        ${nid})`,
+        ${nid})`
         );
 
         store.set('user', username);
