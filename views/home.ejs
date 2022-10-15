@@ -41,6 +41,11 @@
         <% flatList.forEach((flat) => { %>
         <li>
           <a href="../../flat/profile/<%=flat.flatID%>"><%=flat.name%></a>
+          <p>
+            Gender: <%=flat.gender? 'Male': 'Female'%> <br />
+            Address: <%=flat.address%> <br />
+            Level: <%=flat.level%>
+          </p>
         </li>
         <% }) %>
       </ul>
