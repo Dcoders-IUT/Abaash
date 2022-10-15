@@ -1,7 +1,7 @@
 const express = require('express');
 const store = require('store');
 const database = require('../database');
-const util = require('../util');
+const hash = require('../hash');
 
 const app = express.Router();
 
@@ -24,7 +24,7 @@ app.route('/login')
             id = record.studentID;
 
             const { plc } = record;
-            pass = util.hash(`${pass + plc}Home Is Where The Start Is!`);
+            pass = hash.hash(`${pass + plc}Home Is Where The Start Is!`);
             if (pass === record.password) {
                 store.set('user', id);
                 store.set('mode', req.body.mode);
@@ -47,8 +47,8 @@ app.route('/register')
         const { name } = temp;
         const gender = temp.gender === 'Male' ? 1 : 0;
         const id = Number(temp.studentID);
-        const plc = util.plc();
-        const pass = util.hash(`${temp.pass + plc}Home Is Where The Start Is!`);
+        const plc = hash.plc();
+        const pass = hash.hash(`${temp.pass + plc}Home Is Where The Start Is!`);
         const phone = Number(temp.phone);
         const { email } = temp;
         const nid = Number(temp.nid);
@@ -73,5 +73,42 @@ app.route('/register')
         res.redirect('../');
     })
     .get((req, res) => res.redirect('./login'));
+
+app.get('/profile', (req, res) => {
+    const currentUser = store.get('user');
+    res.redirect(`profile/${currentUser}`);
+});
+
+app.get('/profile/:id', async (req, res) => {
+    const { id } = req.params;
+    let profileUserData;
+    let flat;
+
+    try {
+        profileUserData = await database.getUnique(
+            `SELECT name, gender, bloodgroup FROM student WHERE studentID='${id}'`
+        );
+    } catch (err) {
+        res.render('student/profile', { currentUser: store.get('user'), profileUser: null });
+        return;
+    }
+
+    try {
+        flat = await database.get(
+            `SELECT flatID, name FROM flat WHERE flatID=(SELECT flatID FROM student WHERE studentID='${id}')`,
+        );
+    } catch (err) {
+        flat = null;
+    }
+
+    res.render('student/profile', {
+        currentUser: store.get('user'),
+        profileUser: id,
+        name: profileUserData.name,
+        gender: profileUserData.gender,
+        bloodgroup: profileUserData.bloodgroup,
+        flat,
+    });
+});
 
 module.exports = app;

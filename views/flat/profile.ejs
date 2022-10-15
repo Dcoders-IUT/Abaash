@@ -10,6 +10,10 @@
     <h1>Name: <%=flat.name%></h1>
     <h1>Address: <%=flat.address%></h1>
     <h1>Level: <%=flat.level%></h1>
+    <h1>
+      Owner:
+      <a href="../../owner/profile/<%=flat.owner%>"> <%=ownername%> </a>
+    </h1>
     <h1>Generator: <%=flat.generator? 'YES': 'NO'%></h1>
     <h1>Lift: <%=flat.lift? 'YES': 'NO'%></h1>
     <% } else { %>

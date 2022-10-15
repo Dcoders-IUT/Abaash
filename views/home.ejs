@@ -15,7 +15,9 @@
       <ul class="navbar-list">
         <% if(currentUser) { %>
         <li>
-          <a href="<%=mode%>/profile/<%=currentUser%>"> <%=currentUser%> </a>
+          <a href="<%=mode%>/profile/<%=currentUser%>">
+            <%=nameOfCurrentUser? nameOfCurrentUser: currentUser%>
+          </a>
         </li>
         <li><a href="logout">Log Out</a></li>
 
@@ -31,6 +33,18 @@
         <li><a href="student/login">Log In</a></li>
         <% } %>
       </ul>
+      <br />
+      <h2>Dashboard</h2>
+
+      <% if(flatList) { %>
+      <ul>
+        <% flatList.forEach((flat) => { %>
+        <li>
+          <a href="../../flat/profile/<%=flat.flatID%>"><%=flat.name%></a>
+        </li>
+        <% }) %>
+      </ul>
+      <% } %>
     </div>
   </body>
 </html>

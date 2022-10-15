@@ -1,7 +1,7 @@
 const express = require('express');
 const store = require('store');
 const database = require('../database');
-const util = require('../util');
+const hash = require('../hash');
 
 const app = express.Router();
 
@@ -19,12 +19,12 @@ app.route('/login')
 
         try {
             const record = await database.getUnique(
-                `SELECT username, password, plc FROM owner WHERE username='${id}' OR email='${id}' OR phone='${id}'`,
+                `SELECT username, password, plc FROM owner WHERE username='${id}' OR email='${id}' OR phone='${id}'`
             );
             id = record.username;
 
             const { plc } = record;
-            pass = util.hash(`${pass + plc}Home Is Where The Start Is!`);
+            pass = hash.hash(`${pass + plc}Home Is Where The Start Is!`);
             if (pass === record.password) {
                 store.set('user', id);
                 store.set('mode', req.body.mode);
@@ -37,7 +37,7 @@ app.route('/login')
             return;
         }
 
-        res.redirect('../');
+        res.redirect('../profile');
     })
     .get((req, res) => res.redirect('./login.html'));
 
@@ -47,8 +47,8 @@ app.route('/register')
 
         const { name } = temp;
         const { username } = temp;
-        const plc = util.plc();
-        const pass = util.hash(`${temp.pass + plc}Home Is Where The Start Is!`);
+        const plc = hash.plc();
+        const pass = hash.hash(`${temp.pass + plc}Home Is Where The Start Is!`);
         const phone = Number(temp.phone);
         const { email } = temp;
         const nid = Number(temp.nid);
@@ -60,15 +60,20 @@ app.route('/register')
         '${plc}',
         ${phone},
         '${email}',
-        ${nid})`
+        ${nid})`,
         );
 
         store.set('user', username);
         store.set('mode', req.body.mode);
 
-        res.redirect('../');
+        res.redirect('../profile');
     })
     .get((req, res) => res.redirect('./login'));
+
+app.get('/profile', (req, res) => {
+    const currentUser = store.get('user');
+    res.redirect(`profile/${currentUser}`);
+});
 
 app.get('/profile/:id', async (req, res) => {
     const { id } = req.params;

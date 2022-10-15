@@ -3,9 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Student Login</title>
+    <title><%=name%></title>
   </head>
   <body>
-    <h1>My Flat</h1>
+    <a href="../..">Home</a>
+    <% if(profileUser) { %>
+    <h1>Name: <%=name%></h1>
+    <h1>Gender: <%=gender? 'Male': 'Female'%></h1>
+    <h1>Blood Group: <%=bloodgroup%></h1>
+    <% } else { %>
+    <p>USER NOT FOUND!</p>
+    <% } %>
   </body>
 </html>

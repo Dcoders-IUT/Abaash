@@ -1,11 +1,20 @@
 const express = require('express');
 const store = require('store');
+const database = require('./database');
 
 const app = express();
 const port = 3001;
 
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
+
+async function allFlats() {
+    try {
+        return await database.get('SELECT flatID, name FROM flat');
+    } catch (err) {
+        return {};
+    }
+}
 
 function openEJS(page, res) {
     const currentUser = store.get('user');
@@ -14,35 +23,73 @@ function openEJS(page, res) {
     res.render(page, { currentUser, mode });
 }
 
-app.route('/')
-    .get((req, res) => {
-        if (!store.get('mode') || !store.get('user')) openEJS('home', res);
-        const currentUser = store.get('user');
-        const mode = store.get('mode');
+async function openHomeEJS(res) {
+    const currentUser = store.get('user');
+    const mode = store.get('mode');
 
-        res.render('home', { currentUser, mode });
-    })
-    .post((req, res) => openEJS('home', res));
+    if (!store.get('mode') || !store.get('user')) {
+        res.render('home', { currentUser, mode, flatList: await allFlats() });
+        return;
+    }
+    let currentUserData;
+
+    try {
+        currentUserData = await database.getUnique(
+            `SELECT name FROM ${mode} WHERE ${
+                mode === 'student' ? 'studentID' : 'username'
+            }='${currentUser}'`
+        );
+    } catch (err) {
+        res.render('home', {
+            currentUser,
+            mode,
+            nameOfCurrentUser: null,
+            flatList: await allFlats(),
+        });
+        return;
+    }
+
+    res.render('home', {
+        currentUser,
+        mode,
+        nameOfCurrentUser: currentUserData.name,
+        flatList: await allFlats(),
+    });
+}
+
+app.route('/')
+    .get(async (req, res) => openHomeEJS(res))
+    .post(async (req, res) => openHomeEJS(res));
 
 app.get('/map', (req, res) => {
     if (!store.get('mode') || !store.get('user')) res.redirect('./');
-    openEJS('map', res);
+    else openEJS('map', res);
 });
 
 app.get('/notifications', (req, res) => {
     if (!store.get('mode') || !store.get('user')) res.redirect('./');
-    openEJS('notifications', res);
+    else openEJS('notifications', res);
 });
 
 app.get('/sos', (req, res) => {
     if (!store.get('mode') || !store.get('user')) res.redirect('./');
-    openEJS('sos', res);
+    else openEJS('sos', res);
 });
 
 app.get('/logout', (req, res) => {
     store.remove('user');
     store.remove('mode');
     res.redirect('./');
+});
+
+app.get('/profile', (req, res) => {
+    if (!store.get('mode') || !store.get('user')) res.redirect('./');
+    else {
+        const currentUser = store.get('user');
+        const mode = store.get('mode');
+
+        res.redirect(`${mode}/profile/${currentUser}`);
+    }
 });
 
 const studentRouter = require('./routes/student');
