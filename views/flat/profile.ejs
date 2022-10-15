@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%=flat.name%></title>
+  </head>
+  <body>
+    <% if(flat.flatID) { %>
+    <h1>Name: <%=flat.name%></h1>
+    <h1>Address: <%=flat.address%></h1>
+    <h1>Level: <%=flat.level%></h1>
+    <h1>Generator: <%=flat.generator? 'YES': 'NO'%></h1>
+    <h1>Lift: <%=flat.lift? 'YES': 'NO'%></h1>
+    <% } else { %>
+    <p>FLAT NOT FOUND!</p>
+    <% } %>
+  </body>
+</html>

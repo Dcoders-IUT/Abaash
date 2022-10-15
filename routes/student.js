@@ -12,25 +12,50 @@ app.get('/', (req, res) => {
     res.redirect('./login.html');
 });
 
-app.get('/login', (req, res) => {
-    res.redirect('./login.html');
-});
+app.route('/login')
+    .post(async (req, res) => {
+        let { id } = req.body;
+        let pass = req.body.password;
 
-app.post('/register', async (req, res) => {
-    const temp = req.body;
+        try {
+            const record = await database.getUnique(
+                `SELECT studentID, password, plc FROM student WHERE studentID='${id}' OR email='${id}' OR phone='${id}'`,
+            );
+            id = record.studentID;
 
-    const { name } = temp;
-    const gender = temp.gender === 'Male' ? 1 : 0;
-    const id = Number(temp.studentID);
-    const plc = util.plc();
-    const pass = util.hash(`${temp.pass + plc}Home Is Where The Start Is!`);
-    const phone = Number(temp.phone);
-    const { email } = temp;
-    const nid = Number(temp.nid);
-    const blg = temp.blg === "I don't know" ? ' ' : temp.blg;
+            const { plc } = record;
+            pass = util.hash(`${pass + plc}Home Is Where The Start Is!`);
+            if (pass === record.password) {
+                store.set('user', id);
+                store.set('mode', req.body.mode);
+            } else {
+                return;
+            }
+        } catch (err) {
+            res.send('USER NOT FOUND!');
+            return;
+        }
 
-    await database.exec(
-        `INSERT INTO student VALUES ('${name}',
+        res.redirect('../');
+    })
+    .get((req, res) => res.redirect('./login.html'));
+
+app.route('/register')
+    .post(async (req, res) => {
+        const temp = req.body;
+
+        const { name } = temp;
+        const gender = temp.gender === 'Male' ? 1 : 0;
+        const id = Number(temp.studentID);
+        const plc = util.plc();
+        const pass = util.hash(`${temp.pass + plc}Home Is Where The Start Is!`);
+        const phone = Number(temp.phone);
+        const { email } = temp;
+        const nid = Number(temp.nid);
+        const blg = temp.blg === "I don't know" ? ' ' : temp.blg;
+
+        await database.exec(
+            `INSERT INTO student VALUES ('${name}',
         ${gender},
         ${id},
         '${pass}',
@@ -40,38 +65,13 @@ app.post('/register', async (req, res) => {
         ${nid},
         '${blg}',
         null)`
-    );
-
-    store.set('user', id);
-    store.set('mode', req.body.mode);
-
-    res.redirect('../');
-});
-
-app.post('/login', async (req, res) => {
-    const id = req.body.studentID;
-    let pass = req.body.password;
-
-    try {
-        const record = await database.getUnique(
-            `SELECT studentID, password, plc FROM student WHERE studentID='${id}'`,
         );
 
-        const { plc } = record;
-        pass = util.hash(`${pass + plc}Home Is Where The Start Is!`);
-        if (pass === record.password) {
-            store.set('user', id);
-            store.set('mode', req.body.mode);
-        } else {
-            res.send('WRONG PASSWORD!');
-            return;
-        }
-    } catch (err) {
-        res.send('USER NOT FOUND!');
-        return;
-    }
+        store.set('user', id);
+        store.set('mode', req.body.mode);
 
-    res.redirect('../');
-});
+        res.redirect('../');
+    })
+    .get((req, res) => res.redirect('./login'));
 
 module.exports = app;
