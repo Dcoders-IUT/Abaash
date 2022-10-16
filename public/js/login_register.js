@@ -11,10 +11,6 @@ signInButton.addEventListener('click', () => {
 });
 
 
-// --------popup------
-// document.querySelector("#show-login").addEventListener("click",function(){
-// 	document.querySelector(".popup").classList.add("active");
-// });
 
 //-----------------------^ No clue what is happening up there ^-----------------------
 
