@@ -113,24 +113,6 @@ input {
   min-height: 700px;
 }
 
-/* .popup{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	transform: translate(-50%,-50%);
-    transition: top 0ms ease-in-out 200ms,
-                opacity 200ms ease-in-out 0ms,
-                transform 20ms ease-in-out 0ms; 
-}
-
-.popup.active{
-    top:50%;
-    opacity:1;
-    transform: translate(-50%,-50%) scale(1);
-    transition: top 0ms ease-in-out 200ms,
-                opacity 200ms ease-in-out 0ms,
-                transform 20ms ease-in-out 0ms;
-} */
 
 .form-container {
   position: absolute;
