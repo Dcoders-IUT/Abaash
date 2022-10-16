@@ -1,7 +1,7 @@
 const express = require('express');
 const store = require('store');
-const database = require('../database');
-const hash = require('../hash');
+const database = require('../util/database');
+const hash = require('../util/hash');
 
 const app = express.Router();
 
@@ -19,11 +19,11 @@ app.route('/login')
 
         try {
             const record = await database.getUnique(
-                `SELECT studentID, password, plc FROM student WHERE studentID='${id}' OR email='${id}' OR phone='${id}'`,
+                `SELECT studentID, password, passwordLastChanged FROM student WHERE studentID='${id}' OR email='${id}' OR phone='${id}'`
             );
             id = record.studentID;
 
-            const { plc } = record;
+            const plc = record.passwordLastChanged;
             pass = hash.hash(`${pass + plc}Home Is Where The Start Is!`);
             if (pass === record.password) {
                 store.set('user', id);
@@ -47,7 +47,7 @@ app.route('/register')
         const { name } = temp;
         const gender = temp.gender === 'Male' ? 1 : 0;
         const id = Number(temp.studentID);
-        const plc = hash.plc();
+        const plc = hash.salt();
         const pass = hash.hash(`${temp.pass + plc}Home Is Where The Start Is!`);
         const phone = Number(temp.phone);
         const { email } = temp;
@@ -64,7 +64,7 @@ app.route('/register')
         '${email}',
         ${nid},
         '${blg}',
-        null)`
+        null)`,
         );
 
         store.set('user', id);
@@ -86,7 +86,7 @@ app.get('/profile/:id', async (req, res) => {
 
     try {
         profileUserData = await database.getUnique(
-            `SELECT name, gender, bloodgroup FROM student WHERE studentID='${id}'`
+            `SELECT name, gender, bloodgroup, flatID FROM student WHERE studentID='${id}'`,
         );
     } catch (err) {
         res.render('student/profile', { currentUser: store.get('user'), profileUser: null });
@@ -94,8 +94,8 @@ app.get('/profile/:id', async (req, res) => {
     }
 
     try {
-        flat = await database.get(
-            `SELECT flatID, name FROM flat WHERE flatID=(SELECT flatID FROM student WHERE studentID='${id}')`,
+        flat = await database.getUnique(
+            `SELECT flatID, name FROM flat WHERE flatID=${profileUserData.flatID}`,
         );
     } catch (err) {
         flat = null;

@@ -1,6 +1,7 @@
 const express = require('express');
 const store = require('store');
-const database = require('./database');
+const database = require('./util/database');
+const misc = require('./util/misc');
 
 const app = express();
 const port = 3001;
@@ -10,7 +11,7 @@ app.set('view engine', 'ejs');
 
 async function allFlats() {
     try {
-        return await database.get('SELECT flatID, name FROM flat');
+        return await database.get('SELECT flatID, name, address, gender, level FROM flat');
     } catch (err) {
         return {};
     }
@@ -28,32 +29,34 @@ async function openHomeEJS(res) {
     const mode = store.get('mode');
 
     if (!store.get('mode') || !store.get('user')) {
-        res.render('home', { currentUser, mode, flatList: await allFlats() });
+        res.render('home', {
+            currentUser,
+            mode,
+            flatList: misc.shuffle(await allFlats()),
+        });
         return;
     }
     let currentUserData;
 
     try {
         currentUserData = await database.getUnique(
-            `SELECT name FROM ${mode} WHERE ${
-                mode === 'student' ? 'studentID' : 'username'
-            }='${currentUser}'`
+            `SELECT name FROM ${mode} WHERE ${mode === 'student' ? 'studentID' : 'username'
+            }='${currentUser}'`,
         );
     } catch (err) {
         res.render('home', {
             currentUser,
             mode,
             nameOfCurrentUser: null,
-            flatList: await allFlats(),
+            flatList: misc.shuffle(await allFlats()),
         });
         return;
     }
-
     res.render('home', {
         currentUser,
         mode,
         nameOfCurrentUser: currentUserData.name,
-        flatList: await allFlats(),
+        flatList: misc.shuffle(await allFlats()),
     });
 }
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const store = require('store');
-const database = require('../database');
-const hash = require('../hash');
+const database = require('../util/database');
+const hash = require('../util/hash');
 
 const app = express.Router();
 
@@ -19,11 +19,11 @@ app.route('/login')
 
         try {
             const record = await database.getUnique(
-                `SELECT username, password, plc FROM owner WHERE username='${id}' OR email='${id}' OR phone='${id}'`
+                `SELECT username, password, passwordLastChanged FROM owner WHERE username='${id}' OR email='${id}' OR phone='${id}'`
             );
             id = record.username;
 
-            const { plc } = record;
+            const plc = record.passwordLastChanged;
             pass = hash.hash(`${pass + plc}Home Is Where The Start Is!`);
             if (pass === record.password) {
                 store.set('user', id);
@@ -47,7 +47,7 @@ app.route('/register')
 
         const { name } = temp;
         const { username } = temp;
-        const plc = hash.plc();
+        const plc = hash.salt();
         const pass = hash.hash(`${temp.pass + plc}Home Is Where The Start Is!`);
         const phone = Number(temp.phone);
         const { email } = temp;

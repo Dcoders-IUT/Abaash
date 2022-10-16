@@ -1,6 +1,6 @@
 const express = require('express');
 const store = require('store');
-const database = require('../database');
+const database = require('../util/database');
 
 const app = express.Router();
 

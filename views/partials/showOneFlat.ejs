@@ -1,0 +1,83 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- link css -->
+  <link rel="stylesheet" href="/css/showOneFlat.css">
+
+  <!-- google font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,500;0,600;0,700;1,300&display=swap"
+    rel="stylesheet">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="cards">
+      <section class="card">
+        <figure>
+          <div class="img-overlay hot-home">
+            <img
+              src="https://media-cldnry.s-nbcnews.com/image/upload/t_fit-560w,f_auto,q_auto:best/newscms/2018_30/1355945/home-exterior-today-180726-tease.jpg"
+              alt="Trulli">
+            <div class="overlay"><a href="#">view property</a></div>
+            <div class="cont">
+              <div class="icons-img">
+                <button><i class="fas fa-heart"></i></button>
+                <button><i class="fas fa-share"></i></button>
+              </div>
+            </div>
+          </div>
+          <figcaption>
+            <!-- Should be Address -->
+            <a class="nameAnchor" href="../../flat/profile/<%=flat.flatID%>">
+              <%=flat.name%>
+            </a>
+          </figcaption>
+        </figure>
+        <div class="card-content">
+          <p>TODO: Write a function to generate description about the flat</p>
+          <%= flat.address %>
+
+            <section class="icons-home">
+              <div class="name-icon">
+                <span>Level</span>
+                <div class="icon">
+                  <i class="fas fa-bed"></i>
+                  <span>
+                    <%= flat.level %>
+                  </span>
+                </div>
+              </div>
+              <div class="name-icon">
+                <span>For</span>
+                <div class="icon">
+                  <i class="fas fa-sink"></i>
+                  <span>
+                    <%=flat.gender? 'Bachelors' : 'Bachelorettes' %>
+                  </span>
+                </div>
+              </div>
+              <div class="name-icon">
+                <span>area</span>
+                <div class="icon">
+                  <i class="fas fa-vector-square"></i>
+                  <span>4300</span>
+                </div>
+              </div>
+            </section>
+            <section class="price">
+              <span>for rent</span></br>
+              <span>৳5,000/month</span>
+            </section>
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+
+</html>
