@@ -40,7 +40,8 @@ async function openHomeEJS(res) {
 
     try {
         currentUserData = await database.getUnique(
-            `SELECT name FROM ${mode} WHERE ${mode === 'student' ? 'studentID' : 'username'
+            `SELECT name FROM ${mode} WHERE ${
+                mode === 'student' ? 'studentID' : 'username'
             }='${currentUser}'`,
         );
     } catch (err) {
