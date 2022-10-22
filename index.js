@@ -2,7 +2,7 @@ const express = require('express')
 const store = require('store')
 const database = require('./backend/util/database')
 const misc = require('./backend/util/misc')
-const path = require("path")
+const path = require('path')
 const app = express()
 const port = 3001
 
@@ -10,7 +10,7 @@ app.use(express.static('frontend'))
 app.set('views', path.join(__dirname, './backend/views'))
 app.set('view engine', 'ejs')
 
-async function allFlats() {
+const allFlats = async () => {
     try {
         return await database.get('SELECT flatID, name, address, gender, level FROM flat')
     } catch (err) {
@@ -18,14 +18,14 @@ async function allFlats() {
     }
 }
 
-function openEJS(page, res) {
+const openEJS = async (page, res) => {
     const currentUser = store.get('user')
     const mode = store.get('mode')
 
     res.render(page, { currentUser, mode })
 }
 
-async function openHomeEJS(res) {
+const openHomeEJS = async res => {
     const currentUser = store.get('user')
     const mode = store.get('mode')
 

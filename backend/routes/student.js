@@ -1,58 +1,58 @@
-const express = require('express');
-const store = require('store');
-const database = require('../util/database');
-const hash = require('../util/hash');
+const express = require('express')
+const store = require('store')
+const database = require('../util/database')
+const hash = require('../util/hash')
 
-const app = express.Router();
+const app = express.Router()
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
-    res.redirect('./login.html');
-});
+    res.redirect('./login.html')
+})
 
 app.route('/login')
     .post(async (req, res) => {
-        let { id } = req.body;
-        let pass = req.body.password;
+        let { id } = req.body
+        let pass = req.body.password
 
         try {
             const record = await database.getUnique(
                 `SELECT studentID, password, passwordLastChanged FROM student WHERE studentID='${id}' OR email='${id}' OR phone='${id}'`
-            );
-            id = record.studentID;
+            )
+            id = record.studentID
 
-            const plc = record.passwordLastChanged;
-            pass = hash.hash(`${pass + plc}Home Is Where The Start Is!`);
+            const plc = record.passwordLastChanged
+            pass = hash.hash(`${pass + plc}Home Is Where The Start Is!`)
             if (pass === record.password) {
-                store.set('user', id);
-                store.set('mode', req.body.mode);
+                store.set('user', id)
+                store.set('mode', req.body.mode)
             } else {
-                return;
+                return
             }
         } catch (err) {
-            res.send('USER NOT FOUND!');
-            return;
+            res.send('USER NOT FOUND!')
+            return
         }
 
-        res.redirect('../');
+        res.redirect('../')
     })
-    .get((req, res) => res.redirect('./login.html'));
+    .get((req, res) => res.redirect('./login.html'))
 
 app.route('/register')
     .post(async (req, res) => {
-        const temp = req.body;
+        const temp = req.body
 
-        const { name } = temp;
-        const gender = temp.gender === 'Male' ? 1 : 0;
-        const id = Number(temp.studentID);
-        const plc = hash.salt();
-        const pass = hash.hash(`${temp.pass + plc}Home Is Where The Start Is!`);
-        const phone = Number(temp.phone);
-        const { email } = temp;
-        const nid = Number(temp.nid);
-        const blg = temp.blg === "I don't know" ? ' ' : temp.blg;
+        const { name } = temp
+        const gender = temp.gender === 'Male' ? 1 : 0
+        const id = Number(temp.studentID)
+        const plc = hash.salt()
+        const pass = hash.hash(`${temp.pass + plc}Home Is Where The Start Is!`)
+        const phone = Number(temp.phone)
+        const { email } = temp
+        const nid = Number(temp.nid)
+        const blg = temp.blg === "I don't know" ? ' ' : temp.blg
 
         await database.exec(
             `INSERT INTO student VALUES ('${name}',
@@ -65,40 +65,40 @@ app.route('/register')
         ${nid},
         '${blg}',
         null)`,
-        );
+        )
 
-        store.set('user', id);
-        store.set('mode', req.body.mode);
+        store.set('user', id)
+        store.set('mode', req.body.mode)
 
-        res.redirect('../');
+        res.redirect('../')
     })
-    .get((req, res) => res.redirect('./login'));
+    .get((req, res) => res.redirect('./login'))
 
 app.get('/profile', (req, res) => {
-    const currentUser = store.get('user');
-    res.redirect(`profile/${currentUser}`);
-});
+    const currentUser = store.get('user')
+    res.redirect(`profile/${currentUser}`)
+})
 
 app.get('/profile/:id', async (req, res) => {
-    const { id } = req.params;
-    let profileUserData;
-    let flat;
+    const { id } = req.params
+    let profileUserData
+    let flat
 
     try {
         profileUserData = await database.getUnique(
             `SELECT name, gender, bloodgroup, flatID FROM student WHERE studentID='${id}'`,
-        );
+        )
     } catch (err) {
-        res.render('student/profile', { currentUser: store.get('user'), profileUser: null });
-        return;
+        res.render('student/profile', { currentUser: store.get('user'), profileUser: null })
+        return
     }
 
     try {
         flat = await database.getUnique(
             `SELECT flatID, name FROM flat WHERE flatID=${profileUserData.flatID}`,
-        );
+        )
     } catch (err) {
-        flat = null;
+        flat = null
     }
 
     res.render('student/profile', {
@@ -108,7 +108,7 @@ app.get('/profile/:id', async (req, res) => {
         gender: profileUserData.gender,
         bloodgroup: profileUserData.bloodgroup,
         flat,
-    });
-});
+    })
+})
 
-module.exports = app;
+module.exports = app
