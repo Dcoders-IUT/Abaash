@@ -7,6 +7,7 @@ const app = express();
 const port = 3001;
 
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 async function allFlats() {
@@ -94,6 +95,11 @@ app.get('/profile', (req, res) => {
 
         res.redirect(`${mode}/profile/${currentUser}`);
     }
+});
+
+app.post('/search', (req, res) => {
+    const temp = req.body;
+    res.send(temp);
 });
 
 const studentRouter = require('./routes/student');
