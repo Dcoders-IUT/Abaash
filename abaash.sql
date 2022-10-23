@@ -41,29 +41,30 @@ CREATE TABLE IF NOT EXISTS `flat` (
   `y` decimal(16,16) NOT NULL,
   `level` int(3) NOT NULL,
   `owner` varchar(50) NOT NULL,
-  `generator` tinyint(1) NOT NULL DEFAULT 0,
   `lift` tinyint(1) NOT NULL DEFAULT 0,
+  `generator` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`flatID`) USING BTREE,
   KEY `owner` (`owner`),
   CONSTRAINT `flat_ibfk_1` FOREIGN KEY (`owner`) REFERENCES `owner` (`username`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table abaash.flat: ~12 rows (approximately)
+-- Dumping data for table abaash.flat: ~13 rows (approximately)
 DELETE FROM `flat`;
 /*!40000 ALTER TABLE `flat` DISABLE KEYS */;
-INSERT INTO `flat` (`flatID`, `name`, `address`, `gender`, `x`, `y`, `level`, `owner`, `generator`, `lift`) VALUES
-	(1001, 'Ork er Flat 1', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 2, 'ork', 1, 0),
-	(1002, 'Ork er Flat 2', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 2, 'ork', 1, 0),
-	(1003, 'Ork er Flat 3', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 2, 'ork', 1, 0),
-	(1004, 'Ork er Flat 4', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 3, 'ork', 1, 0),
-	(1005, 'Ork er Flat 5', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 3, 'ork', 1, 0),
-	(1006, 'Ork er Flat 6', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 3, 'ork', 1, 0),
-	(1007, 'Ork er Flat 7', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 5, 'ork', 0, 1),
-	(1008, 'Ork er Flat 8', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 5, 'ork', 0, 1),
-	(1009, 'Ork er Flat 9', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 6, 'ork', 0, 1),
-	(1010, 'Ork er Flat 10', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 6, 'ork', 0, 1),
-	(1011, 'Ork er Flat 11', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 7, 'ork', 1, 1),
-	(1012, 'Ork er Flat 12', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 7, 'ork', 0, 1);
+INSERT INTO `flat` (`flatID`, `name`, `address`, `gender`, `x`, `y`, `level`, `owner`, `lift`, `generator`) VALUES
+	(1144037, 'Ork er Flat 1', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 7, 'ork', 1, 0),
+	(1208967, 'Ork er Flat 2', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 2, 'ork', 0, 1),
+	(1246200, 'Ork er Flat 3', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 5, 'ork', 1, 0),
+	(1389513, 'Ork er Flat 4', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 2, 'ork', 0, 1),
+	(1456430, 'Ork er Flat 5', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 7, 'ork', 1, 1),
+	(1666675, 'Ork er Flat 6', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 3, 'ork', 0, 1),
+	(1734064, 'Ork er Flat 7', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 2, 'ork', 0, 1),
+	(1754585, 'Ork er Flat 8', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 3, 'ork', 0, 1),
+	(1829871, 'Ork er Flat 9', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 6, 'ork', 1, 0),
+	(1850038, 'Ork er Flat 10', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 1, 'ork', 1, 1),
+	(1876297, 'Ork er Flat 11', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 5, 'ork', 1, 0),
+	(1946818, 'Ork er Flat 12', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 3, 'ork', 0, 1),
+	(1947162, 'Ork er Flat 13', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 6, 'ork', 1, 0);
 /*!40000 ALTER TABLE `flat` ENABLE KEYS */;
 
 -- Dumping structure for table abaash.owner
@@ -106,15 +107,15 @@ CREATE TABLE IF NOT EXISTS `student` (
   UNIQUE KEY `phone` (`phone`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `nid` (`nid`),
-  KEY `flatID` (`flatID`),
-  CONSTRAINT `student_ibfk_1` FOREIGN KEY (`flatID`) REFERENCES `flat` (`flatID`)
+  KEY `student_ibfk_1` (`flatID`),
+  CONSTRAINT `student_ibfk_1` FOREIGN KEY (`flatID`) REFERENCES `flat` (`flatID`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table abaash.student: ~1 rows (approximately)
 DELETE FROM `student`;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
 INSERT INTO `student` (`name`, `gender`, `studentID`, `password`, `passwordLastChanged`, `phone`, `email`, `nid`, `bloodgroup`, `flatID`) VALUES
-	('Jubayer', 1, 129, 'bc8e7191c2fae4af85e6b728bcec435a48fe18faf0ee58d710800d0da33be456', '2022-9-14T16:12:16.155', 123, 'jubayer@gmail.com', 1223, 'A+', 1003);
+	('Jubayer', 1, 129, 'bc8e7191c2fae4af85e6b728bcec435a48fe18faf0ee58d710800d0da33be456', '2022-9-14T16:12:16.155', 123, 'jubayer@gmail.com', 1223, 'A+', 1389513);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

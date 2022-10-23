@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>New Flat</title>
+  </head>
+
+  <body>
+    <form action="register" method="post">
+      <h1>New Flat</h1>
+      <input type="text" name="name" placeholder="Name" /> <br />
+      <input type="text" name="address" placeholder="Address" /> <br />
+      <label>Gender</label>
+      <select name="gender">
+        <option value="Male">For Bachelors</option>
+        <option value="Female">For Bachelorettes</option>
+      </select>
+      <br />
+      <label>Level</label>
+      <select name="level">
+        <% for(let i=0; i<20; i++) { %>
+        <option value="<%=i+1%>"><%=i+1%></option>
+        <% } %>
+      </select>
+      <br />
+      <label>Lift</label>
+      <input type="checkbox" name="lift" />
+      <label>Generator</label>
+      <input type="checkbox" name="generator" /> <br />
+      <a href="../../owner/profile/<%=owner.username%>"
+        >Owner: <%=owner.name%></a
+      >
+      <input type="hidden" name="x" value="0" />
+      <input type="hidden" name="y" value="0" />
+      <input type="hidden" name="owner" value="<%=owner.username%>" />
+      <br />
+      <button>Register</button>
+    </form>
+  </body>
+</html>
