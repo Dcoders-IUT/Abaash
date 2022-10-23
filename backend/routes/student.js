@@ -9,7 +9,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
-    res.redirect('./login.html')
+    res.redirect('./login')
 })
 
 app.route('/login')
@@ -29,6 +29,7 @@ app.route('/login')
                 store.set('user', id)
                 store.set('mode', req.body.mode)
             } else {
+                res.send('WRONG PASSWORD!')
                 return
             }
         } catch (err) {
