@@ -12,7 +12,6 @@
   </head>
 
   <body>
-    <%- include("./partials/advanced_search.ejs") %>
     <div class="navbar-bottom">
       <ul class="navbar-list">
         <% if(currentUser) { %>
@@ -35,6 +34,8 @@
         <li><a href="student/login">Log In</a></li>
         <% } %>
       </ul>
+      <br />
+      <%- include("./partials/advanced_search.ejs") %>
       <br />
       <h2>Dashboard</h2>
 

@@ -1,9 +1,6 @@
 <% if(flatList) { %>
-  <ul>
-    <% flatList.forEach((flat)=> { %>
-      <div>
-        <%- include ("./showOneFlat.ejs",{flat:flat}) %>
-          <% }) %>
-      </div>
-  </ul>
-  <% } %>
+<ul>
+  <% flatList.forEach((flat)=> { %>
+  <div><%- include ("./showOneFlat.ejs",{flat:flat}) %> <% }) %></div>
+</ul>
+<% } %>

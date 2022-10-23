@@ -8,11 +8,30 @@ const port = 3001;
 
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
+app.set('views', './views');
 app.set('view engine', 'ejs');
 
 async function allFlats() {
     try {
         return await database.get('SELECT flatID, name, address, gender, level FROM flat');
+    } catch (err) {
+        return {};
+    }
+}
+
+async function searchFlats(address, name, minLevel, maxLevel, gender, lift, generator) {
+    const addressQuery =        address === '' ? 'true' : `LOWER(address) LIKECONCAT('%', LOWER('${address}'),'%')`;
+    const nameQuery = name === '' ? 'true' : `LOWER(name) LIKE CONCAT('%', LOWER('${name}'),'%')`;
+    const levelQuery = `level >= ${minLevel} AND level <= ${maxLevel}`;
+    const genderQuery = `gender = ${gender}`;
+    const liftQuery = `lift >= ${lift}`;
+    const generatorQuery = `generator >= ${generator}`;
+
+    try {
+        return await database.get(
+            `SELECT flatID, name, address, gender, level FROM flat
+            WHERE ${addressQuery} AND ${nameQuery} AND ${levelQuery} AND ${genderQuery} AND ${liftQuery} AND ${generatorQuery}`
+        );
     } catch (err) {
         return {};
     }
@@ -97,9 +116,20 @@ app.get('/profile', (req, res) => {
     }
 });
 
-app.post('/search', (req, res) => {
+app.post('/search', async (req, res) => {
     const temp = req.body;
-    res.send(temp);
+
+    const { address } = temp;
+    const { name } = temp;
+    const minLevel = Number(temp.minLevel);
+    const maxLevel = Number(temp.maxLevel);
+    const gender = temp.gender === 'Male' ? 1 : 0;
+    const lift = temp.lift === 'on' ? 1 : 0;
+    const generator = temp.lift === 'on' ? 1 : 0;
+
+    res.render('searchResults', {
+        flatList: await searchFlats(address, name, minLevel, maxLevel, gender, lift, generator),
+    });
 });
 
 const studentRouter = require('./routes/student');

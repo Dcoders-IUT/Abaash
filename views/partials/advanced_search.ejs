@@ -66,41 +66,9 @@
                       class="input--style-1"
                       type="text"
                       name="name"
-                      placeholder="Flat or building name"
+                      placeholder="Flat or Building Name"
                       autocomplete="off"
                     />
-                  </div>
-
-                  <p style="color: white">Coordinates</p>
-                  <div class="row row-space">
-                    <div class="col-2">
-                      <div class="input-group">
-                        <label class="label">x-corodinate</label>
-                        <input
-                          class="input--style-1"
-                          type="text"
-                          name="x"
-                          placeholder="x"
-                          id="x"
-                          autocomplete="off"
-                        />
-                        <i class="zmdi zmdi-pin input-group-symbol"></i>
-                      </div>
-                    </div>
-                    <div class="col-2">
-                      <div class="input-group">
-                        <label class="label">y-coordinate</label>
-                        <input
-                          class="input--style-1"
-                          type="text"
-                          name="y"
-                          placeholder="y"
-                          id="y"
-                          autocomplete="off"
-                        />
-                        <i class="zmdi zmdi-pin input-group-symbol"></i>
-                      </div>
-                    </div>
                   </div>
 
                   <!-- level -->
@@ -108,16 +76,18 @@
                     <div class="col-2">
                       <div class="input-group">
                         <label for="level" class="level">Level</label>
-                        <select name="level">
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                          <option value="6">6</option>
-                          <option value="7">7</option>
-                          <option value="8">8</option>
-                          <option value="9">9</option>
+                        <label>Min</label>
+                        <select name="minLevel">
+                          <% for(let i=0; i<20; i++) { %>
+                          <option value="<%=i+1%>"><%=i+1%></option>
+                          <% } %>
+                        </select>
+                        <br />
+                        <label>Max</label>
+                        <select name="maxLevel" default-value="20">
+                          <% for(let i=0; i<20; i++) { %>
+                          <option value="<%=i+1%>"><%=i+1%></option>
+                          <% } %>
                         </select>
                       </div>
                     </div>
@@ -127,25 +97,21 @@
                       <div class="input-group">
                         <label for="gender" class="gender">Gender</label>
                         <select name="gender">
-                          <option value="male">Male</option>
-                          <option value="female">Female</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
                         </select>
                       </div>
                     </div>
                   </div>
 
                   <!-- lift & generator -->
-                  <div class="checkbox-row">
-                    <label class="checkbox-container m-r-45"
-                      >Lift
+                  <div>
+                    <span>
+                      <label>Lift Required</label>
                       <input type="checkbox" name="lift" />
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container"
-                      >Generator
+                      <label>Generator Required</label>
                       <input type="checkbox" name="generator" />
-                      <span class="checkmark"></span>
-                    </label>
+                    </span>
                   </div>
 
                   <!-- submit -->
