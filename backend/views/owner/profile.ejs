@@ -15,9 +15,11 @@
     <h1>Name: <%=name%>
     </h1>
     <%- include ("../partials/showFlats.ejs", {flatList:flatList}) %>
-      <% } else { %>
-        <p>USER NOT FOUND!</p>
-        <% } %>
+      <% if(profileUser===currentUser) { %>
+        <button><a href="#">Add New Flat</a></button>
+        <% }} else { %>
+          <p>USER NOT FOUND!</p>
+          <% } %>
 </body>
 
 </html>

@@ -11,34 +11,34 @@
 </head>
 
 <body>
-  <%- include("./partials/advanced_search.ejs") %>
-    <div class="navbar-bottom">
-      <ul class="navbar-list">
-        <% if(currentUser) { %>
-          <li>
-            <a href="<%=mode%>/profile/<%=currentUser%>">
-              <%=nameOfCurrentUser? nameOfCurrentUser: currentUser%>
-            </a>
-          </li>
-          <li><a href="logout">Log Out</a></li>
+  <div class="navbar-bottom">
+    <ul class="navbar-list">
+      <% if(currentUser) { %>
+        <li>
+          <a href="<%=mode%>/profile/<%=currentUser%>">
+            <%=nameOfCurrentUser? nameOfCurrentUser: currentUser%>
+          </a>
+        </li>
+        <li><a href="logout">Log Out</a></li>
 
-          <% if(mode==='student' ) { %>
-            <li><a href="student/coupon">Coupon</a></li>
-            <% } %>
+        <% if(mode==='student' ) { %>
+          <li><a href="student/coupon">Coupon</a></li>
+          <% } %>
 
-              <li><a href="map">Map</a></li>
-              <li><a href="notifications">Notifications</a></li>
-              <li><a href="sos">SOS</a></li>
+            <li><a href="map">Map</a></li>
+            <li><a href="notifications">Notifications</a></li>
+            <li><a href="sos">SOS</a></li>
 
-              <% } else { %>
-                <li><a href="/student/login">Log In</a></li>
-                <% } %>
-      </ul>
-      <br />
+            <% } else { %>
+              <li><a href="/student/login">Log In</a></li>
+              <% } %>
+    </ul>
+    <br />
+    <%- include("./partials/advanced_search.ejs") %>
       <h2>Dashboard</h2>
 
       <%- include ("./partials/showFlats.ejs", {flatList:flatList}) %>
-    </div>
+  </div>
 </body>
 
 </html>
