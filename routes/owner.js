@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    res.redirect('./login.html');
+    res.redirect('./login');
 });
 
 app.route('/login')
@@ -19,7 +19,7 @@ app.route('/login')
 
         try {
             const record = await database.getUnique(
-                `SELECT username, password, passwordLastChanged FROM owner WHERE username='${id}' OR email='${id}' OR phone='${id}'`
+                `SELECT username, password, passwordLastChanged FROM owner WHERE username='${id}' OR email='${id}' OR phone='${id}'`,
             );
             id = record.username;
 
@@ -60,7 +60,7 @@ app.route('/register')
         '${plc}',
         ${phone},
         '${email}',
-        ${nid})`,
+        ${nid})`
         );
 
         store.set('user', username);
