@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Montserrat:wght@500&display=swap');
+
+body {
+  /* font-family: 'Lilita One', cursive; */
+  font-family: 'Montserrat', sans-serif;
+  background-color: whitesmoke;
+}
+
+/*  --- navbar start ---  */
+
+header {
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+}
+
+.my-box {
+  border-radius: 1rem;
+  /* box-shadow: 0 0.5rem 1em -0.125em; */
+  margin: 0.5rem;
+  background-color: #293462;
+}
+
+.mynavItem {
+  font-family: 'Lilita One', cursive;
+  font-size: 1.4rem;
+  color: turquoise;
+}
+
+.mynavItem:hover {
+  border-radius: 0.5rem;
+}
+
+.my-navbar-dropdown {
+  border-radius: 1 rem;
+  margin: 4px;
+}
+
+/*  --- navbar end ---  */
+
+/* --  bg image  -- */
+.bg>img {
+  object-fit: cover;
+  filter: brightness(0.4);
+}
