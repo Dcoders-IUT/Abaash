@@ -18,7 +18,7 @@ const allFlats = async () => {
     }
 }
 
-async function searchFlats(address, name, minLevel, maxLevel, gender, lift, generator) {
+const searchFlats = async (address, name, minLevel, maxLevel, gender, lift, generator) => {
     const addressQuery = address === '' ? 'true' : `LOWER(address) LIKECONCAT('%', LOWER('${address}'),'%')`
     const nameQuery = name === '' ? 'true' : `LOWER(name) LIKE CONCAT('%', LOWER('${name}'),'%')`
     const levelQuery = `level >= ${minLevel} AND level <= ${maxLevel}`

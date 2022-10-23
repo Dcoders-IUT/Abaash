@@ -13,13 +13,13 @@
 </head>
 
 <body>
-  <%- include ("./partials/navbar.ejs") %>
+  <%- include ("./partials/navbar.ejs", {mode:mode,currentUser:currentUser}) %>
     <div class="navbar-bottom">
       <ul class="navbar-list">
         <% if(currentUser) { %>
           <li>
             <a href="<%=mode%>/profile/<%=currentUser%>">
-              <%=nameOfCurrentUser? nameOfCurrentUser: currentUser%>
+              <%#=nameOfCurrentUser? nameOfCurrentUser: currentUser%>
             </a>
           </li>
           <li><a href="logout">Log Out</a></li>

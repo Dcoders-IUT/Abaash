@@ -18,30 +18,30 @@
           Home
         </a>
         <a class="navbar-item mynavItem">
-          Rent Property
+          <%= mode==='student' ? Rent Property : Add Property %>
         </a>
-
-        <a class="navbar-item mynavItem">
-          Add Property
-        </a>
-
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link mynavItem">
-            More
+        <% if (currentUser) { %>
+          <a class="navbar-item mynavItem" href="<%=mode%>/profile/<%=currentUser%>">
+            <%=nameOfCurrentUser? nameOfCurrentUser: currentUser%>
           </a>
-          <div class="navbar-dropdown my-navbar-dropdown">
-            <a class="navbar-item mynavItem">
-              About
-            </a>
-            <a class="navbar-item mynavItem">
-              Contact
-            </a>
-            <hr class="navbar-divider">
-            <a class="navbar-item mynavItem">
-              Report an issue
-            </a>
-          </div>
-        </div>
+          <% } %>
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link mynavItem">
+                More
+              </a>
+              <div class="navbar-dropdown my-navbar-dropdown">
+                <a class="navbar-item mynavItem">
+                  About
+                </a>
+                <a class="navbar-item mynavItem">
+                  Contact
+                </a>
+                <hr class="navbar-divider">
+                <a class="navbar-item mynavItem">
+                  Report an issue
+                </a>
+              </div>
+            </div>
       </div>
 
       <div class="navbar-end">
