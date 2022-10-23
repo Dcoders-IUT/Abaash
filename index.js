@@ -2,12 +2,11 @@ const express = require('express')
 const store = require('store')
 const database = require('./backend/util/database')
 const misc = require('./backend/util/misc')
-const path = require('path')
 const app = express()
 const port = 3001
 
 app.use(express.static('frontend'))
-app.set('views', path.join(__dirname, './backend/views'))
+app.set('views', './backend/views')
 app.set('view engine', 'ejs')
 
 const allFlats = async () => {
