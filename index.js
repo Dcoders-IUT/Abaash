@@ -18,21 +18,21 @@ const allFlats = async () => {
     }
 }
 
-async function searchFlats(address, name, minLevel, maxLevel, gender, lift, generator) {
-    const addressQuery = address === '' ? 'true' : `LOWER(address) LIKECONCAT('%', LOWER('${address}'),'%')`;
-    const nameQuery = name === '' ? 'true' : `LOWER(name) LIKE CONCAT('%', LOWER('${name}'),'%')`;
-    const levelQuery = `level >= ${minLevel} AND level <= ${maxLevel}`;
-    const genderQuery = `gender = ${gender}`;
-    const liftQuery = `lift >= ${lift}`;
-    const generatorQuery = `generator >= ${generator}`;
+const searchFlats = async (address, name, minLevel, maxLevel, gender, lift, generator) => {
+    const addressQuery = address === '' ? 'true' : `LOWER(address) LIKECONCAT('%', LOWER('${address}'),'%')`
+    const nameQuery = name === '' ? 'true' : `LOWER(name) LIKE CONCAT('%', LOWER('${name}'),'%')`
+    const levelQuery = `level >= ${minLevel} AND level <= ${maxLevel}`
+    const genderQuery = `gender = ${gender}`
+    const liftQuery = `lift >= ${lift}`
+    const generatorQuery = `generator >= ${generator}`
 
     try {
         return await database.get(
             `SELECT flatID, name, address, gender, level FROM flat
             WHERE ${addressQuery} AND ${nameQuery} AND ${levelQuery} AND ${genderQuery} AND ${liftQuery} AND ${generatorQuery}`
-        );
+        )
     } catch (err) {
-        return {};
+        return {}
     }
 }
 
@@ -115,15 +115,15 @@ app.get('/profile', (req, res) => {
 })
 
 app.post('/search', async (req, res) => {
-    const temp = req.body;
+    const temp = req.body
 
-    const { address } = temp;
-    const { name } = temp;
-    const minLevel = Number(temp.minLevel);
-    const maxLevel = Number(temp.maxLevel);
-    const gender = temp.gender === 'Male' ? 1 : 0;
-    const lift = temp.lift === 'on' ? 1 : 0;
-    const generator = temp.lift === 'on' ? 1 : 0;
+    const { address } = temp
+    const { name } = temp
+    const minLevel = Number(temp.minLevel)
+    const maxLevel = Number(temp.maxLevel)
+    const gender = temp.gender === 'Male' ? 1 : 0
+    const lift = temp.lift === 'on' ? 1 : 0
+    const generator = temp.lift === 'on' ? 1 : 0
 
     res.render('searchResults', {
         flatList: await searchFlats(address, name, minLevel, maxLevel, gender, lift, generator),
