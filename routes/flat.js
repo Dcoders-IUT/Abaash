@@ -40,7 +40,7 @@ app.get('/profile/:id', async (req, res) => {
         return;
     }
 
-    res.render('flat/profile', { currentUser: store.get('user'), flat, ownername: ownername.name });
+    res.render('flat/profile', { currentUser: store.get('user'), flat, owner: ownername });
 });
 
 app.route('/register')

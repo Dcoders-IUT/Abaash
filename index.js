@@ -20,7 +20,8 @@ async function allFlats() {
 }
 
 async function searchFlats(address, name, minLevel, maxLevel, gender, lift, generator) {
-    const addressQuery =        address === '' ? 'true' : `LOWER(address) LIKECONCAT('%', LOWER('${address}'),'%')`;
+    const addressQuery =
+        address === '' ? 'true' : `LOWER(address) LIKE CONCAT('%', LOWER('${address}'),'%')`;
     const nameQuery = name === '' ? 'true' : `LOWER(name) LIKE CONCAT('%', LOWER('${name}'),'%')`;
     const levelQuery = `level >= ${minLevel} AND level <= ${maxLevel}`;
     const genderQuery = `gender = ${gender}`;
@@ -30,7 +31,7 @@ async function searchFlats(address, name, minLevel, maxLevel, gender, lift, gene
     try {
         return await database.get(
             `SELECT flatID, name, address, gender, level FROM flat
-            WHERE ${addressQuery} AND ${nameQuery} AND ${levelQuery} AND ${genderQuery} AND ${liftQuery} AND ${generatorQuery}`
+            WHERE ${addressQuery} AND ${nameQuery} AND ${levelQuery} AND ${genderQuery} AND ${liftQuery} AND ${generatorQuery}`,
         );
     } catch (err) {
         return {};
@@ -62,7 +63,7 @@ async function openHomeEJS(res) {
         currentUserData = await database.getUnique(
             `SELECT name FROM ${mode} WHERE ${
                 mode === 'student' ? 'studentID' : 'username'
-            }='${currentUser}'`,
+            }='${currentUser}'`
         );
     } catch (err) {
         res.render('home', {

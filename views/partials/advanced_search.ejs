@@ -38,7 +38,8 @@
             <!-- advance search heading -->
             <ul class="tab-list">
               <li class="tab-list__item active">
-                <h1 class="tab-list__link">Advance Search</h1>
+                <!-- <h1 class="tab-list__link">Advance Search</h1> -->
+                <h1>Search</h1>
               </li>
             </ul>
 
@@ -76,18 +77,19 @@
                     <div class="col-2">
                       <div class="input-group">
                         <label for="level" class="level">Level</label>
+                        <br />
                         <label>Min</label>
                         <select name="minLevel">
                           <% for(let i=0; i<20; i++) { %>
                           <option value="<%=i+1%>"><%=i+1%></option>
                           <% } %>
                         </select>
-                        <br />
                         <label>Max</label>
                         <select name="maxLevel" default-value="20">
-                          <% for(let i=0; i<20; i++) { %>
+                          <% for(let i=0; i<19; i++) { %>
                           <option value="<%=i+1%>"><%=i+1%></option>
                           <% } %>
+                          <option value="20" selected>20</option>
                         </select>
                       </div>
                     </div>
@@ -105,7 +107,7 @@
                   </div>
 
                   <!-- lift & generator -->
-                  <div>
+                  <div class="matha">
                     <span>
                       <label>Lift Required</label>
                       <input type="checkbox" name="lift" />
@@ -115,7 +117,9 @@
                   </div>
 
                   <!-- submit -->
-                  <button class="btn-submit" type="submit">search</button>
+                  <button class="btn-submit" type="submit" text-align="center">
+                    search
+                  </button>
                 </form>
               </div>
             </div>

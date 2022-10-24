@@ -1,3 +1,6 @@
+.matha {
+  color: whitesmoke;
+}
 
 /* ==========================================================================
    #GRID
@@ -56,7 +59,9 @@ html {
   margin: 0;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   -webkit-box-sizing: inherit;
   -moz-box-sizing: inherit;
   box-sizing: inherit;
@@ -69,12 +74,23 @@ html {
  * A very simple reset that sits on top of Normalize.css.
  */
 body,
-h1, h2, h3, h4, h5, h6,
-blockquote, p, pre,
-dl, dd, ol, ul,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+blockquote,
+p,
+pre,
+dl,
+dd,
+ol,
+ul,
 figure,
 hr,
-fieldset, legend {
+fieldset,
+legend {
   margin: 0;
   padding: 0;
 }
@@ -127,7 +143,12 @@ body {
   font-size: 14px;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 400;
 }
 
@@ -267,10 +288,11 @@ a:active {
 .btn-submit {
   display: block;
   margin-top: 32px;
+  padding-left: 40%;
   width: 100%;
   line-height: 50px;
   font-family: inherit;
-  background: #00ad5f;
+  background: purple;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
@@ -324,7 +346,8 @@ a:active {
   }
 }
 
-.daterangepicker:before, .daterangepicker:after {
+.daterangepicker:before,
+.daterangepicker:after {
   display: none;
 }
 
@@ -345,7 +368,8 @@ a:active {
   font-weight: 700;
 }
 
-.daterangepicker .calendar th.next, .daterangepicker .calendar th.prev {
+.daterangepicker .calendar th.next,
+.daterangepicker .calendar th.prev {
   font-size: 20px;
   color: #ccc;
   text-align: center;
@@ -360,7 +384,8 @@ a:active {
     width: 235px;
     max-width: 270px;
   }
-  .daterangepicker .calendar.right, .daterangepicker .calendar.left {
+  .daterangepicker .calendar.right,
+  .daterangepicker .calendar.left {
     float: none !important;
     clear: none !important;
     margin: 0 auto !important;
@@ -399,7 +424,8 @@ a:active {
   color: #555;
 }
 
-.daterangepicker td.start-date, .daterangepicker td.end-date {
+.daterangepicker td.start-date,
+.daterangepicker td.end-date {
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
@@ -430,7 +456,10 @@ a:active {
   background: #00ad5f;
 }
 
-.daterangepicker td.off, .daterangepicker td.off.in-range, .daterangepicker td.off.start-date, .daterangepicker td.off.end-date {
+.daterangepicker td.off,
+.daterangepicker td.off.in-range,
+.daterangepicker td.off.start-date,
+.daterangepicker td.off.end-date {
   background: transparent;
   color: #aaa;
 }
@@ -440,7 +469,8 @@ a:active {
   font-family: inherit;
 }
 
-.daterangepicker select.monthselect, .daterangepicker select.yearselect {
+.daterangepicker select.monthselect,
+.daterangepicker select.yearselect {
   font-size: 14px;
   padding: 8px 4px;
 }
@@ -815,8 +845,8 @@ button {
   margin-top: 5px;
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
@@ -890,7 +920,10 @@ input[type=number]::-webkit-outer-spin-button {
   height: 30px;
 }
 
-.rs-select2 .select2-container .select2-selection--single .select2-selection__rendered {
+.rs-select2
+  .select2-container
+  .select2-selection--single
+  .select2-selection__rendered {
   line-height: 30px;
   padding-left: 0;
   color: #808080;
@@ -898,7 +931,10 @@ input[type=number]::-webkit-outer-spin-button {
   text-transform: uppercase;
 }
 
-.rs-select2 .select2-container .select2-selection--single .select2-selection__arrow {
+.rs-select2
+  .select2-container
+  .select2-selection--single
+  .select2-selection__arrow {
   height: 28px;
   right: 4px;
   display: -webkit-box;
@@ -918,13 +954,20 @@ input[type=number]::-webkit-outer-spin-button {
   align-items: center;
 }
 
-.rs-select2 .select2-container .select2-selection--single .select2-selection__arrow b {
+.rs-select2
+  .select2-container
+  .select2-selection--single
+  .select2-selection__arrow
+  b {
   display: none;
 }
 
-.rs-select2 .select2-container .select2-selection--single .select2-selection__arrow:after {
+.rs-select2
+  .select2-container
+  .select2-selection--single
+  .select2-selection__arrow:after {
   font-family: "Material-Design-Iconic-Font";
-  content: '\f2f9';
+  content: "\f2f9";
   font-size: 24px;
   color: #808080;
   -webkit-transition: all 0.4s ease;
@@ -933,7 +976,10 @@ input[type=number]::-webkit-outer-spin-button {
   transition: all 0.4s ease;
 }
 
-.rs-select2 .select2-container.select2-container--open .select2-selection--single .select2-selection__arrow::after {
+.rs-select2
+  .select2-container.select2-container--open
+  .select2-selection--single
+  .select2-selection__arrow::after {
   -webkit-transform: rotate(-180deg);
   -moz-transform: rotate(-180deg);
   -ms-transform: rotate(-180deg);
@@ -959,7 +1005,8 @@ input[type=number]::-webkit-outer-spin-button {
   color: #808080;
 }
 
-.select2-container--default .select2-results__option--highlighted[aria-selected] {
+.select2-container--default
+  .select2-results__option--highlighted[aria-selected] {
   background: #00ad5f;
 }
 
@@ -967,6 +1014,7 @@ input[type=number]::-webkit-outer-spin-button {
    #TAB
    ========================================================================== */
 .tab-list {
+  background-color: #002b5b;
   list-style: none;
   -webkit-border-top-right-radius: 10px;
   -moz-border-radius-topright: 10px;
@@ -976,6 +1024,7 @@ input[type=number]::-webkit-outer-spin-button {
   border-top-left-radius: 10px;
   padding: 0 55px;
   padding-top: 40px;
+  color: whitesmoke;
 }
 
 .tab-list::after {
@@ -1027,6 +1076,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .tab-content > .tab-pane.active {
   display: block;
+  background-color: #256d85;
 }
 
 @media (max-width: 767px) {
@@ -1058,14 +1108,12 @@ input[type=number]::-webkit-outer-spin-button {
   border-radius: 10px;
 }
 
-
-
 /* gender */
-.gender{
+.gender {
   padding-right: 30px;
 }
 
 /* level */
-.level{
+.level {
   padding-right: 30px;
 }
