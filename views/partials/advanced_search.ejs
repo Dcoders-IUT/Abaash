@@ -80,16 +80,15 @@
                         <br />
                         <label>Min</label>
                         <select name="minLevel">
-                          <% for(let i=0; i<20; i++) { %>
-                          <option value="<%=i+1%>"><%=i+1%></option>
+                          <% for(let i=1; i<=20; i++) { %>
+                          <option value="<%=i%>"> <%=i%> </option>
                           <% } %>
                         </select>
                         <label>Max</label>
-                        <select name="maxLevel" default-value="20">
-                          <% for(let i=0; i<19; i++) { %>
-                          <option value="<%=i+1%>"><%=i+1%></option>
+                        <select name="maxLevel">
+                          <% for(let i=1; i<=20; i++) { %>
+                          <option value="<%=i%>" <%= i==20? "selected": '' %> > <%=i%> </option>
                           <% } %>
-                          <option value="20" selected>20</option>
                         </select>
                       </div>
                     </div>

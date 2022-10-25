@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title><%=flat.name%></title>
+    <title><%=flat? flat.name: 'FLAT NOT FOUND'%></title>
   </head>
 
   <body>
-    <% if(flat.flatID) { %>
+    <% if(flat) { %>
     <h1>Name: <%=flat.name%></h1>
     <h1>Address: <%=flat.address%></h1>
     <h1>For <%=flat.gender? 'Bachelors' : 'Bachelorettes' %></h1>
@@ -16,9 +16,9 @@
       Owner:
       <a href="../../owner/profile/<%=flat.owner%>"> <%=owner.name%> </a>
     </h1>
-    <h1>Generator: <%=flat.generator? 'YES' : 'NO' %></h1>
     <h1>Lift: <%=flat.lift? 'YES' : 'NO' %></h1>
-    <% if(flat.owner===currentUser) { %>
+    <h1>Generator: <%=flat.generator? 'YES' : 'NO' %></h1>
+    <% if(currentUser===flat.owner) { %>
     <button class="bb">
       <a href="../edit/<%=flat.flatID%>">Edit Info</a>
     </button>
