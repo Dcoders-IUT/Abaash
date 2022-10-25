@@ -7,6 +7,7 @@
   </head>
 
   <body>
+    <% if(currentUser === owner.username) { %>
     <form action="register" method="post">
       <h1>New Flat</h1>
       <input type="text" name="name" placeholder="Name" /> <br />
@@ -35,7 +36,11 @@
       <input type="hidden" name="y" value="0" />
       <input type="hidden" name="owner" value="<%=owner.username%>" />
       <br />
-      <button>Register</button>
+      <button>Save</button>
     </form>
+    <button><a href="../owner/profile">Cancel</a></button>
+    <% } else { %>
+    <p>USER NOT FOUND!</p>
+    <% } %>
   </body>
 </html>

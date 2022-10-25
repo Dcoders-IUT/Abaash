@@ -15,7 +15,11 @@
     <h1>
       Flat: <a href="../../flat/profile/<%=flat.flatID%>"><%=flat.name%></a>
     </h1>
-    <% }} else { %>
+    <% } %> <% if(Number(currentUser)===Number(profileUser)) { %>
+    <button>
+      <a href="../edit/<%= profileUser %> ">Edit Profile Info</a>
+    </button>
+    <% } %> <% } else { %>
     <p>USER NOT FOUND!</p>
     <% } %>
   </body>

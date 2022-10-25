@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title><%=name%></title>
+    <title>Owner Profile</title>
     <style>
       .bb {
         appearance: button;
@@ -34,7 +34,6 @@
         vertical-align: middle;
         white-space: nowrap;
         width: 20%;
-        transform: translate(200%, 0%);
       }
       .bb > a {
         color: whitesmoke;
@@ -51,9 +50,12 @@
     <a href="../..">Home</a>
     <% if(profileUser) { %>
     <h1>Name: <%=name%></h1>
-    <% if(profileUser===currentUser) { %>
+    <% if(currentUser===profileUser) { %>
     <button class="bb">
       <a href="../../flat/register">Add New Flat</a>
+    </button>
+    <button class="bb">
+      <a href="../edit/<%= profileUser %> ">Edit Profile Info</a>
     </button>
     <% } %>
     <div class="lol">

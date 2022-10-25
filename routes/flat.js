@@ -28,19 +28,17 @@ async function newFlatID() {
 app.get('/profile/:id', async (req, res) => {
     const { id } = req.params;
     let flat;
-    let ownername;
+    let owner;
 
     try {
         flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${id}'`);
-        ownername = await database.getUnique(
-            `SELECT name FROM owner WHERE username='${flat.owner}'`
-        );
+        owner = await database.getUnique(`SELECT name FROM owner WHERE username='${flat.owner}'`);
     } catch (err) {
         res.render('flat/profile', { currentUser: store.get('user'), flat: null });
         return;
     }
 
-    res.render('flat/profile', { currentUser: store.get('user'), flat, owner: ownername });
+    res.render('flat/profile', { currentUser: store.get('user'), flat, owner });
 });
 
 app.route('/register')
@@ -63,7 +61,7 @@ app.route('/register')
             return;
         }
 
-        res.render('flat/register', { owner });
+        res.render('flat/register', { currentUser, owner });
     })
     .post(async (req, res) => {
         const temp = req.body;
@@ -84,13 +82,62 @@ app.route('/register')
         const x = Number(temp.x);
         const y = Number(temp.y);
         const lift = temp.lift === 'on' ? 1 : 0;
-        const generator = temp.lift === 'on' ? 1 : 0;
+        const generator = temp.generator === 'on' ? 1 : 0;
 
         await database.exec(
             `INSERT INTO flat VALUES (${flatID}, '${name}', '${address}', ${gender}, ${x}, ${y}, ${level}, '${owner}', ${lift}, ${generator})`
         );
 
         res.redirect(`profile/${flatID}`);
+    });
+
+app.route('/edit/:id')
+    .get(async (req, res) => {
+        const { id } = req.params;
+        const currentUser = store.get('user');
+        const mode = store.get('mode');
+        let flat;
+        let owner;
+
+        if (mode !== 'owner') {
+            res.redirect('../../');
+            return;
+        }
+
+        try {
+            flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${id}'`);
+            owner = await database.getUnique(
+                `SELECT name FROM owner WHERE username='${flat.owner}'`
+            );
+        } catch (err) {
+            res.redirect('../../');
+            return;
+        }
+
+        res.render('flat/edit', { currentUser, flat, owner });
+    })
+    .post(async (req, res) => {
+        const temp = req.body;
+        let flat;
+        let owner;
+
+        const { flatID } = temp;
+        const { name } = temp;
+        const { address } = temp;
+        const gender = temp.gender === 'Male' ? 1 : 0;
+        const level = Number(temp.level);
+        const x = Number(temp.x);
+        const y = Number(temp.y);
+        const lift = temp.lift === 'on' ? 1 : 0;
+        const generator = temp.generator === 'on' ? 1 : 0;
+
+        await database.exec(
+            `UPDATE flat
+            SET name='${name}', address='${address}', gender=${gender}, x=${x}, y=${y}, level=${level}, lift=${lift}, generator=${generator}
+            WHERE flatID=${flatID}`,
+        );
+
+        res.redirect(`../profile/${flatID}`);
     });
 
 module.exports = app;
