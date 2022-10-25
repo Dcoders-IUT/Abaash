@@ -19,19 +19,21 @@ async function allFlats() {
     }
 }
 
-async function searchFlats(address, name, minLevel, maxLevel, gender, lift, generator) {
+async function searchFlats(address, minLevel, maxLevel, gender, lift, generator) {
     const addressQuery =
         address === '' ? 'true' : `LOWER(address) LIKE CONCAT('%', LOWER('${address}'),'%')`;
-    const nameQuery = name === '' ? 'true' : `LOWER(name) LIKE CONCAT('%', LOWER('${name}'),'%')`;
     const levelQuery = `level >= ${minLevel} AND level <= ${maxLevel}`;
-    const genderQuery = `gender = ${gender}`;
+    const genderQuery = `gender = ${gender} OR gender = 2`;
     const liftQuery = `lift >= ${lift}`;
     const generatorQuery = `generator >= ${generator}`;
+
+    console.log(`SELECT flatID, name, address, gender, level FROM flat
+    WHERE (${addressQuery}) AND (${levelQuery}) AND (${genderQuery}) AND (${liftQuery}) AND (${generatorQuery})`);
 
     try {
         return await database.get(
             `SELECT flatID, name, address, gender, level FROM flat
-            WHERE ${addressQuery} AND ${nameQuery} AND ${levelQuery} AND ${genderQuery} AND ${liftQuery} AND ${generatorQuery}`,
+            WHERE (${addressQuery}) AND (${levelQuery}) AND (${genderQuery}) AND (${liftQuery}) AND (${generatorQuery})`,
         );
     } catch (err) {
         return {};
@@ -51,6 +53,7 @@ async function openHomeEJS(res) {
 
     if (!store.get('mode') || !store.get('user')) {
         res.render('home', {
+            misc,
             currentUser,
             mode,
             flatList: misc.shuffle(await allFlats()),
@@ -67,6 +70,7 @@ async function openHomeEJS(res) {
         );
     } catch (err) {
         res.render('home', {
+            misc,
             currentUser,
             mode,
             nameOfCurrentUser: null,
@@ -75,6 +79,7 @@ async function openHomeEJS(res) {
         return;
     }
     res.render('home', {
+        misc,
         currentUser,
         mode,
         nameOfCurrentUser: currentUserData.name,
@@ -121,15 +126,15 @@ app.post('/search', async (req, res) => {
     const temp = req.body;
 
     const { address } = temp;
-    const { name } = temp;
     const minLevel = Number(temp.minLevel);
     const maxLevel = Number(temp.maxLevel);
-    const gender = temp.gender === 'Male' ? 1 : 0;
-    const lift = temp.lift === 'on' ? 1 : 0;
-    const generator = temp.lift === 'on' ? 1 : 0;
+    const gender = Number(temp.gender);
+    const lift = temp.lift === 'on';
+    const generator = temp.lift === 'on';
 
     res.render('searchResults', {
-        flatList: await searchFlats(address, name, minLevel, maxLevel, gender, lift, generator),
+        misc,
+        flatList: await searchFlats(address, minLevel, maxLevel, gender, lift, generator),
     });
 });
 

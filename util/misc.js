@@ -1,4 +1,8 @@
-const shuffle = (ara) => {
+const obj = {};
+
+obj.globalConst = require('./globalConst');
+
+obj.shuffle = (ara) => {
     const shuffled = ara;
     for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -8,4 +12,25 @@ const shuffle = (ara) => {
     return shuffled;
 };
 
-module.exports = { shuffle };
+obj.genderText = (num) => {
+    const temp = num !== 0;
+
+    obj.globalConst.genderList.forEach((gender) => {
+        if (temp === gender.value) return gender.display;
+    });
+
+    return '';
+};
+
+obj.flatGenderText = (num) => {
+    const temp = num === 0 || num === 1 ? num : 2;
+    let ans = '';
+
+    obj.globalConst.flatGenderList.forEach((gender) => {
+        if (temp === gender.value) ans = gender.display;
+    });
+
+    return ans;
+};
+
+module.exports = obj;

@@ -36,14 +36,15 @@ CREATE TABLE IF NOT EXISTS `flat` (
   CONSTRAINT `flat_ibfk_1` FOREIGN KEY (`owner`) REFERENCES `owner` (`username`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table abaash.flat: ~4 rows (approximately)
+-- Dumping data for table abaash.flat: ~5 rows (approximately)
 DELETE FROM `flat`;
 /*!40000 ALTER TABLE `flat` DISABLE KEYS */;
 INSERT INTO `flat` (`flatID`, `name`, `address`, `gender`, `x`, `y`, `level`, `owner`, `lift`, `generator`) VALUES
 	(1001734, 'Ork er Flat 1', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 2, 'ork', 0, 1),
 	(1002726, 'Ork er Flat 2', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 1, 'ork', 1, 0),
 	(1003432, 'Ork er Flat 3', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 2, 'ork', 0, 1),
-	(1004979, 'Ork er Flat 4', 'In Our Hearts', 1, 0.0000000000000000, 0.0000000000000000, 3, 'ork', 0, 1);
+	(1004979, 'Ork er Flat 4', 'In Our Hearts', 2, 0.0000000000000000, 0.0000000000000000, 3, 'ork', 0, 1),
+	(1158151, 'gultu', 'dhaka', 1, 0.0000000000000000, 0.0000000000000000, 20, 'arifin', 1, 1);
 /*!40000 ALTER TABLE `flat` ENABLE KEYS */;
 
 -- Dumping structure for table abaash.owner
@@ -62,10 +63,11 @@ CREATE TABLE IF NOT EXISTS `owner` (
   UNIQUE KEY `nid` (`nid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table abaash.owner: ~1 rows (approximately)
+-- Dumping data for table abaash.owner: ~2 rows (approximately)
 DELETE FROM `owner`;
 /*!40000 ALTER TABLE `owner` DISABLE KEYS */;
 INSERT INTO `owner` (`name`, `username`, `password`, `passwordLastChanged`, `phone`, `email`, `nid`) VALUES
+	('Sherajul Arifin', 'arifin', '65ca3d04be0cc68c1a7003f8aab5e7c9f93d83fa94351f91925e4dcabb5065fe', '2022-9-25T14:13:17.638', 111, 'gmail@arifin.com', 111),
 	('Ork the Bariola', 'ork', 'f6c3a82f8d5ed8b78bfd15d639410719ce24d8393fb020a722c298831d8a6555', '2022-9-15T3:29:21.858', 1731969827, 'ork@bariola.com', 123);
 /*!40000 ALTER TABLE `owner` ENABLE KEYS */;
 
