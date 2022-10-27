@@ -3,59 +3,93 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://kit.fontawesome.com/53732d670c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/edit.css" type="text/css">
     <title>Edit Profile</title>
   </head>
 
   <body>
-    <% if(currentUser === profileUserData.username) { %>
+
+    <h1>Edit Owner Profile</h1>
+  
+  <div class="container">
+      <% if(currentUser === profileUserData.username) { %>
     <form method="post">
-      <h1>Edit Owner Profile</h1>
-      <input
-        type="hidden"
-        name="profileID"
-        value="<%= profileUserData.username %>"
-      />
-      <input
-        type="text"
-        name="name"
-        placeholder="Name"
-        value="<%=profileUserData.name%>"
-      />
-      <input
-        type="text"
-        name="username"
-        placeholder="Username"
-        value="<%=profileUserData.username%>"
-      />
-      <input
-        type="number"
-        name="phone"
-        placeholder="Phone Number"
-        value="<%=profileUserData.phone%>"
-      />
-      <input
-        type="email"
-        name="email"
-        placeholder="Email Address"
-        value="<%=profileUserData.email%>"
-      />
-      <input
-        type="number"
-        name="nid"
-        placeholder="NID Number"
-        value="<%=profileUserData.nid%>"
-      />
-      <br />
-      <label>Enter Password </label>
-      <input type="password" name="pass" placeholder="Password" />
-      <br />
-      <button>Save</button>
+
+      <div class="icon">
+        <i class="fa-regular fa-user"></i>
+      </div>
+      <div class="edit">
+        <input
+          type="hidden"
+          name="profileID"
+          value="<%= profileUserData.username %>"
+        />
+      </div>
+
+      <div class="edit">
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          value="<%=profileUserData.name%>"
+        />
+      </div>
+
+      <div class="edit">
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          value="<%=profileUserData.username%>"
+        />
+      </div>
+
+      <div class="edit">
+        <input
+          type="number"
+          name="phone"
+          placeholder="Phone Number"
+          value="<%=profileUserData.phone%>"
+        />
+      </div>
+
+      <div class="edit">
+        <input
+          type="email"
+          name="email"
+          placeholder="Email Address"
+          value="<%=profileUserData.email%>"
+        />
+      </div>
+
+      <div class="edit">
+        <input
+          type="number"
+          name="nid"
+          placeholder="NID Number"
+          value="<%=profileUserData.nid%>"
+        />
+      </div>
+
+      <!-- <label>Enter Password </label> -->
+      <div class="edit">
+        <input type="password" name="pass" placeholder="Password" />
+      </div>
+
+      
+        <button class="save">Save</button>
+      
+        <button class="cancel">
+          <a href="../profile/<%=profileUserData.username%>">Cancel</a>
+        </button>
+
     </form>
-    <button>
-      <a href="../profile/<%=profileUserData.username%>">Cancel</a>
-    </button>
     <% } else { %>
     <p>USER NOT FOUND!</p>
     <% } %>
+    </div>
+    
+    
   </body>
 </html>

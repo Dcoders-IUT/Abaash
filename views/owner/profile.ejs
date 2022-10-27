@@ -3,47 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/owner-profile.css" type="text/css">
     <title>Owner Profile</title>
-    <style>
-      .bb {
-        appearance: button;
-        background-color: #7a18d6;
-        border: solid transparent;
-        border-radius: 16px;
-        border-width: 0 0 4px;
-        box-sizing: border-box;
-        color: #ffffff;
-        cursor: pointer;
-        display: inline-block;
-        font-family: din-round, sans-serif;
-        font-size: 15px;
-        font-weight: 700;
-        letter-spacing: 0.8px;
-        line-height: 20px;
-        margin: 0;
-        outline: none;
-        overflow: visible;
-        padding: 13px 16px;
-        text-align: center;
-        text-transform: uppercase;
-        touch-action: manipulation;
-        transform: translateZ(0);
-        transition: filter 0.2s;
-        user-select: none;
-        -webkit-user-select: none;
-        vertical-align: middle;
-        white-space: nowrap;
-        width: 20%;
-      }
-      .bb > a {
-        color: whitesmoke;
-      }
-      .lol {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-    </style>
+    
   </head>
 
   <body>
@@ -52,10 +14,10 @@
     <h1>Name: <%=name%></h1>
     <% if(currentUser===profileUser) { %>
     <button class="bb">
-      <a href="../../flat/register">Add New Flat</a>
+      <a href="../../flat/register">Add Flat</a>
     </button>
     <button class="bb">
-      <a href="../edit/<%= profileUser %> ">Edit Profile Info</a>
+      <a href="../edit/<%= profileUser %> ">Edit Profile</a>
     </button>
     <% } %>
     <div class="lol">
