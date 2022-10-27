@@ -61,18 +61,6 @@
                     <i class="zmdi zmdi-pin input-group-symbol"></i>
                   </div>
 
-                  <!-- name -->
-                  <div class="input-group">
-                    <label class="label">Name</label>
-                    <input
-                      class="input--style-1"
-                      type="text"
-                      name="name"
-                      placeholder="Flat or Building Name"
-                      autocomplete="off"
-                    />
-                  </div>
-
                   <!-- level -->
                   <div class="row row-space">
                     <div class="col-2">
@@ -99,8 +87,9 @@
                       <div class="input-group">
                         <label for="gender" class="gender">Gender</label>
                         <select name="gender">
-                          <option value="Male">Male</option>
-                          <option value="Female">Female</option>
+                          <% misc.globalConst.genderList.forEach((gender)=> { %>
+                            <option value="<%=gender.value%>"><%= gender.display %></option>
+                          <% }) %>
                         </select>
                       </div>
                     </div>

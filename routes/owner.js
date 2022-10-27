@@ -2,6 +2,7 @@ const express = require('express');
 const store = require('store');
 const database = require('../util/database');
 const hash = require('../util/hash');
+const misc = require('../util/misc');
 
 const app = express.Router();
 
@@ -13,7 +14,7 @@ async function getUser(id, pass) {
 
     try {
         const record = await database.getUnique(
-            `SELECT username, password, passwordLastChanged FROM owner WHERE username='${id}' OR email='${id}' OR phone='${id}'`,
+            `SELECT username, password, passwordLastChanged FROM owner WHERE username='${id}' OR email='${id}' OR phone='${id}'`
         );
         const { username } = record;
 
@@ -69,7 +70,7 @@ app.route('/register')
         '${plc}',
         ${phone},
         '${email}',
-        ${nid})`
+        ${nid})`,
         );
 
         store.set('user', username);
@@ -94,9 +95,10 @@ app.get('/profile/:id', async (req, res) => {
         res.render('owner/profile', { currentUser: store.get('user'), profileUser: null });
         return;
     }
-    const flatList = await database.get(`SELECT flatID, name FROM flat WHERE owner='${id}'`);
+    const flatList = await database.get(`SELECT * FROM flat WHERE owner='${id}'`);
 
     res.render('owner/profile', {
+        misc,
         currentUser: store.get('user'),
         profileUser: id,
         name: profileUserData.name,
@@ -118,7 +120,7 @@ app.route('/edit/:id')
 
         try {
             profileUserData = await database.getUnique(
-                `SELECT * FROM owner WHERE username='${id}'`
+                `SELECT * FROM owner WHERE username='${id}'`,
             );
         } catch (err) {
             res.redirect('../../');
@@ -165,7 +167,7 @@ app.route('/edit/:id')
         await database.exec(
             `UPDATE owner
             SET name='${name}', username='${username}', phone=${phone}, email='${email}', nid=${nid}
-            WHERE username='${currentUser}'`
+            WHERE username='${currentUser}'`,
         );
 
         res.redirect('../profile');

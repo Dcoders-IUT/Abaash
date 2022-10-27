@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Edit Profile</title>
   </head>
-
   <body>
     <% if(currentUser === profileUserData.studentID) { %>
     <form method="post">
@@ -45,6 +44,20 @@
         placeholder="NID Number"
         value="<%=profileUserData.nid%>"
       />
+      <label>Gender</label>
+      <select name="gender">
+        <% misc.globalConst.genderList.forEach((gender)=> { %>
+          <option value="<%=gender.value%>" <%= profileUserData.gender===gender.value? 'selected': '' %>>
+            <%= gender.display %>
+          </option>
+        <% }) %>
+      </select>
+      <label>Blood Group</label>
+      <select name="blg">
+        <% misc.globalConst.bloodgroupList.forEach((blg)=> { %>
+          <option value="<%=blg.value%>" <%= profileUserData.bloodgroup===blg.value? 'selected': '' %>> <%= blg.display %> </option>
+        <% }) %>
+      </select>
       <br />
       <label>Enter Password </label>
       <input type="password" name="pass" placeholder="Password" />

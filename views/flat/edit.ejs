@@ -27,8 +27,11 @@
       <br />
       <label>Gender</label>
       <select name="gender">
-        <option value="Male">For Bachelors</option>
-        <option value="Female">For Bachelorettes</option>
+        <% misc.globalConst.flatGenderList.forEach((gender)=> { %>
+          <option value="<%=gender.value%>" <%= flat.gender===gender.value? 'selected': '' %>>
+            <%= gender.display %>
+          </option>
+        <% }) %>
       </select>
       <br />
       <label>Level</label>

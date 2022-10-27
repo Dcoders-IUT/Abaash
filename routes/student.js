@@ -2,6 +2,7 @@ const express = require('express');
 const store = require('store');
 const database = require('../util/database');
 const hash = require('../util/hash');
+const misc = require('../util/misc');
 
 const app = express.Router();
 
@@ -55,14 +56,14 @@ app.route('/register')
         const temp = req.body;
 
         const { name } = temp;
-        const gender = temp.gender === 'Male' ? 1 : 0;
+        const gender = Number(temp.gender);
         const id = Number(temp.studentID);
         const plc = hash.salt();
         const pass = hash.hash(`${temp.pass + plc}Home Is Where The Start Is!`);
         const phone = Number(temp.phone);
         const { email } = temp;
         const nid = Number(temp.nid);
-        const blg = temp.blg === "I don't know" ? ' ' : temp.blg;
+        const { blg } = temp;
 
         await database.exec(
             `INSERT INTO student VALUES ('${name}',
@@ -147,7 +148,7 @@ app.route('/edit/:id')
             return;
         }
 
-        res.render('student/edit', { currentUser, profileUserData });
+        res.render('student/edit', { misc, currentUser, profileUserData });
     })
     .post(async (req, res) => {
         const temp = req.body;

@@ -2,6 +2,7 @@ const express = require('express');
 const store = require('store');
 const crypto = require('crypto');
 const database = require('../util/database');
+const misc = require('../util/misc');
 
 const app = express.Router();
 
@@ -61,7 +62,7 @@ app.route('/register')
             return;
         }
 
-        res.render('flat/register', { currentUser, owner });
+        res.render('flat/register', { misc, currentUser, owner });
     })
     .post(async (req, res) => {
         const temp = req.body;
@@ -77,12 +78,12 @@ app.route('/register')
         const { name } = temp;
         const { address } = temp;
         const { owner } = temp;
-        const gender = temp.gender === 'Male' ? 1 : 0;
+        const gender = Number(temp.gender);
         const level = Number(temp.level);
         const x = Number(temp.x);
         const y = Number(temp.y);
-        const lift = temp.lift === 'on' ? 1 : 0;
-        const generator = temp.generator === 'on' ? 1 : 0;
+        const lift = temp.lift === 'on';
+        const generator = temp.generator === 'on';
 
         await database.exec(
             `INSERT INTO flat VALUES (${flatID}, '${name}', '${address}', ${gender}, ${x}, ${y}, ${level}, '${owner}', ${lift}, ${generator})`
@@ -114,22 +115,25 @@ app.route('/edit/:id')
             return;
         }
 
-        res.render('flat/edit', { currentUser, flat, owner });
+        res.render('flat/edit', {
+            misc,
+            currentUser,
+            flat,
+            owner,
+        });
     })
     .post(async (req, res) => {
         const temp = req.body;
-        let flat;
-        let owner;
 
         const { flatID } = temp;
         const { name } = temp;
         const { address } = temp;
-        const gender = temp.gender === 'Male' ? 1 : 0;
+        const gender = Number(temp.gender);
         const level = Number(temp.level);
         const x = Number(temp.x);
         const y = Number(temp.y);
-        const lift = temp.lift === 'on' ? 1 : 0;
-        const generator = temp.generator === 'on' ? 1 : 0;
+        const lift = temp.lift === 'on';
+        const generator = temp.generator === 'on';
 
         await database.exec(
             `UPDATE flat
