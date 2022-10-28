@@ -235,7 +235,7 @@ a:active {
 }
 
 .p-t-165 {
-  padding-top: 165px;
+  padding-top: 120px;
 }
 
 @media (max-width: 767px) {
@@ -1014,7 +1014,8 @@ input[type="number"]::-webkit-outer-spin-button {
    #TAB
    ========================================================================== */
 .tab-list {
-  background-color: #002b5b;  
+  /* background-color: #002b5b;   */
+  background-color: rgba(0, 43, 91, 0.6);  
   list-style: none;
   -webkit-border-top-right-radius: 10px;
   -moz-border-radius-topright: 10px;

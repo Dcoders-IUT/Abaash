@@ -4,8 +4,7 @@
     margin : 0;
     padding : 0;
     box-sizing: border-box;
-    /* font-family: "Poppins", sans-serif; */
-    /* background-color: #1c2833; */
+    
 
 }
 
@@ -13,50 +12,15 @@
         display: flex;
     }
 
-     /* .bb {
-        appearance: button;
-        background-color: #7a18d6;
-        border: solid transparent;
-        border-radius: 16px;
-        border-width: 0 0 4px;
-        box-sizing: border-box;
-        color: #ffffff;
-        cursor: pointer;
-        display: inline-block;
-        font-family: din-round, sans-serif;
-        font-size: 15px;
-        font-weight: 700;
-        letter-spacing: 0.8px;
-        line-height: 20px;
-        margin: 0;
-        outline: none;
-        overflow: visible;
-        padding: 13px 16px;
-        text-align: center;
-        text-transform: uppercase;
-        touch-action: manipulation;
-        transform: translateZ(0);
-        transition: filter 0.2s;
-        user-select: none;
-        -webkit-user-select: none;
-        vertical-align: middle;
-        white-space: nowrap;
-        width: 20%;
-      } */
-      .bb > a {
+     
+      .button-3 > a {
         color: whitesmoke;
         text-decoration: none;
       }
-      .lol {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        width: 300px;
-      }
+     
 
 
-      button{
+      /* button{
         background-color: #83e040;
         display: inline-block;
         cursor: pointer;
@@ -66,8 +30,68 @@
         text-align: center;
         text-transform: uppercase;
         font-size: 15px;
-        font-weight: 700;
-        width: 150px;
+        font-weight: 600;
+        width: 120px;
+      } */
+      
+
+      h1{
+        margin-left: 30px;
+      }
+      .buttons{
+        margin-left: 30px;
+        margin-top: 30px;
       }
 
-      
+       
+       
+       .button-3 {
+         appearance: none;
+         background-color: #2ea44f;
+         border: 1px solid rgba(27, 31, 35, .15);
+         border-radius: 6px;
+         box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+         box-sizing: border-box;
+         color: #fff;
+         cursor: pointer;
+         display: inline-block;
+         font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+         font-size: 14px;
+         font-weight: 600;
+         line-height: 20px;
+         padding: 6px 16px;
+         position: relative;
+         text-align: center;
+         text-decoration: none;
+         user-select: none;
+         -webkit-user-select: none;
+         touch-action: manipulation;
+         vertical-align: middle;
+         white-space: nowrap;
+       }
+       
+       .button-3:focus:not(:focus-visible):not(.focus-visible) {
+         box-shadow: none;
+         outline: none;
+       }
+       
+       .button-3:hover {
+         background-color: #2c974b;
+       }
+       
+       .button-3:focus {
+         box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+         outline: none;
+       }
+       
+       .button-3:disabled {
+         background-color: #94d3a2;
+         border-color: rgba(27, 31, 35, .1);
+         color: rgba(255, 255, 255, .8);
+         cursor: default;
+       }
+       
+       .button-3:active {
+         background-color: #298e46;
+         box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+       }
