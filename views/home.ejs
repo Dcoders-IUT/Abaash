@@ -16,7 +16,7 @@
   <body>
       <div class="nav">
         <ul class="navbar-list">
-          <li><i class="fa fa-home fa-2x" style="margin-right:-10px; margin-left:10px ;"></i></li>
+          <li><a class="fa fa-home fa-2x" href="#" style="margin-right:-10px; margin-left:10px ;"></a></li>
           <% if(currentUser) { %>
           <li>
             <a href="<%=mode%>/profile/<%=currentUser%>">
@@ -43,5 +43,8 @@
       <!-- <h2>Dashboard</h2> -->
 
       <%- include ("./partials/showFlats.ejs", {misc, flatList}) %>
+      <%- include ("./partials/footer.ejs") %>
+
+      
   </body>
 </html>
