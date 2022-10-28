@@ -28,6 +28,8 @@ async function newFlatID() {
 
 app.get('/profile/:id', async (req, res) => {
     const { id } = req.params;
+    const currentUser = store.get('user');
+    const mode = store.get('mode');
     let flat;
     let owner;
 
@@ -39,7 +41,37 @@ app.get('/profile/:id', async (req, res) => {
         return;
     }
 
-    res.render('flat/profile', { currentUser: store.get('user'), flat, owner });
+    if (mode === 'student') {
+        try {
+            const student = await database.getUnique(
+                `SELECT * FROM student WHERE studentID=${currentUser}`,
+            );
+
+            res.render('flat/profile', {
+                currentUser,
+                mode,
+                flat,
+                owner,
+                student,
+            });
+        } catch (err) {
+            res.render('flat/profile', {
+                currentUser,
+                mode,
+                flat,
+                owner,
+            });
+        }
+
+        return;
+    }
+
+    res.render('flat/profile', {
+        currentUser,
+        mode,
+        flat,
+        owner,
+    });
 });
 
 app.route('/register')

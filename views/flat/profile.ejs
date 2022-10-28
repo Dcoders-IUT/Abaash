@@ -22,7 +22,11 @@
     <button class="bb">
       <a href="../edit/<%=flat.flatID%>">Edit Info</a>
     </button>
-    <% } %> <% } else { %>
+    <% } else if (mode==='student') { %> <% if (student.flatID===null) { %>
+    <button class="bb">
+      <a href="../edit/<%=flat.flatID%>">Request Reservation</a>
+    </button>
+    <% } %> <% } %> <% } else { %>
     <p>FLAT NOT FOUND!</p>
     <% } %>
   </body>
