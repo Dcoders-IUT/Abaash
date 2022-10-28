@@ -13,12 +13,14 @@
     <% if(profileUser) { %>
     <h1>Name: <%=name%></h1>
     <% if(currentUser===profileUser) { %>
-    <button class="bb">
-      <a href="../../flat/register">Add Flat</a>
-    </button>
-    <button class="bb">
-      <a href="../edit/<%= profileUser %> ">Edit Profile</a>
-    </button>
+      <div class="buttons">
+        <button class="button-3">
+          <a href="../../flat/register">Add Flat</a>
+        </button>
+        <button class="button-3">
+          <a href="../edit/<%= profileUser %> ">Edit Profile</a>
+        </button>
+      </div>
     <% } %>
     <div class="lol">
       <%- include ("../partials/showFlats.ejs", {misc, flatList}) %>

@@ -52,7 +52,7 @@ button {
   color: #ffffff;
   font-size: 12px;
   font-weight: bold;
-  padding: 12px 45px;
+  padding: 12px 40px;
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: transform 80ms ease-in;
@@ -77,6 +77,12 @@ button.ghost {
   left: 20px;
   cursor: pointer;
   text-decoration: none;
+}
+
+.go{
+  font-size: 8px;
+  font-weight:600;
+  padding: 12px 20px;
 }
 
 .mode-button > button > a {
@@ -158,6 +164,7 @@ input {
     z-index: 5;
   }
 }
+
 
 .overlay-container {
   position: absolute;
