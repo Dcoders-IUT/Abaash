@@ -22,11 +22,12 @@
     <button class="bb">
       <a href="../edit/<%=flat.flatID%>">Edit Info</a>
     </button>
-    <% } else if (mode==='student') { %> <% console.log(student) %> <% if
-    (student.flatID===null) { %>
-    <button class="bb">
-      <a href="../edit/<%=flat.flatID%>">Request Reservation</a>
-    </button>
+    <% } else if (mode==='student') { %> <% if (student.flatID===null) { %>
+    <form action="request" method="post">
+      <input type="hidden" name="studentID" value="<%= currentUser %>" />
+      <input type="hidden" name="flatID" value="<%= flat.flatID %>" />
+      <button class="bb">Request Reservation</button>
+    </form>
     <% } %> <% } %> <% } else { %>
     <p>FLAT NOT FOUND!</p>
     <% } %>

@@ -47,6 +47,25 @@ INSERT INTO `flat` (`flatID`, `name`, `address`, `gender`, `x`, `y`, `level`, `o
 	(1158151, 'gultu', 'dhaka', 1, 0.0000000000000000, 0.0000000000000000, 20, 'arifin', 1, 1);
 /*!40000 ALTER TABLE `flat` ENABLE KEYS */;
 
+-- Dumping structure for table abaash.flatrequest
+DROP TABLE IF EXISTS `flatrequest`;
+CREATE TABLE IF NOT EXISTS `flatrequest` (
+  `studentID` int(9) NOT NULL,
+  `flatID` int(12) NOT NULL,
+  `date` varchar(100) NOT NULL DEFAULT '',
+  PRIMARY KEY (`studentID`,`flatID`),
+  KEY `flatID` (`flatID`),
+  CONSTRAINT `flatrequest_ibfk_1` FOREIGN KEY (`studentID`) REFERENCES `student` (`studentID`),
+  CONSTRAINT `flatrequest_ibfk_2` FOREIGN KEY (`flatID`) REFERENCES `flat` (`flatID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table abaash.flatrequest: ~1 rows (approximately)
+DELETE FROM `flatrequest`;
+/*!40000 ALTER TABLE `flatrequest` DISABLE KEYS */;
+INSERT INTO `flatrequest` (`studentID`, `flatID`, `date`) VALUES
+	(190041120, 1002726, '2022-9-28T8:10:22.870');
+/*!40000 ALTER TABLE `flatrequest` ENABLE KEYS */;
+
 -- Dumping structure for table abaash.owner
 DROP TABLE IF EXISTS `owner`;
 CREATE TABLE IF NOT EXISTS `owner` (
@@ -63,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `owner` (
   UNIQUE KEY `nid` (`nid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table abaash.owner: ~2 rows (approximately)
+-- Dumping data for table abaash.owner: ~1 rows (approximately)
 DELETE FROM `owner`;
 /*!40000 ALTER TABLE `owner` DISABLE KEYS */;
 INSERT INTO `owner` (`name`, `username`, `password`, `passwordLastChanged`, `phone`, `email`, `nid`) VALUES
@@ -92,11 +111,13 @@ CREATE TABLE IF NOT EXISTS `student` (
   CONSTRAINT `student_ibfk_1` FOREIGN KEY (`flatID`) REFERENCES `flat` (`flatID`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table abaash.student: ~1 rows (approximately)
+-- Dumping data for table abaash.student: ~3 rows (approximately)
 DELETE FROM `student`;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
 INSERT INTO `student` (`name`, `gender`, `studentID`, `password`, `passwordLastChanged`, `phone`, `email`, `nid`, `bloodgroup`, `flatID`) VALUES
-	('Jubayer', 1, 129, 'bc8e7191c2fae4af85e6b728bcec435a48fe18faf0ee58d710800d0da33be456', '2022-9-14T16:12:16.155', 182, 'jubayer@gmail.com', 1223, 'A+', 1002726);
+	('Fardin', 1, 112, '519211b1c823753d0db208af050b9fe855b7379aeacf1f7e4b834c5e7378390e', '2022-9-28T7:15:16.53', 543156464, 'fardinnur12@gmail.com', 56466, 'AB+', NULL),
+	('Jubayer', 1, 129, 'bc8e7191c2fae4af85e6b728bcec435a48fe18faf0ee58d710800d0da33be456', '2022-9-14T16:12:16.155', 182, 'jubayer@gmail.com', 1223, 'A+', 1002726),
+	('Nafi', 1, 190041120, 'ff20e2239111482880e23eb82ddce6e3ad3ea4ec9914fa231181a76ff220a3da', '2022-9-28T6:50:41.680', 49871497, 'nafi@gmail.com', 123164867, 'B+', NULL);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

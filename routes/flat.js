@@ -3,6 +3,7 @@ const store = require('store');
 const crypto = require('crypto');
 const database = require('../util/database');
 const misc = require('../util/misc');
+const hash = require('../util/hash');
 
 const app = express.Router();
 
@@ -25,6 +26,17 @@ async function newFlatID() {
 
     return base + offset;
 }
+
+app.post('/profile/request', async (req, res) => {
+    const { studentID } = req.body;
+    const { flatID } = req.body;
+
+    await database.exec(
+        `INSERT INTO flatrequest VALUES (${studentID}, ${flatID}, '${hash.salt()}')`,
+    );
+
+    res.redirect(`../profile/${flatID}`);
+});
 
 app.get('/profile/:id', async (req, res) => {
     const { id } = req.params;
