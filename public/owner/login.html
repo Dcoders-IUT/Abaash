@@ -1,74 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script
-      src="https://kit.fontawesome.com/95c4a58bfc.js"
-      crossorigin="anonymous"
-    ></script>
-    <link rel="stylesheet" href="../css/student-login-signup.css" />
-  </head>
 
-  <body>
-    <div class="mode-button">
-      <button class="go"><a href="../student/login">Student Mode</a</button>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://kit.fontawesome.com/95c4a58bfc.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../css/student-login-signup.css" />
+  <style>
+    .invalid {
+      border: 2px solid crimson;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    input+span {
+      color: crimson;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="mode-button">
+    <button class="go"><a href="../student/login">Student Mode</a< /button>
+  </div>
+  <div class="container" id="container">
+    <div class="form-container sign-up-container">
+      <form name="Register" action="register" method="post" onsubmit="return validateRegisterOwner()">
+        <h1>Create Account</h1>
+        <div class="social-container">
+          <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+          <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <span>Use your email for registration</span>
+        <input type="text" name="name" placeholder="Name" /><span class="hide">Provide a valid fullname</span>
+        <input type="text" name="username" placeholder="Username" /><span class="hide">Provide a valid username</span>
+        <input type="password" name="pass" placeholder="Password" /><span class="hide">Provide a valid password</span>
+        <input type="password" name="pass2" placeholder="Confirm Password" /><span class="hide">Oops a typo!!</span>
+        <input type="number" name="phone" placeholder="Phone Number" /><span class="hide">Provide a valid phone
+          number</span>
+        <input type="email" name="email" placeholder="Email Address" /><span class="hide">Provide a valid email
+          address</span>
+        <input type="number" name="nid" placeholder="NID Number" /><span class="hide">Provide a valid nid</span>
+        <input type="hidden" name="mode" value="owner" />
+        <br />
+        <button type="submit">Sign Up</button>
+      </form>
     </div>
-    <div class="container" id="container">
-      <div class="form-container sign-up-container">
-        <form action="register" method="post">
-          <h1>Create Account</h1>
-          <div class="social-container">
-            <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-            <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-          </div>
-          <span>or use your email for registration</span>
-          <input type="text" name="name" placeholder="Name" />
-          <input type="text" name="username" placeholder="Username" />
-          <input type="password" name="pass" placeholder="Password" />
-          <input type="password" name="pass2" placeholder="Confirm Password" />
-          <input type="number" name="phone" placeholder="Phone Number" />
-          <input type="email" name="email" placeholder="Email Address" />
-          <input type="number" name="nid" placeholder="NID Number" />
-          <input type="hidden" name="mode" value="owner" />
-          <br />
-          <button>Sign Up</button>
-        </form>
-      </div>
-      <div class="form-container sign-in-container">
-        <form action="login" method="post">
-          <h1>Sign in</h1>
-          <div class="social-container">
-            <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-            <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-          </div>
-          <span>or use your account</span>
-          <input type="text" name="id" placeholder="Username or E-mail or Phone Number" />
-          <input type="password" name="password" placeholder="Password" />
-          <input type="hidden" name="mode" value="owner" />
-          <a href="#">Forgot your password?</a>
-          <button>Sign In</button>
-        </form>
-      </div>
-      <div class="overlay-container">
-        <div class="overlay">
-          <div class="overlay-panel overlay-left">
-            <h1>Welcome Back!</h1>
-            <p>Please login with your personal info to keep connected</p>
-            <button class="ghost" id="signIn">Sign In</button>
-          </div>
-          <div class="overlay-panel overlay-right">
-            <h1>Hello!</h1>
-            <p>Enter your personal details and start your journey with us</p>
-            <button class="ghost" id="signUp">Sign Up</button>
-          </div>
+    <div class="form-container sign-in-container">
+      <form name="LogIn" action="login" method="post">
+        <h1>Sign in</h1>
+        <div class="social-container">
+          <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+          <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <span>or use your account</span>
+        <input type="text" name="id" placeholder="Username or E-mail or Phone Number" />
+        <input type="password" name="password" placeholder="Password" />
+        <input type="hidden" name="mode" value="owner" />
+        <a href="#">Forgot your password?</a>
+        <button type="submit">Sign In</button>
+      </form>
+    </div>
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h1>Welcome Back!</h1>
+          <p>Please login with your personal info to keep connected</p>
+          <button class="ghost" id="signIn">Sign In</button>
+        </div>
+        <div class="overlay-panel overlay-right">
+          <h1>Hello!</h1>
+          <p>Enter your personal details and start your journey with us</p>
+          <button class="ghost" id="signUp">Sign Up</button>
         </div>
       </div>
     </div>
+  </div>
 
-    <script src="../js/login_register.js"></script>
-  </body>
+  <script src="../js/login_register.js"></script>
+</body>
+
 </html>
