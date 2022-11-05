@@ -173,4 +173,39 @@ app.route('/edit/:id')
         res.redirect('../profile');
     });
 
+app.get('/requests', async (req, res) => {
+    const currentUser = store.get('user');
+    const detailedRequestList = [];
+
+    try {
+        const flatRequestList = await database.get(
+            `SELECT * FROM flatrequest WHERE (SELECT owner FROM flat WHERE flatrequest.flatid=flat.flatid)='${currentUser}'`,
+        );
+
+        for (let i = 0; i < flatRequestList.length; i++) {
+            const studentDetails = await database.getUnique(
+                `SELECT * FROM student WHERE studentID='${flatRequestList[i].studentID}'`,
+            );
+
+            const flatDetails = await database.getUnique(
+                `SELECT * FROM flat WHERE flatID='${flatRequestList[i].flatID}'`,
+            );
+
+            detailedRequestList.push({
+                student: studentDetails,
+                flat: flatDetails,
+                date: flatRequestList[i].date,
+            });
+        }
+
+        console.log('HERE');
+        // console.log(detailedRequestList);
+
+        res.render('owner/requests', { currentUser, flatRequestList: detailedRequestList });
+    } catch (err) {
+        console.log(err);
+        res.redirect('../../');
+    }
+});
+
 module.exports = app;

@@ -1,0 +1,30 @@
+<% 
+console.log(flatRequestList);
+%>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Requests</title>
+  </head>
+  <body>
+    <a href="../..">Home</a>
+    <h1>Requests</h1>
+    <table border="1">
+      <tr>
+        <td>Student</td>
+        <td>Flat</td>
+        <td>Request Date</td>
+      </tr>
+      <% flatRequestList.forEach(request => { %>
+      <tr>
+        <td><a href="../../student/profile/<%= request.student.studentID %>"><%= request.student.name %></a></td>
+        <td><a href="../../flat/profile/<%= request.flat.flatID %>"><%= request.flat.name %></a></td>
+        <td><%= request.date %></a></td>
+      </tr>
+      <% }) %>
+    </table>
+  </body>
+</html>

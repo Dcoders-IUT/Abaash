@@ -20,15 +20,11 @@ async function allFlats() {
 }
 
 async function searchFlats(address, minLevel, maxLevel, gender, lift, generator) {
-    const addressQuery =
-        address === '' ? 'true' : `LOWER(address) LIKE CONCAT('%', LOWER('${address}'),'%')`;
+    const addressQuery =        address === '' ? 'true' : `LOWER(address) LIKE CONCAT('%', LOWER('${address}'),'%')`;
     const levelQuery = `level >= ${minLevel} AND level <= ${maxLevel}`;
     const genderQuery = `gender = ${gender} OR gender = 2`;
-    const liftQuery = `lift >= ${lift}`;
-    const generatorQuery = `generator >= ${generator}`;
-
-    console.log(`SELECT flatID, name, address, gender, level FROM flat
-    WHERE (${addressQuery}) AND (${levelQuery}) AND (${genderQuery}) AND (${liftQuery}) AND (${generatorQuery})`);
+    const liftQuery = `lift >= ${lift ? 1 : 0}`;
+    const generatorQuery = `generator >= ${generator ? 1 : 0}`;
 
     try {
         return await database.get(
