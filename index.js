@@ -13,14 +13,15 @@ app.set('view engine', 'ejs');
 
 async function allFlats() {
     try {
-        return await database.get('SELECT flatID, name, address, gender, level FROM flat');
+        return await database.get('SELECT *, flatarea(flatID) AS area FROM flat');
     } catch (err) {
         return {};
     }
 }
 
 async function searchFlats(address, minLevel, maxLevel, gender, lift, generator) {
-    const addressQuery =        address === '' ? 'true' : `LOWER(address) LIKE CONCAT('%', LOWER('${address}'),'%')`;
+    const addressQuery =
+        address === '' ? 'true' : `LOWER(address) LIKE CONCAT('%', LOWER('${address}'),'%')`; 
     const levelQuery = `level >= ${minLevel} AND level <= ${maxLevel}`;
     const genderQuery = `gender = ${gender} OR gender = 2`;
     const liftQuery = `lift >= ${lift ? 1 : 0}`;
@@ -28,8 +29,8 @@ async function searchFlats(address, minLevel, maxLevel, gender, lift, generator)
 
     try {
         return await database.get(
-            `SELECT flatID, name, address, gender, level FROM flat
-            WHERE (${addressQuery}) AND (${levelQuery}) AND (${genderQuery}) AND (${liftQuery}) AND (${generatorQuery})`,
+            `SELECT *, flatarea(flatID) AS area FROM flat
+            WHERE (${addressQuery}) AND (${levelQuery}) AND (${genderQuery}) AND (${liftQuery}) AND (${generatorQuery})`
         );
     } catch (err) {
         return {};
@@ -62,7 +63,7 @@ async function openHomeEJS(res) {
         currentUserData = await database.getUnique(
             `SELECT name FROM ${mode} WHERE ${
                 mode === 'student' ? 'studentID' : 'username'
-            }='${currentUser}'`
+            }='${currentUser}'`,
         );
     } catch (err) {
         res.render('home', {
@@ -137,7 +138,7 @@ app.post('/search', async (req, res) => {
 const studentRouter = require('./routes/student');
 const ownerRouter = require('./routes/owner');
 const flatRouter = require('./routes/flat');
-const roomRouter = require('./routes/flat');
+const roomRouter = require('./routes/room');
 
 app.use('/student', studentRouter);
 app.use('/owner', ownerRouter);

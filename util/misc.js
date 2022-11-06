@@ -53,4 +53,14 @@ obj.roomTableName = (num) => {
     return ans;
 };
 
+obj.floorText = (num) => {
+    let ans = '';
+
+    obj.globalConst.flooringList.forEach((ftype) => {
+        if (num === ftype.value) ans = ftype.display;
+    });
+
+    return ans;
+};
+
 module.exports = obj;

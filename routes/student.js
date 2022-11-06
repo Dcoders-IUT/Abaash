@@ -14,7 +14,7 @@ async function getUser(id, pass) {
 
     try {
         const record = await database.getUnique(
-            `SELECT studentID, password, passwordLastChanged FROM student WHERE studentID='${id}' OR email='${id}' OR phone='${id}'`,
+            `SELECT studentID, password, passwordLastChanged FROM student WHERE studentID='${id}' OR email='${id}' OR phone='${id}'`
         );
         const { studentID } = record;
 
@@ -75,7 +75,7 @@ app.route('/register')
         '${email}',
         ${nid},
         '${blg}',
-        null)`,
+        null)`
         );
 
         store.set('user', id);
@@ -97,7 +97,7 @@ app.get('/profile/:id', async (req, res) => {
 
     try {
         profileUserData = await database.getUnique(
-            `SELECT name, gender, bloodgroup, flatID FROM student WHERE studentID='${id}'`,
+            `SELECT name, gender, bloodgroup, flatID FROM student WHERE studentID='${id}'`
         );
     } catch (err) {
         res.render('student/profile', { currentUser: store.get('user'), profileUser: null });
@@ -106,7 +106,7 @@ app.get('/profile/:id', async (req, res) => {
 
     try {
         flat = await database.getUnique(
-            `SELECT flatID, name FROM flat WHERE flatID=${profileUserData.flatID}`,
+            `SELECT flatID, name FROM flat WHERE flatID=${profileUserData.flatID}` 
         );
     } catch (err) {
         flat = null;
@@ -136,7 +136,7 @@ app.route('/edit/:id')
 
         try {
             profileUserData = await database.getUnique(
-                `SELECT * FROM student WHERE studentID='${id}'`,
+                `SELECT * FROM student WHERE studentID='${id}'`
             );
         } catch (err) {
             res.redirect('../../');
@@ -183,7 +183,7 @@ app.route('/edit/:id')
         await database.exec(
             `UPDATE student
             SET name='${name}', studentID='${studentID}', phone=${phone}, email='${email}', nid=${nid}
-            WHERE studentID='${currentUser}'`,
+            WHERE studentID='${currentUser}'`
         );
 
         res.redirect('../profile');

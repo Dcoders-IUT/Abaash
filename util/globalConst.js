@@ -34,4 +34,10 @@ obj.roomTypeList = [
     { value: 8, display: 'Extra Room', table: null },
 ];
 
+obj.flooringList = [
+    { value: 1, display: 'Plain' },
+    { value: 1.05, display: 'Mosaic' },
+    { value: 1.15, display: 'Tiles' },
+];
+
 module.exports = obj;
