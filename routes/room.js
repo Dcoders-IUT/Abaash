@@ -10,16 +10,16 @@ const app = express.Router();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-async function newFlatID() {
-    const base = 1000000;
-    const divisor = 1000000;
+async function newRoomID(type) {
+    const base = type * 10000000;
+    const divisor = 10000000;
     let offset;
     let row;
 
     while (true) {
         offset = crypto.randomInt(divisor);
         row = await database.getUnique(
-            `SELECT COUNT(*) AS count FROM flat WHERE flatID=${base + offset}`,
+            `SELECT COUNT(*) AS count FROM room WHERE roomID=${base + offset}`
         );
         if (row.count < 1) break;
     }
@@ -27,93 +27,53 @@ async function newFlatID() {
     return base + offset;
 }
 
-async function getRoomList(flatID) {
-    const bedrooms = await database.get(
-        `SELECT roomID, name  FROM room WHERE flatID=${flatID} AND type=1`,
-    );
-    const diningrooms = await database.get(
-        `SELECT roomID, name  FROM room WHERE flatID=${flatID} AND type=2`,
-    );
-    const livingrooms = await database.get(
-        `SELECT roomID, name  FROM room WHERE flatID=${flatID} AND type=3`,
-    );
-    const kitchens = await database.get(
-        `SELECT roomID, name  FROM room WHERE flatID=${flatID} AND type=4`,
-    );
-    const bathrooms = await database.get(
-        `SELECT roomID, name  FROM room WHERE flatID=${flatID} AND type=5`,
-    );
-    const balconies = await database.get(
-        `SELECT roomID, name  FROM room WHERE flatID=${flatID} AND type=6`,
-    );
-    const storerooms = await database.get(
-        `SELECT roomID, name  FROM room WHERE flatID=${flatID} AND type=7`,
-    );
-    const xtrarooms = await database.get(
-        `SELECT roomID, name  FROM room WHERE flatID=${flatID} AND type=8`,
-    );
-
-    return {
-        bedrooms,
-        diningrooms,
-        livingrooms,
-        kitchens,
-        bathrooms,
-        balconies,
-        storerooms,
-        xtrarooms,
-    };
-}
-
-app.post('/profile/request', async (req, res) => {
-    const { studentID } = req.body;
-    const { flatID } = req.body;
-
-    await database.exec(
-        `INSERT INTO flatrequest VALUES (${studentID}, ${flatID}, '${hash.salt()}')`,
-    );
-
-    res.redirect(`../profile/${flatID}`);
-});
-
 app.get('/profile/:id', async (req, res) => {
     const { id } = req.params;
     const currentUser = store.get('user');
     const mode = store.get('mode');
+    let room;
     let flat;
+    let ownerRecord;
     let owner;
-    let roomList;
 
     try {
-        flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${id}'`);
-        roomList = await getRoomList(id);
-        owner = await database.getUnique(`SELECT name FROM owner WHERE username='${flat.owner}'`);
+        room = await database.getUnique(`SELECT * FROM room WHERE roomID='${id}'`);
+        flat = await database.get(`SELECT flatID, name FROM flat WHERE roomID=${id}`);
+        ownerRecord = await database.getUnique(
+            `SELECT * FROM owner WHERE username='${flat.owner}'`
+        );
+        owner = ownerRecord.username;
     } catch (err) {
         console.log(err);
-        res.render('flat/profile', { currentUser: store.get('user'), flat: null, roomList: null });
+        res.render('room/profile', {
+            currentUser: store.get('user'),
+            room: null,
+            flat: null,
+            owner: null,
+        });
         return;
     }
 
     if (mode === 'student') {
         try {
-            const student = await database.getUnique(
-                `SELECT * FROM student WHERE studentID=${currentUser}`,
+            const student = await database.getUnique(s
+                `SELECT * FROM student WHERE studentID=${currentUser}`
             );
 
-            res.render('flat/profile', {
+            res.render('room/profile', {
                 currentUser,
                 mode,
+                room,
                 flat,
-                roomList,
                 owner,
                 student,
             });
         } catch (err) {
-            res.render('flat/profile', {
+            res.render('room/profile', {
                 currentUser,
                 mode,
+                room,
                 flat,
-                roomList,
                 owner,
             });
         }
@@ -121,11 +81,11 @@ app.get('/profile/:id', async (req, res) => {
         return;
     }
 
-    res.render('flat/profile', {
+    res.render('room/profile', {
         currentUser,
         mode,
+        room,
         flat,
-        roomList,
         owner,
     });
 });
@@ -143,21 +103,21 @@ app.route('/register')
 
         try {
             owner = await database.getUnique(
-                `SELECT username, name FROM owner WHERE username='${currentUser}'`,
+                `SELECT username, name FROM owner WHERE username='${currentUser}'`
             );
         } catch (err) {
             res.redirect('../');
             return;
         }
 
-        res.render('flat/register', { misc, currentUser, owner });
+        res.render('room/register', { misc, currentUser, owner });
     })
     .post(async (req, res) => {
         const temp = req.body;
-        let flatID;
+        let roomID;
 
         try {
-            flatID = await newFlatID();
+            roomID = await newroomID();
         } catch (err) {
             res.redirect('../');
             return;
@@ -174,10 +134,10 @@ app.route('/register')
         const generator = temp.generator === 'on';
 
         await database.exec(
-            `INSERT INTO flat VALUES (${flatID}, '${name}', '${address}', ${gender}, ${x}, ${y}, ${level}, '${owner}', ${lift}, ${generator})`
+            `INSERT INTO room VALUES (${roomID}, '${name}', '${address}', ${gender}, ${x}, ${y}, ${level}, '${owner}', ${lift}, ${generator})`,
         );
 
-        res.redirect(`profile/${flatID}`);
+        res.redirect(`profile/${roomID}`);
     });
 
 app.route('/edit/:id')
@@ -185,7 +145,7 @@ app.route('/edit/:id')
         const { id } = req.params;
         const currentUser = store.get('user');
         const mode = store.get('mode');
-        let flat;
+        let room;
         let owner;
 
         if (mode !== 'owner') {
@@ -194,26 +154,26 @@ app.route('/edit/:id')
         }
 
         try {
-            flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${id}'`);
+            room = await database.getUnique(`SELECT * FROM room WHERE roomID='${id}'`);
             owner = await database.getUnique(
-                `SELECT name FROM owner WHERE username='${flat.owner}'`
+                `SELECT name FROM owner WHERE username='${room.owner}'`,
             );
         } catch (err) {
             res.redirect('../../');
             return;
         }
 
-        res.render('flat/edit', {
+        res.render('room/edit', {
             misc,
             currentUser,
-            flat,
+            room,
             owner,
         });
     })
     .post(async (req, res) => {
         const temp = req.body;
 
-        const { flatID } = temp;
+        const { roomID } = temp;
         const { name } = temp;
         const { address } = temp;
         const gender = Number(temp.gender);
@@ -224,12 +184,12 @@ app.route('/edit/:id')
         const generator = temp.generator === 'on';
 
         await database.exec(
-            `UPDATE flat
+            `UPDATE room
             SET name='${name}', address='${address}', gender=${gender}, x=${x}, y=${y}, level=${level}, lift=${lift}, generator=${generator}
-            WHERE flatID=${flatID}`,
+            WHERE roomID=${roomID}`
         );
 
-        res.redirect(`../profile/${flatID}`);
+        res.redirect(`../profile/${roomID}`);
     });
 
 module.exports = app;
