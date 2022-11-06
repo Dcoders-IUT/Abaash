@@ -1,3 +1,5 @@
+<% console.log(roomList) %>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -19,17 +21,30 @@
     </h1>
     <h1>Lift: <%=flat.lift? 'YES' : 'NO' %></h1>
     <h1>Generator: <%=flat.generator? 'YES' : 'NO' %></h1>
+    <h1>Rooms</h1>
+    <ul>
+      <% roomList.forEach(room => { %>
+      <li>
+        <a href="../../room/profile/<%= room.roomID %> "
+          ><h2><%= room.name %></h2></a
+        >
+      </li>
+      <% }) %>
+    </ul>
     <% if(currentUser===flat.owner) { %>
-    <button class="bb">
+    <button>
       <a href="../edit/<%=flat.flatID%>">Edit Info</a>
     </button>
-    <% } else if (mode==='student') { %> <% if (student.flatID===null) { %>
+    <button>
+      <a href="#">Add Rooms</a>
+    </button>
+    <% } else if (mode==='student') { %> <%# if (student.flatID===null) { %>
     <form action="request" method="post">
       <input type="hidden" name="studentID" value="<%= currentUser %>" />
       <input type="hidden" name="flatID" value="<%= flat.flatID %>" />
-      <button class="bb">Request Reservation</button>
+      <button>Request Reservation</button>
     </form>
-    <% } %> <% } %> <% } else { %>
+    <%# } %> <% } %> <% } else { %>
     <p>FLAT NOT FOUND!</p>
     <% } %>
   </body>
