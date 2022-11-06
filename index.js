@@ -137,9 +137,11 @@ app.post('/search', async (req, res) => {
 const studentRouter = require('./routes/student');
 const ownerRouter = require('./routes/owner');
 const flatRouter = require('./routes/flat');
+const roomRouter = require('./routes/flat');
 
 app.use('/student', studentRouter);
 app.use('/owner', ownerRouter);
 app.use('/flat', flatRouter);
+app.use('/room', roomRouter);
 
 app.listen(port);

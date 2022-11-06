@@ -3,7 +3,6 @@ const store = require('store');
 const crypto = require('crypto');
 const database = require('../util/database');
 const misc = require('../util/misc');
-const hash = require('../util/hash');
 
 const app = express.Router();
 
@@ -19,12 +18,35 @@ async function newRoomID(type) {
     while (true) {
         offset = crypto.randomInt(divisor);
         row = await database.getUnique(
-            `SELECT COUNT(*) AS count FROM room WHERE roomID=${base + offset}`
+            `SELECT COUNT(*) AS count FROM room WHERE roomID=${base + offset}`,
         );
         if (row.count < 1) break;
     }
 
     return base + offset;
+}
+
+async function getRoom(roomID) {
+    let roomType;
+    let roomTable;
+    let room;
+
+    try {
+        roomType = await database.getUnique(`SELECT type FROM room WHERE roomID='${roomID}'`);
+        roomTable = misc.roomTableName(roomType);
+        if (roomTable === null) {
+            room = await database.getUnique(
+                `SELECT * FROM room NATURAL JOIN ${roomTable} WHERE roomID=${roomID}`,
+            );
+        } else {
+            room = await database.getUnique(`SELECT * FROM room WHERE roomID=${roomID}`);
+        }
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
+
+    return room;
 }
 
 app.get('/profile/:id', async (req, res) => {
@@ -37,10 +59,10 @@ app.get('/profile/:id', async (req, res) => {
     let owner;
 
     try {
-        room = await database.getUnique(`SELECT * FROM room WHERE roomID='${id}'`);
+        room = getRoom(id);
         flat = await database.get(`SELECT flatID, name FROM flat WHERE roomID=${id}`);
         ownerRecord = await database.getUnique(
-            `SELECT * FROM owner WHERE username='${flat.owner}'`
+            `SELECT * FROM owner WHERE username='${flat.owner}'`,
         );
         owner = ownerRecord.username;
     } catch (err) {
@@ -51,33 +73,6 @@ app.get('/profile/:id', async (req, res) => {
             flat: null,
             owner: null,
         });
-        return;
-    }
-
-    if (mode === 'student') {
-        try {
-            const student = await database.getUnique(s
-                `SELECT * FROM student WHERE studentID=${currentUser}`
-            );
-
-            res.render('room/profile', {
-                currentUser,
-                mode,
-                room,
-                flat,
-                owner,
-                student,
-            });
-        } catch (err) {
-            res.render('room/profile', {
-                currentUser,
-                mode,
-                room,
-                flat,
-                owner,
-            });
-        }
-
         return;
     }
 
@@ -103,7 +98,7 @@ app.route('/register')
 
         try {
             owner = await database.getUnique(
-                `SELECT username, name FROM owner WHERE username='${currentUser}'`
+                `SELECT username, name FROM owner WHERE username='${currentUser}'`,
             );
         } catch (err) {
             res.redirect('../');
@@ -117,7 +112,7 @@ app.route('/register')
         let roomID;
 
         try {
-            roomID = await newroomID();
+            roomID = await newoomID();
         } catch (err) {
             res.redirect('../');
             return;
@@ -134,7 +129,7 @@ app.route('/register')
         const generator = temp.generator === 'on';
 
         await database.exec(
-            `INSERT INTO room VALUES (${roomID}, '${name}', '${address}', ${gender}, ${x}, ${y}, ${level}, '${owner}', ${lift}, ${generator})`,
+            `INSERT INTO room VALUES (${roomID}, '${name}', '${address}', ${gender}, ${x}, ${y}, ${level}, '${owner}', ${lift}, ${generator})`
         );
 
         res.redirect(`profile/${roomID}`);
@@ -156,7 +151,7 @@ app.route('/edit/:id')
         try {
             room = await database.getUnique(`SELECT * FROM room WHERE roomID='${id}'`);
             owner = await database.getUnique(
-                `SELECT name FROM owner WHERE username='${room.owner}'`,
+                `SELECT name FROM owner WHERE username='${room.owner}'`
             );
         } catch (err) {
             res.redirect('../../');
@@ -186,7 +181,7 @@ app.route('/edit/:id')
         await database.exec(
             `UPDATE room
             SET name='${name}', address='${address}', gender=${gender}, x=${x}, y=${y}, level=${level}, lift=${lift}, generator=${generator}
-            WHERE roomID=${roomID}`
+            WHERE roomID=${roomID}`,
         );
 
         res.redirect(`../profile/${roomID}`);

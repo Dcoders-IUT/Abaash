@@ -216,16 +216,20 @@
           </ul>
         </div>
         <% } %>
+        <div class="form-item">
+          <span class="attribute">Rent</span
+          ><span class="val"><%=flat.rent%></span>
+        </div>
       </div>
       <% if(currentUser===flat.owner) { %>
-      <button class="bb">
+      <button>
         <a href="../edit/<%=flat.flatID%>">Edit Info</a>
       </button>
       <% } else if (mode==='student') { %> <% if (student.flatID===null) { %>
       <form action="request" method="post">
         <input type="hidden" name="studentID" value="<%= currentUser %>" />
         <input type="hidden" name="flatID" value="<%= flat.flatID %>" />
-        <button class="bb">Request Reservation</button>
+        <button>Request Reservation</button>
       </form>
       <% } %> <% } %> <% } else { %>
       <span>FLAT NOT FOUND!</span>
