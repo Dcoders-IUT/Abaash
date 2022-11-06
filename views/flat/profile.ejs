@@ -38,13 +38,13 @@
     <button>
       <a href="#">Add Rooms</a>
     </button>
-    <% } else if (mode==='student') { %> <%# if (student.flatID===null) { %>
+    <% } else if (mode==='student') { %>
     <form action="request" method="post">
       <input type="hidden" name="studentID" value="<%= currentUser %>" />
       <input type="hidden" name="flatID" value="<%= flat.flatID %>" />
       <button>Request Reservation</button>
     </form>
-    <%# } %> <% } %> <% } else { %>
+    <% } %> <% } else { %>
     <p>FLAT NOT FOUND!</p>
     <% } %>
   </body>
