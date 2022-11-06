@@ -6,37 +6,38 @@
     <title><%=flat? flat.name: 'FLAT NOT FOUND'%></title>
     <link rel="stylesheet" href="/css/single-flat.css" type="text/css" />
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
       @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap');
 
-      *{
-          margin: 0;
-          padding:0;
-          box-sizing: border-box;
-          /* font-family: Lato,Helvetica,sans-serif; */
-          font-family: 'Montserrat', sans-serif;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        /* font-family: Lato, Helvetica,sans-serif; */
+          font-family: 'Montserrat',  sans-serif;
       }
 
-      .container{
-          width: 100vw;
-          height: 95vh;
-          background-image:  linear-gradient(110deg,
-              rgba(255,255,255,0.7) 50%,
-              transparent 50%),
-           url("/images/home5.jpg");
-          background-size: 100% 100%;
-          /* display: flex;
+      .container {
+        width: 100vw;
+        height: 95vh;
+        background-image: linear-gradient(
+            110deg,
+            rgba(255, 255, 255, 0.7) 50%,
+            transparent 50%
+          ),
+          url("/images/home5.jpg");
+        background-size: 100% 100%;
+        /* display: flex;
           align-items: center; */
-          
       }
 
-      .details{
+      .details {
         /* border:2px solid; */
         box-shadow: 0 5px 20px -6px #000;
-        width:25vw;
+        width: 25vw;
         height: fit-content;
-        background-color: rgba(255,255,255,0.7);
-        color : #20247b;
+        background-color: rgba(255, 255, 255, 0.7);
+        color: #20247b;
         margin-left: 10vw;
         padding: 23px;
         position:fixed;
@@ -45,30 +46,28 @@
         border-radius: 8px;
       }
 
-      .form-item{
+      .form-item {
         /* border-bottom: 0.1rem solid #f5f5f5; */
         margin: 7px;
       }
 
-      
-      .attribute{
+      .attribute {
         width: 88px;
         position: absolute;
-        
       }
 
-      .val{
+      .val {
         font-weight: 700;
         position: relative;
-        left:140px;
+        left: 140px;
         color: #3f7fb7;
       }
 
-      h1{
+      h1 {
         margin-bottom: 30px;
       }
 
-      a{
+      a {
         text-decoration: none;
       }
 
@@ -129,54 +128,169 @@
          box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
        }
 
-  </style>
+    </style>
   </head>
 
   <body>
     <a href="../..">Home</a>
     <div class="container">
       <div class="details">
-        <h1>Property Information </h1>
+        <h1>Property Information</h1>
         <% if(flat) { %>
-          <div class="form-item">
-            <span class="attribute">Name</span><span class="val"><%=flat.name%></span> 
-          </div>
-<div class="form-item">
-  <label class="attribute">Address</label><span class="val"><%=flat.address%></span> 
-</div>
-<div class="form-item">
-  <label class="attribute">For</label><span class="val"><%=flat.gender? 'Bachelors' : 'Bachelorettes' %></span> 
-</div>
-<div class="form-item">
-  <label class="attribute">Level</label><span class="val"><%=flat.level%></span> 
-</div>
-<div class="form-item">
-  <label class="attribute">
-    Owner</label>
-    <span class="val"><a href="../../owner/profile/<%=flat.owner%>"><%=owner.name%></a></span>
-  
-</div>
-<div class="form-item">
-  <label class="attribute">Lift</label><span class="val"><%=flat.lift? 'YES' : 'NO' %></span> 
-</div>
-<div class="form-item">
-  <label class="attribute">Generator</label><span class="val"><%=flat.generator? 'YES' : 'NO' %></span> 
-</div>
+        <div class="form-item">
+          <span class="attribute">Name</span
+          ><span class="val"><%=flat.name%></span>
+        </div>
+        <div class="form-item">
+          <label class="attribute">Address</label
+          ><span class="val"><%=flat.address%></span>
+        </div>
+        <div class="form-item">
+          <label class="attribute">For</label
+          ><span class="val"
+            ><%=flat.gender? 'Bachelors' : 'Bachelorettes' %></span
+          >
+        </div>
+        <div class="form-item">
+          <label class="attribute">Level</label
+          ><span class="val"><%=flat.level%></span>
+        </div>
+        <div class="form-item">
+          <label class="attribute"> Owner</label>
+          <span class="val"
+            ><a href="../../owner/profile/<%=flat.owner%>"
+              ><%=owner.name%></a
+            ></span
+          >
+        </div>
+        <div class="form-item">
+          <label class="attribute">Lift</label
+          ><span class="val"><%=flat.lift? 'YES' : 'NO' %></span>
+        </div>
+        <div class="form-item">
+          <label class="attribute">Generator</label
+          ><span class="val"><%=flat.generator? 'YES' : 'NO' %></span>
+        </div>
 
-      </div>
-        <% if(currentUser===flat.owner) { %>
-        <button class="bb">
-          <a href="../edit/<%=flat.flatID%>">Edit Info</a>
-        </button>
-        <% } else if (mode==='student') { %> <% if (student.flatID===null) { %>
-        <form action="request" method="post">
-          <input type="hidden" name="studentID" value="<%= currentUser %>" />
-          <input type="hidden" name="flatID" value="<%= flat.flatID %>" />
-          <button class="bb">Request Reservation</button>
-        </form>
-        <% } %> <% } %> <% } else { %>
-        <span>FLAT NOT FOUND!</span>
+        <% if (roomList.bedrooms.length > 0) { %>
+        <div>
+          <h1>Bedroom: <%= roomList.bedrooms.length %></h1>
+          <ul>
+            <% roomList.bedrooms.forEach(room => { %>
+            <li>
+              <a href="../../room/profile/<%= room.roomID %> "
+                ><h2><%= room.name %></h2></a
+              >
+            </li>
+            <% }) %>
+          </ul>
+        </div>
+        <% } %> <% if (roomList.diningrooms.length > 0) { %>
+        <div>
+          <h1>Dining Room: <%= roomList.diningrooms.length %></h1>
+          <ul>
+            <% roomList.diningrooms.forEach(room => { %>
+            <li>
+              <a href="../../room/profile/<%= room.roomID %> "
+                ><h2><%= room.name %></h2></a
+              >
+            </li>
+            <% }) %>
+          </ul>
+        </div>
+        <% } %> <% if (roomList.livingrooms.length > 0) { %>
+        <div>
+          <h1>Living Room: <%= roomList.livingrooms.length %></h1>
+          <ul>
+            <% roomList.livingrooms.forEach(room => { %>
+            <li>
+              <a href="../../room/profile/<%= room.roomID %> "
+                ><h2><%= room.name %></h2></a
+              >
+            </li>
+            <% }) %>
+          </ul>
+        </div>
+        <% } %> <% if (roomList.kitchens.length > 0) { %>
+        <div>
+          <h1>Kitchen: <%= roomList.kitchens.length %></h1>
+          <ul>
+            <% roomList.kitchens.forEach(room => { %>
+            <li>
+              <a href="../../room/profile/<%= room.roomID %> "
+                ><h2><%= room.name %></h2></a
+              >
+            </li>
+            <% }) %>
+          </ul>
+        </div>
+        <% } %> <% if (roomList.bathrooms.length > 0) { %>
+        <div>
+          <h1>Bathroom: <%= roomList.bathrooms.length %></h1>
+          <ul>
+            <% roomList.bathrooms.forEach(room => { %>
+            <li>
+              <a href="../../room/profile/<%= room.roomID %> "
+                ><h2><%= room.name %></h2></a
+              >
+            </li>
+            <% }) %>
+          </ul>
+        </div>
+        <% } %> <% if (roomList.balconies.length > 0) { %>
+        <div>
+          <h1>Balcony: <%= roomList.balconies.length %></h1>
+          <ul>
+            <% roomList.balconies.forEach(room => { %>
+            <li>
+              <a href="../../room/profile/<%= room.roomID %> "
+                ><h2><%= room.name %></h2></a
+              >
+            </li>
+            <% }) %>
+          </ul>
+        </div>
+        <% } %> <% if (roomList.storerooms.length > 0) { %>
+        <div>
+          <h1>Store Room: <%= roomList.storerooms.length %></h1>
+          <ul>
+            <% roomList.storerooms.forEach(room => { %>
+            <li>
+              <a href="../../room/profile/<%= room.roomID %> "
+                ><h2><%= room.name %></h2></a
+              >
+            </li>
+            <% }) %>
+          </ul>
+        </div>
+        <% } %> <% if (roomList.xtrarooms.length > 0) { %>
+        <div>
+          <h1>Extra Room: <%= roomList.xtrarooms.length %></h1>
+          <ul>
+            <% roomList.xtrarooms.forEach(room => { %>
+            <li>
+              <a href="../../room/profile/<%= room.roomID %> "
+                ><h2><%= room.name %></h2></a
+              >
+            </li>
+            <% }) %>
+          </ul>
+        </div>
         <% } %>
+      </div>
+      <% if(currentUser===flat.owner) { %>
+      <button class="bb">
+        <a href="../edit/<%=flat.flatID%>">Edit Info</a>
+      </button>
+      <% } else if (mode==='student') { %> <% if (student.flatID===null) { %>
+      <form action="request" method="post">
+        <input type="hidden" name="studentID" value="<%= currentUser %>" />
+        <input type="hidden" name="flatID" value="<%= flat.flatID %>" />
+        <button class="bb">Request Reservation</button>
+      </form>
+      <% } %> <% } %> <% } else { %>
+      <span>FLAT NOT FOUND!</span>
+      <% } %>
     </div>
   </body>
 </html>

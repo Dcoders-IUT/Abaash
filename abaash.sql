@@ -213,11 +213,12 @@ CREATE TABLE IF NOT EXISTS `room` (
   CONSTRAINT `room_ibfk_1` FOREIGN KEY (`flatID`) REFERENCES `flat` (`flatID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table abaash.room: ~0 rows (approximately)
+-- Dumping data for table abaash.room: ~1 rows (approximately)
 DELETE FROM `room`;
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
 INSERT INTO `room` (`roomID`, `name`, `type`, `area`, `tiles`, `flatID`) VALUES
-	(4001734, 'Dining Room 1', 3, 120, 1, 1001734);
+	(10005663, 'Bedroom 1', 1, 130, 1.15, 1001734),
+	(20001734, 'Dining Room 1', 2, 120, 1.15, 1001734);
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 
 -- Dumping structure for table abaash.student
