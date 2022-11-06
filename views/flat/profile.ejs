@@ -1,5 +1,3 @@
-<% console.log(roomList) %>
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -21,9 +19,11 @@
     </h1>
     <h1>Lift: <%=flat.lift? 'YES' : 'NO' %></h1>
     <h1>Generator: <%=flat.generator? 'YES' : 'NO' %></h1>
-    <h1>Rooms</h1>
+
+    <% if (roomList.bedrooms.length > 0) { %>
+    <h1>Bedroom: <%= roomList.bedrooms.length %></h1>
     <ul>
-      <% roomList.forEach(room => { %>
+      <% roomList.bedrooms.forEach(room => { %>
       <li>
         <a href="../../room/profile/<%= room.roomID %> "
           ><h2><%= room.name %></h2></a
@@ -31,7 +31,84 @@
       </li>
       <% }) %>
     </ul>
-    <% if(currentUser===flat.owner) { %>
+    <% } %> <% if (roomList.diningrooms.length > 0) { %>
+    <h1>Dining Room: <%= roomList.diningrooms.length %></h1>
+    <ul>
+      <% roomList.diningrooms.forEach(room => { %>
+      <li>
+        <a href="../../room/profile/<%= room.roomID %> "
+          ><h2><%= room.name %></h2></a
+        >
+      </li>
+      <% }) %>
+    </ul>
+    <% } %> <% if (roomList.livingrooms.length > 0) { %>
+    <h1>Living Room: <%= roomList.livingrooms.length %></h1>
+    <ul>
+      <% roomList.livingrooms.forEach(room => { %>
+      <li>
+        <a href="../../room/profile/<%= room.roomID %> "
+          ><h2><%= room.name %></h2></a
+        >
+      </li>
+      <% }) %>
+    </ul>
+    <% } %> <% if (roomList.kitchens.length > 0) { %>
+    <h1>Kitchen: <%= roomList.kitchens.length %></h1>
+    <ul>
+      <% roomList.kitchens.forEach(room => { %>
+      <li>
+        <a href="../../room/profile/<%= room.roomID %> "
+          ><h2><%= room.name %></h2></a
+        >
+      </li>
+      <% }) %>
+    </ul>
+    <% } %> <% if (roomList.bathrooms.length > 0) { %>
+    <h1>Bathroom: <%= roomList.bathrooms.length %></h1>
+    <ul>
+      <% roomList.bathrooms.forEach(room => { %>
+      <li>
+        <a href="../../room/profile/<%= room.roomID %> "
+          ><h2><%= room.name %></h2></a
+        >
+      </li>
+      <% }) %>
+    </ul>
+    <% } %> <% if (roomList.balconies.length > 0) { %>
+    <h1>Balcony: <%= roomList.balconies.length %></h1>
+    <ul>
+      <% roomList.balconies.forEach(room => { %>
+      <li>
+        <a href="../../room/profile/<%= room.roomID %> "
+          ><h2><%= room.name %></h2></a
+        >
+      </li>
+      <% }) %>
+    </ul>
+    <% } %> <% if (roomList.storerooms.length > 0) { %>
+    <h1>Store Room: <%= roomList.storerooms.length %></h1>
+    <ul>
+      <% roomList.storerooms.forEach(room => { %>
+      <li>
+        <a href="../../room/profile/<%= room.roomID %> "
+          ><h2><%= room.name %></h2></a
+        >
+      </li>
+      <% }) %>
+    </ul>
+    <% } %> <% if (roomList.xtrarooms.length > 0) { %>
+    <h1>Extra Room: <%= roomList.xtrarooms.length %></h1>
+    <ul>
+      <% roomList.xtrarooms.forEach(room => { %>
+      <li>
+        <a href="../../room/profile/<%= room.roomID %> "
+          ><h2><%= room.name %></h2></a
+        >
+      </li>
+      <% }) %>
+    </ul>
+    <% } %> <% if(currentUser===flat.owner) { %>
     <button>
       <a href="../edit/<%=flat.flatID%>">Edit Info</a>
     </button>
