@@ -4,56 +4,76 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Edit Flat</title>
+    <style>
+      *{
+          margin: 0;
+          padding:0;
+          box-sizing: border-box;
+      }
+
+      .container{
+          width: 100vw;
+          height: 100vh;
+          background-image:  linear-gradient(110deg,
+              rgba(255,255,255,0.7) 50%,
+              transparent 50%),
+           url("/images/home5.jpg");
+          background-size: 100% 100%;
+      }
+
+  </style>
   </head>
 
   <body>
-    <% if(currentUser === flat.owner) { %>
-    <form method="post">
-      <h1>Edit Flat</h1>
-      <input type="hidden" name="flatID" value="<%=flat.flatID%>" />
-      <input
-        type="text"
-        name="name"
-        placeholder="Name"
-        value="<%= flat.name %>"
-      />
-      <br />
-      <input
-        type="text"
-        name="address"
-        placeholder="Address"
-        value="<%= flat.address %>"
-      />
-      <br />
-      <label>Gender</label>
-      <select name="gender">
-        <% misc.globalConst.flatGenderList.forEach((gender)=> { %>
-          <option value="<%=gender.value%>" <%= flat.gender===gender.value? 'selected': '' %>>
-            <%= gender.display %>
-          </option>
-        <% }) %>
-      </select>
-      <br />
-      <label>Level</label>
-      <select name="level">
-        <% for(let i=1; i<=20; i++) { %>
-        <option value="<%=i%>" <%= i===flat.level? 'selected': '' %> ><%=i%></option>
-        <% } %>
-      </select>
-      <br />
-      <label>Lift</label>
-      <input type="checkbox" name="lift" <%=flat.lift > 0? 'checked': '' %> />
-      <label>Generator</label>
-      <input type="checkbox" name="generator" <%=flat.generator > 0? 'checked': '' %> /> <br />
-      <a href="../../owner/profile/<%=flat.owner%>">Owner: <%=owner.name%></a>
-      <input type="hidden" name="x" value="<%= flat.x %>" />
-      <input type="hidden" name="y" value="<%= flat.y %>" />
-      <br />
-      <button>Save</button>
-    </form>
-    <button><a href="../profile/<%=flat.flatID%>">Cancel</a></button>
-    <% } else { %>
-    <p>USER NOT FOUND!</p>
-    <% } %>
+    <div class="container">
+      <% if(currentUser === flat.owner) { %>
+      <form method="post">
+        <h1>Edit Flat</h1>
+        <input type="hidden" name="flatID" value="<%=flat.flatID%>" />
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          value="<%= flat.name %>"
+        />
+        <br />
+        <input
+          type="text"
+          name="address"
+          placeholder="Address"
+          value="<%= flat.address %>"
+        />
+        <br />
+        <label>Gender</label>
+        <select name="gender">
+          <% misc.globalConst.flatGenderList.forEach((gender)=> { %>
+            <option value="<%=gender.value%>" <%= flat.gender===gender.value? 'selected': '' %>>
+              <%= gender.display %>
+            </option>
+          <% }) %>
+        </select>
+        <br />
+        <label>Level</label>
+        <select name="level">
+          <% for(let i=1; i<=20; i++) { %>
+          <option value="<%=i%>" <%= i===flat.level? 'selected': '' %> ><%=i%></option>
+          <% } %>
+        </select>
+        <br />
+        <label>Lift</label>
+        <input type="checkbox" name="lift" <%=flat.lift > 0? 'checked': '' %> />
+        <label>Generator</label>
+        <input type="checkbox" name="generator" <%=flat.generator > 0? 'checked': '' %> /> <br />
+        <a href="../../owner/profile/<%=flat.owner%>">Owner: <%=owner.name%></a>
+        <input type="hidden" name="x" value="<%= flat.x %>" />
+        <input type="hidden" name="y" value="<%= flat.y %>" />
+        <br />
+        <button>Save</button>
+      </form>
+      <button><a href="../profile/<%=flat.flatID%>">Cancel</a></button>
+      <% } else { %>
+      <p>USER NOT FOUND!</p>
+      <% } %>
+    </div>
   </body>
 </html>

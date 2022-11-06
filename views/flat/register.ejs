@@ -3,45 +3,80 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://kit.fontawesome.com/53732d670c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/edit.css" type="text/css">
     <title>New Flat</title>
+    <style>
+      *{
+          margin: 0;
+          padding:0;
+          box-sizing: border-box;
+      }
+
+      .container{
+          width: 100vw;
+          height: 100vh;
+          background-image:  linear-gradient(110deg,
+              rgba(255,255,255,0.7) 50%,
+              transparent 50%),
+           url("/images/home5.jpg");
+          background-size: 100% 100%;
+      }
+
+  </style>
   </head>
 
   <body>
-    <% if(currentUser === owner.username) { %>
-    <form action="register" method="post">
-      <h1>New Flat</h1>
-      <input type="text" name="name" placeholder="Name" /> <br />
-      <input type="text" name="address" placeholder="Address" /> <br />
-      <label>Gender</label>
-      <select name="gender">
-        <% misc.globalConst.flatGenderList.forEach((gender)=> { %>
-        <option value="<%=gender.value%>"><%= gender.display %></option>
-        <% }) %>
-      </select>
-      <br />
-      <label>Level</label>
-      <select name="level">
-        <% for(let i=0; i<20; i++) { %>
-        <option value="<%=i+1%>"><%=i+1%></option>
-        <% } %>
-      </select>
-      <br />
-      <label>Lift</label>
-      <input type="checkbox" name="lift" />
-      <label>Generator</label>
-      <input type="checkbox" name="generator" /> <br />
-      <a href="../../owner/profile/<%=owner.username%>"
-        >Owner: <%=owner.name%></a
-      >
-      <input type="hidden" name="x" value="0" />
-      <input type="hidden" name="y" value="0" />
-      <input type="hidden" name="owner" value="<%=owner.username%>" />
-      <br />
-      <button>Save</button>
-    </form>
-    <button><a href="../owner/profile">Cancel</a></button>
-    <% } else { %>
-    <p>USER NOT FOUND!</p>
-    <% } %>
+    
+    <div class="register-container">
+      <% if(currentUser === owner.username) { %>
+      <form action="register" method="post">
+        <h1>New Flat</h1>
+        <div class="edit">
+          <input type="text" name="name" placeholder="Name" /> <br />
+        </div>       
+        <div class="edit">
+          <input type="text" name="address" placeholder="Address" /> <br />
+        </div>
+        <div class="edit">
+          <label>Gender</label>
+          <select name="gender">
+            <% misc.globalConst.flatGenderList.forEach((gender)=> { %>
+            <option value="<%=gender.value%>"><%= gender.display %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="edit">
+          <label>Level</label>
+          <select name="level">
+            <% for(let i=0; i<20; i++) { %>
+            <option value="<%=i+1%>"><%=i+1%></option>
+            <% } %>
+          </select>
+        </div>
+        <div class="edit">
+          <label>Lift</label>
+          <input type="checkbox" name="lift" />
+        </div>
+        <div class="edit">
+          <label>Generator</label>
+          <input type="checkbox" name="generator" /> <br />
+        </div>
+
+        <a href="../../owner/profile/<%=owner.username%>"
+          >Owner: <%=owner.name%></a
+        >
+        <input type="hidden" name="x" value="0" />
+        <input type="hidden" name="y" value="0" />
+        <input type="hidden" name="owner" value="<%=owner.username%>" />
+        <br />
+
+        <button class="save">Save</button>
+        <button><a href="../owner/profile">Cancel</a></button>
+      </form>
+      <% } else { %>
+      <p>USER NOT FOUND!</p>
+      <% } %>
+    </div>
   </body>
 </html>

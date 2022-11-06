@@ -4,33 +4,118 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title><%=flat? flat.name: 'FLAT NOT FOUND'%></title>
+    <link rel="stylesheet" href="/css/single-flat.css" type="text/css" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+      *{
+          margin: 0;
+          padding:0;
+          box-sizing: border-box;
+          font-family: Lato,Helvetica,sans-serif;
+      }
+
+      .container{
+          width: 100vw;
+          height: 95vh;
+          background-image:  linear-gradient(110deg,
+              rgba(255,255,255,0.7) 50%,
+              transparent 50%),
+           url("/images/home5.jpg");
+          background-size: 100% 100%;
+          /* display: flex;
+          align-items: center; */
+          
+      }
+
+      .details{
+        /* border:2px solid; */
+        box-shadow: 0 5px 20px -6px #000;
+        width:25vw;
+        height: fit-content;
+        background-color: rgba(255,255,255,0.7);
+        color : #20247b;
+        margin-left: 10vw;
+        padding: 23px;
+        position:fixed;
+          top:28vh;
+          left:3vw;
+      }
+
+      .form-item{
+        /* border-bottom: 0.1rem solid #f5f5f5; */
+        margin: 7px;
+      }
+
+      
+      .attribute{
+        width: 88px;
+        position: absolute;
+        
+      }
+
+      .val{
+        font-weight: 700;
+        position: relative;
+        left:140px;
+        color: #3f7fb7;
+      }
+
+      h1{
+        margin-bottom: 30px;
+      }
+
+      a{
+        text-decoration: none;
+      }
+  </style>
   </head>
 
   <body>
     <a href="../..">Home</a>
-    <% if(flat) { %>
-    <h1>Name: <%=flat.name%></h1>
-    <h1>Address: <%=flat.address%></h1>
-    <h1>For <%=flat.gender? 'Bachelors' : 'Bachelorettes' %></h1>
-    <h1>Level: <%=flat.level%></h1>
-    <h1>
-      Owner:
-      <a href="../../owner/profile/<%=flat.owner%>"> <%=owner.name%> </a>
-    </h1>
-    <h1>Lift: <%=flat.lift? 'YES' : 'NO' %></h1>
-    <h1>Generator: <%=flat.generator? 'YES' : 'NO' %></h1>
-    <% if(currentUser===flat.owner) { %>
-    <button class="bb">
-      <a href="../edit/<%=flat.flatID%>">Edit Info</a>
-    </button>
-    <% } else if (mode==='student') { %> <% if (student.flatID===null) { %>
-    <form action="request" method="post">
-      <input type="hidden" name="studentID" value="<%= currentUser %>" />
-      <input type="hidden" name="flatID" value="<%= flat.flatID %>" />
-      <button class="bb">Request Reservation</button>
-    </form>
-    <% } %> <% } %> <% } else { %>
-    <p>FLAT NOT FOUND!</p>
-    <% } %>
+    <div class="container">
+      <div class="details">
+        <h1>Property Information </h1>
+        <% if(flat) { %>
+          <div class="form-item">
+            <span class="attribute">Name</span><span class="val"><%=flat.name%></span> 
+          </div>
+<div class="form-item">
+  <label class="attribute">Address</label><span class="val"><%=flat.address%></span> 
+</div>
+<div class="form-item">
+  <label class="attribute">For</label><span class="val"><%=flat.gender? 'Bachelors' : 'Bachelorettes' %></span> 
+</div>
+<div class="form-item">
+  <label class="attribute">Level</label><span class="val"><%=flat.level%></span> 
+</div>
+<div class="form-item">
+  <label class="attribute">
+    Owner</label>
+    <span class="val"><a href="../../owner/profile/<%=flat.owner%>"><%=owner.name%></a></span>
+  
+</div>
+<div class="form-item">
+  <label class="attribute">Lift</label><span class="val"><%=flat.lift? 'YES' : 'NO' %></span> 
+</div>
+<div class="form-item">
+  <label class="attribute">Generator</label><span class="val"><%=flat.generator? 'YES' : 'NO' %></span> 
+</div>
+
+      </div>
+        <% if(currentUser===flat.owner) { %>
+        <button class="bb">
+          <a href="../edit/<%=flat.flatID%>">Edit Info</a>
+        </button>
+        <% } else if (mode==='student') { %> <% if (student.flatID===null) { %>
+        <form action="request" method="post">
+          <input type="hidden" name="studentID" value="<%= currentUser %>" />
+          <input type="hidden" name="flatID" value="<%= flat.flatID %>" />
+          <button class="bb">Request Reservation</button>
+        </form>
+        <% } %> <% } %> <% } else { %>
+        <span>FLAT NOT FOUND!</span>
+        <% } %>
+    </div>
   </body>
 </html>
