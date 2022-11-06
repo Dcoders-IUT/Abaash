@@ -29,7 +29,34 @@ body{
     background-color:rgba(0,0,0,0.8);
     /* align-items: center; */
     width: 400px;
-    height: 450px;
+    /* height: 450px; */
+    height:fit-content;
+    border:2px solid black;
+    border-radius: 5px;
+    /* overflow: hidden; */
+    /* Center vertically and horizontally */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: -3px -3px 7px #ffffff73
+                3px 3px 5px rgba(94,104,121,0.288) ;
+                border-radius: 5px;
+
+
+}
+.register-container{
+    color: white;
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    padding-top: 25px;
+    /* background-color: #1c2833; */
+    background-color:rgba(0,0,0,0.8);
+    /* align-items: center; */
+    width: 400px;
+    /* height: 450px; */
+    height:fit-content;
     border:2px solid black;
     border-radius: 5px;
     /* overflow: hidden; */
@@ -45,6 +72,10 @@ body{
 
 }
 
+.register-container h1{
+    position: relative;
+    text-align:center;
+}
 
 .icon{
     font-size: 50px;
@@ -89,6 +120,7 @@ a{
 
 button{
     font-size: 16px;
+    margin-bottom: 20px;
 }
 .cancel{
     width: 80px;
