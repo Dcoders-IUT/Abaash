@@ -139,7 +139,9 @@
         <h1><%=flat.name%></h1>
         <div class="form-item">
           <label class="attribute">Address</label
-          ><span class="val"><%=flat.address%></span>
+          ><span class="val"><a
+            href="<%="https://www.google.com/maps/search/?api=1&query="+flat.x+"%2C"+flat.y%>"
+            ><%=flat.address%></a></span>
         </div>
         <div class="form-item">
           <label class="attribute">For</label

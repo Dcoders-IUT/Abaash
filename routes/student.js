@@ -19,7 +19,7 @@ async function getUser(id, pass) {
         const { studentID } = record;
 
         const plc = record.passwordLastChanged;
-        const password = hash.hash(`${pass + plc}Home Is Where The Start Is!`);
+        const password = hash.create(`${pass + plc}Home Is Where The Start Is!`);
         if (password !== record.password) throw new Error(wrongpass);
 
         return studentID;
@@ -59,7 +59,7 @@ app.route('/register')
         const gender = Number(temp.gender);
         const id = Number(temp.studentID);
         const plc = hash.salt();
-        const pass = hash.hash(`${temp.pass + plc}Home Is Where The Start Is!`);
+        const pass = hash.create(`${temp.pass + plc}Home Is Where The Start Is!`);
         const phone = Number(temp.phone);
         const { email } = temp;
         const nid = Number(temp.nid);

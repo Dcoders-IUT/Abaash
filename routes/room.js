@@ -109,7 +109,6 @@ app.route('/register/:flatID')
             row = await database.getUnique(
                 `SELECT COUNT(*) AS count FROM room WHERE flatID=${flatID}`,
             );
-            roomcount = Number(row.count);
         } catch (err) {
             console.log(err);
             res.redirect('../../');
@@ -126,7 +125,7 @@ app.route('/register/:flatID')
             misc,
             currentUser,
             flat,
-            roomcount,
+            roomcount: Number(row.count),
         });
     })
     .post(async (req, res) => {
@@ -143,7 +142,7 @@ app.route('/register/:flatID')
             roomID = await newRoomID(type);
 
             await database.exec(
-                `INSERT INTO room VALUES (${roomID}, '${name}', '${type}', ${area}, ${flooring}, ${flatID})`,
+                `INSERT INTO room VALUES (${roomID}, '${name}', '${type}', ${area}, ${flooring}, ${flatID})`
             );
         } catch (err) {
             console.log(err);
@@ -151,7 +150,7 @@ app.route('/register/:flatID')
             return;
         }
 
-        res.redirect(`../profile/${roomID}`); 
+        res.redirect(`../profile/${roomID}`);
     });
 
 app.route('/edit/:id')
@@ -160,7 +159,7 @@ app.route('/edit/:id')
         const currentUser = store.get('user');
         const mode = store.get('mode');
         let room;
-        let owner;
+        let flat;
 
         if (mode !== 'owner') {
             res.redirect('../../');
@@ -169,10 +168,9 @@ app.route('/edit/:id')
 
         try {
             room = await database.getUnique(`SELECT * FROM room WHERE roomID='${id}'`);
-            owner = await database.getUnique(
-                `SELECT name FROM owner WHERE username='${room.owner}'`,
-            );
+            flat = await database.getUnique(`SELECT * FROM flat WHERE flatID=${room.flatID}`);
         } catch (err) {
+            console.log(err);
             res.redirect('../../');
             return;
         }
@@ -181,26 +179,21 @@ app.route('/edit/:id')
             misc,
             currentUser,
             room,
-            owner,
+            flat,
         });
     })
     .post(async (req, res) => {
+        const roomID = req.params.id;
         const temp = req.body;
 
-        const { roomID } = temp;
         const { name } = temp;
-        const { address } = temp;
-        const gender = Number(temp.gender);
-        const level = Number(temp.level);
-        const x = Number(temp.x);
-        const y = Number(temp.y);
-        const lift = temp.lift === 'on';
-        const generator = temp.generator === 'on';
+        const area = Number(temp.area);
+        const flooring = Number(temp.flooring);
 
         await database.exec(
             `UPDATE room
-            SET name='${name}', address='${address}', gender=${gender}, x=${x}, y=${y}, level=${level}, lift=${lift}, generator=${generator}
-            WHERE roomID=${roomID}`
+        SET name='${name}', area=${area}, flooring=${flooring}
+        WHERE roomID=${roomID}`, 
         );
 
         res.redirect(`../profile/${roomID}`);

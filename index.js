@@ -2,6 +2,7 @@ const express = require('express');
 const store = require('store');
 const database = require('./util/database');
 const misc = require('./util/misc');
+const mlr = require('./util/mlr');
 
 const app = express();
 const port = 3001;
@@ -10,6 +11,8 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.set('views', './views');
 app.set('view engine', 'ejs');
+
+// console.log(mlr.test().predict([3, 4]))
 
 async function allFlats() {
     try {
@@ -20,8 +23,7 @@ async function allFlats() {
 }
 
 async function searchFlats(address, minLevel, maxLevel, gender, lift, generator) {
-    const addressQuery =
-        address === '' ? 'true' : `LOWER(address) LIKE CONCAT('%', LOWER('${address}'),'%')`; 
+    const addressQuery =        address === '' ? 'true' : `LOWER(address) LIKE CONCAT('%', LOWER('${address}'),'%')`;
     const levelQuery = `level >= ${minLevel} AND level <= ${maxLevel}`;
     const genderQuery = `gender = ${gender} OR gender = 2`;
     const liftQuery = `lift >= ${lift ? 1 : 0}`;
@@ -30,7 +32,7 @@ async function searchFlats(address, minLevel, maxLevel, gender, lift, generator)
     try {
         return await database.get(
             `SELECT *, flatarea(flatID) AS area FROM flat
-            WHERE (${addressQuery}) AND (${levelQuery}) AND (${genderQuery}) AND (${liftQuery}) AND (${generatorQuery})`
+            WHERE (${addressQuery}) AND (${levelQuery}) AND (${genderQuery}) AND (${liftQuery}) AND (${generatorQuery})`,
         );
     } catch (err) {
         return {};
@@ -63,7 +65,7 @@ async function openHomeEJS(res) {
         currentUserData = await database.getUnique(
             `SELECT name FROM ${mode} WHERE ${
                 mode === 'student' ? 'studentID' : 'username'
-            }='${currentUser}'`,
+            }='${currentUser}'`
         );
     } catch (err) {
         res.render('home', {

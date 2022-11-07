@@ -197,7 +197,7 @@ app.route('/edit/:id')
 
         try {
             flat = await database.getUnique(
-                `SELECT *, flatarea(flatID) AS area FROM flat WHERE flatID='${id}'` 
+                `SELECT *, flatarea(flatID) AS area FROM flat WHERE flatID='${id}'`
             );
             owner = await database.getUnique(
                 `SELECT name FROM owner WHERE username='${flat.owner}'`
@@ -216,8 +216,8 @@ app.route('/edit/:id')
     })
     .post(async (req, res) => {
         const temp = req.body;
+        const flatID = req.params.id;
 
-        const { flatID } = temp;
         const { name } = temp;
         const { address } = temp;
         const gender = Number(temp.gender);
@@ -230,7 +230,7 @@ app.route('/edit/:id')
         await database.exec(
             `UPDATE flat
             SET name='${name}', address='${address}', gender=${gender}, x=${x}, y=${y}, level=${level}, lift=${lift}, generator=${generator}
-            WHERE flatID=${flatID}`,
+            WHERE flatID=${flatID}`, 
         );
 
         res.redirect(`../profile/${flatID}`);

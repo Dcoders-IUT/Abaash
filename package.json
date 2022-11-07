@@ -27,6 +27,7 @@
     "express": "^4.18.2",
     "fs": "^0.0.1-security",
     "mariadb": "^3.0.1",
+    "ml-regression-multivariate-linear": "^2.0.4",
     "store": "^2.0.12"
   }
 }
