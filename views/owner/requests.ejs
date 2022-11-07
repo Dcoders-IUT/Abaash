@@ -40,12 +40,16 @@
           <td>Student</td>
           <td>Flat</td>
           <td>Request Date</td>
+          <td>Phone Number</td>
+          <td>E-mail</td>
         </tr>
         <% flatRequestList.forEach(request => { %>
         <tr>
           <td><a href="../../student/profile/<%= request.student.studentID %>"><%= request.student.name %></a></td>
           <td><a href="../../flat/profile/<%= request.flat.flatID %>"><%= request.flat.name %></a></td>
           <td><%= request.date %></a></td>
+          <td><%= request.student.phone %></a></td>
+          <td><%= request.student.email %></a></td>
         </tr>
         <% }) %>
       </table>

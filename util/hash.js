@@ -7,6 +7,6 @@ const salt = () => {
     return str;
 };
 
-const hash = (str) => crypto.createHash('sha256').update(str).digest('hex');
+const create = (str) => crypto.createHash('sha256').update(str).digest('hex');
 
-module.exports = { hash, salt };
+module.exports = { create, salt };

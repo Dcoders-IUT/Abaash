@@ -22,6 +22,7 @@ async function allFlats() {
     }
 }
 
+
 async function searchFlats(address, minLevel, maxLevel, gender, lift, generator) {
     const addressQuery =        address === '' ? 'true' : `LOWER(address) LIKE CONCAT('%', LOWER('${address}'),'%')`;
     const levelQuery = `level >= ${minLevel} AND level <= ${maxLevel}`;
@@ -63,7 +64,7 @@ async function openHomeEJS(res) {
 
     try {
         currentUserData = await database.getUnique(
-            `SELECT name FROM ${mode} WHERE ${
+            `SELECT name FROM $,{mode} WHERE ${
                 mode === 'student' ? 'studentID' : 'username'
             }='${currentUser}'`
         );
