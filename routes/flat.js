@@ -16,41 +16,40 @@ async function newFlatID() {
     let offset;
     let row;
 
-    while (true) {
+    do {
         offset = crypto.randomInt(divisor);
         row = await database.getUnique(
-            `SELECT COUNT(*) AS count FROM flat WHERE flatID=${base + offset}`,
+            `SELECT COUNT(*) AS count FROM flat WHERE flatID=${base + offset}`
         );
-        if (row.count < 1) break;
-    }
+    } while (row.count > 0);
 
     return base + offset;
 }
 
 async function getRoomList(flatID) {
     const bedrooms = await database.get(
-        `SELECT roomID, name  FROM room WHERE flatID=${flatID} AND type=1`,
+        `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=1`,
     );
     const diningrooms = await database.get(
-        `SELECT roomID, name  FROM room WHERE flatID=${flatID} AND type=2`,
+        `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=2`,
     );
     const livingrooms = await database.get(
-        `SELECT roomID, name  FROM room WHERE flatID=${flatID} AND type=3`,
+        `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=3`,
     );
     const kitchens = await database.get(
-        `SELECT roomID, name  FROM room WHERE flatID=${flatID} AND type=4`,
+        `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=4`,
     );
     const bathrooms = await database.get(
-        `SELECT roomID, name  FROM room WHERE flatID=${flatID} AND type=5`,
+        `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=5`,
     );
     const balconies = await database.get(
-        `SELECT roomID, name  FROM room WHERE flatID=${flatID} AND type=6`,
+        `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=6`,
     );
     const storerooms = await database.get(
-        `SELECT roomID, name  FROM room WHERE flatID=${flatID} AND type=7`,
+        `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=7`,
     );
     const xtrarooms = await database.get(
-        `SELECT roomID, name  FROM room WHERE flatID=${flatID} AND type=8`,
+        `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=8`,
     );
 
     return {
@@ -85,7 +84,9 @@ app.get('/profile/:id', async (req, res) => {
     let roomList;
 
     try {
-        flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${id}'`);
+        flat = await database.getUnique(
+            `SELECT *, flatarea(flatID) AS area FROM flat WHERE flatID='${id}'`
+        );
         roomList = await getRoomList(id);
         owner = await database.getUnique(`SELECT name FROM owner WHERE username='${flat.owner}'`);
     } catch (err) {
@@ -172,9 +173,10 @@ app.route('/register')
         const y = Number(temp.y);
         const lift = temp.lift === 'on';
         const generator = temp.generator === 'on';
+        const { rent } = temp;
 
         await database.exec(
-            `INSERT INTO flat VALUES (${flatID}, '${name}', '${address}', ${gender}, ${x}, ${y}, ${level}, '${owner}', ${lift}, ${generator})`
+            `INSERT INTO flat VALUES (${flatID}, '${name}', '${address}', ${gender}, ${x}, ${y}, ${level}, '${owner}', ${lift}, ${generator}, ${rent})`,
         );
 
         res.redirect(`profile/${flatID}`);
@@ -194,7 +196,9 @@ app.route('/edit/:id')
         }
 
         try {
-            flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${id}'`);
+            flat = await database.getUnique(
+                `SELECT *, flatarea(flatID) AS area FROM flat WHERE flatID='${id}'` 
+            );
             owner = await database.getUnique(
                 `SELECT name FROM owner WHERE username='${flat.owner}'`
             );

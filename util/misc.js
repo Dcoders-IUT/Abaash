@@ -33,4 +33,34 @@ obj.flatGenderText = (num) => {
     return ans;
 };
 
+obj.roomText = (num) => {
+    let ans = '';
+
+    obj.globalConst.roomTypeList.forEach((rtype) => {
+        if (num === rtype.value) ans = rtype.display;
+    });
+
+    return ans;
+};
+
+obj.roomTableName = (num) => {
+    let ans = '';
+
+    obj.globalConst.roomTypeList.forEach((rtype) => {
+        if (num === rtype.value) ans = rtype.table;
+    });
+
+    return ans;
+};
+
+obj.floorText = (num) => {
+    let ans = '';
+
+    obj.globalConst.flooringList.forEach((ftype) => {
+        if (num === ftype.value) ans = ftype.display;
+    });
+
+    return ans;
+};
+
 module.exports = obj;

@@ -14,7 +14,7 @@ async function getUser(id, pass) {
 
     try {
         const record = await database.getUnique(
-            `SELECT username, password, passwordLastChanged FROM owner WHERE username='${id}' OR email='${id}' OR phone='${id}'`,
+            `SELECT username, password, passwordLastChanged FROM owner WHERE username='${id}' OR email='${id}' OR phone='${id}'`
         );
         const { username } = record;
 
@@ -70,7 +70,7 @@ app.route('/register')
         '${plc}',
         ${phone},
         '${email}',
-        ${nid})`
+        ${nid})`,
         );
 
         store.set('user', username);
@@ -95,7 +95,9 @@ app.get('/profile/:id', async (req, res) => {
         res.render('owner/profile', { currentUser: store.get('user'), profileUser: null });
         return;
     }
-    const flatList = await database.get(`SELECT * FROM flat WHERE owner='${id}'`);
+    const flatList = await database.get(
+        `SELECT *, flatarea(flatID) AS area FROM flat WHERE owner='${id}'`,
+    );
 
     res.render('owner/profile', {
         misc,
@@ -120,7 +122,7 @@ app.route('/edit/:id')
 
         try {
             profileUserData = await database.getUnique(
-                `SELECT * FROM owner WHERE username='${id}'`
+                `SELECT * FROM owner WHERE username='${id}'`,
             );
         } catch (err) {
             res.redirect('../../');
@@ -167,7 +169,7 @@ app.route('/edit/:id')
         await database.exec(
             `UPDATE owner
             SET name='${name}', username='${username}', phone=${phone}, email='${email}', nid=${nid}
-            WHERE username='${currentUser}'`
+            WHERE username='${currentUser}'`,
         );
 
         res.redirect('../profile');
@@ -179,16 +181,16 @@ app.get('/requests', async (req, res) => {
 
     try {
         const flatRequestList = await database.get(
-            `SELECT * FROM flatrequest WHERE (SELECT owner FROM flat WHERE flatrequest.flatid=flat.flatid)='${currentUser}'`
+            `SELECT *, flatarea(flatID) AS area FROM flatrequest WHERE (SELECT owner FROM flat WHERE flatrequest.flatid=flat.flatid)='${currentUser}'`,
         );
 
         for (let i = 0; i < flatRequestList.length; i++) {
             const studentDetails = await database.getUnique(
-                `SELECT * FROM student WHERE studentID='${flatRequestList[i].studentID}'`
+                `SELECT * FROM student WHERE studentID='${flatRequestList[i].studentID}'`,
             );
 
             const flatDetails = await database.getUnique(
-                `SELECT * FROM flat WHERE flatID='${flatRequestList[i].flatID}'`
+                `SELECT *, flatarea(flatID) AS area FROM flat WHERE flatID='${flatRequestList[i].flatID}'`, 
             );
 
             detailedRequestList.push({
