@@ -17,6 +17,13 @@
         font-family: "Montserrat", sans-serif;
       }
 
+      #mapid {
+        width: 10%;
+        height: 400px;
+        /* margin-left: 80px; */
+        /* margin-top: 35px; */
+        z-index: 1;
+      }
       .container {
         width: 100vw;
         height: 95vh;
@@ -171,9 +178,9 @@
         </div>
 
         <% if (roomList.bedrooms.length > 0) { %>
-        <div>
-          <h1>Bedroom: <%= roomList.bedrooms.length %></h1>
-          <ul>
+        <div class="form-item"> 
+          <label class="attribute">Bedroom </label><span class="val"><%= roomList.bedrooms.length %></span> 
+          <!-- <ul>
             <% roomList.bedrooms.forEach(room => { %>
             <li>
               <a href="../../room/profile/<%= room.roomID %> "
@@ -181,24 +188,26 @@
               >
             </li>
             <% }) %>
-          </ul>
+          </ul> -->
         </div>
-        <% } %> <% if (roomList.diningrooms.length > 0) { %>
-        <div>
-          <h1>Dining Room: <%= roomList.diningrooms.length %></h1>
-          <ul>
-            <% roomList.diningrooms.forEach(room => { %>
-            <li>
-              <a href="../../room/profile/<%= room.roomID %> "
-                ><h2><%= room.name %></h2></a
-              >
-            </li>
-            <% }) %>
-          </ul>
-        </div>
+        <!-- <% } %> <% if (roomList.diningrooms.length > 0) { %>
+        <div class="form-item">
+          <label class="attribute">Dining Room</label> <span class="val"><%= roomList.diningrooms.length %></span> 
+          <div class="rooms">
+            <ul>
+              <% roomList.diningrooms.forEach(room => { %>
+              <li >
+                <a href="../../room/profile/<%= room.roomID %> "
+                  ><div class="attribute"><%= room.name %></></a
+                >
+              </li>
+              <% }) %>
+            </ul>
+          </div>
+        </div> -->
         <% } %> <% if (roomList.livingrooms.length > 0) { %>
-        <div>
-          <h1>Living Room: <%= roomList.livingrooms.length %></h1>
+        <div class="form-item">
+          <label class="attribute">Living Room</label><span class="val"><%= roomList.livingrooms.length %></span> 
           <ul>
             <% roomList.livingrooms.forEach(room => { %>
             <li>
@@ -210,9 +219,9 @@
           </ul>
         </div>
         <% } %> <% if (roomList.kitchens.length > 0) { %>
-        <div>
-          <h1>Kitchen: <%= roomList.kitchens.length %></h1>
-          <ul>
+        <div class="form-item">
+          <label class="attribute">Kitchen</label><span class="val"><%= roomList.kitchens.length %></span> 
+          <!-- <ul>
             <% roomList.kitchens.forEach(room => { %>
             <li>
               <a href="../../room/profile/<%= room.roomID %> "
@@ -220,12 +229,12 @@
               >
             </li>
             <% }) %>
-          </ul>
+          </ul> -->
         </div>
         <% } %> <% if (roomList.bathrooms.length > 0) { %>
-        <div>
-          <h1>Bathroom: <%= roomList.bathrooms.length %></h1>
-          <ul>
+        <div class="form-item">
+          <label class="attribute">Bathroom</label><span class="val"><%= roomList.bathrooms.length %></span> 
+          <!-- <ul>
             <% roomList.bathrooms.forEach(room => { %>
             <li>
               <a href="../../room/profile/<%= room.roomID %> "
@@ -233,22 +242,22 @@
               >
             </li>
             <% }) %>
-          </ul>
+          </ul> -->
         </div>
         <% } %> <% if (roomList.balconies.length > 0) { %>
-        <div>
-          <h1>Balcony: <%= roomList.balconies.length %></h1>
+        <div class="form-item">
+          <label class="attribute">Balcony</label><span class="val"><%= roomList.balconies.length %></span> 
           <ul>
             <% roomList.balconies.forEach(room => { %>
             <li>
               <a href="../../room/profile/<%= room.roomID %> "
-                ><h2><%= room.name %></h2></a
+                ><span class="attribute"><%= room.name %></ span></a
               >
             </li>
             <% }) %>
           </ul>
         </div>
-        <% } %> <% if (roomList.storerooms.length > 0) { %>
+        <!-- <% } %> <% if (roomList.storerooms.length > 0) { %>
         <div>
           <h1>Store Room: <%= roomList.storerooms.length %></h1>
           <ul>
@@ -260,8 +269,8 @@
             </li>
             <% }) %>
           </ul>
-        </div>
-        <% } %> <% if (roomList.xtrarooms.length > 0) { %>
+        </div> -->
+        <!-- <% } %> <% if (roomList.xtrarooms.length > 0) { %>
         <div>
           <h1>Extra Room: <%= roomList.xtrarooms.length %></h1>
           <ul>
@@ -274,19 +283,22 @@
             <% }) %>
           </ul>
         </div>
-        <% } %>
+        <% } %> -->
         <div class="form-item">
-          <span class="attribute">Rent</span
-          ><span class="val"><%=flat.rent%></span>
+          <label class="attribute">Rent</label><span class="val"><%=flat.rent%></span>
         </div>
       </div>
       <% if(currentUser===flat.owner) { %>
-      <button>
-        <a href="../edit/<%=flat.flatID%>">Edit Info</a>
-      </button>
-      <button>
-        <a href="../../room/register/<%=flat.flatID%>">Add Rooms</a>
-      </button>
+
+        <div class="buttons">
+          <button class="bb">
+            <a href="../edit/<%=flat.flatID%>">Edit Info</a>
+          </button>
+          <button class="bb">
+            <a href="../../room/register/<%=flat.flatID%>">Add Rooms</a>
+          </button>
+        </div>
+      
       <% } else if (mode==='student') { %>
       <form action="request" method="post">
         <input type="hidden" name="studentID" value="<%= currentUser %>" />
@@ -296,6 +308,8 @@
       <% } %> <% } else { %>
       <span>FLAT NOT FOUND!</span>
       <% } %>
+
+
     </div>
   </body>
 </html>
