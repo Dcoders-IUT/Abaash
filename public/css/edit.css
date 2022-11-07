@@ -109,10 +109,11 @@ input:focus{
 }
 
 h1{
-    margin-left: 41%;
+    text-align:center;
     margin-top: 65px;
     font-family: 'Roboto';
 }
+
 
 a{
     text-decoration: none;
