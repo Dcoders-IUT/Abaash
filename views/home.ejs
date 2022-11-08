@@ -17,12 +17,9 @@
   </head>
 
   <body>
-    
-    <%- include("./partials/navbar.ejs") %>
-    <%- include('./partials/advanced_search.ejs', { misc }) %>
-    <!-- <h2>Dashboard</h2> -->
-
-    <%- include ("./partials/showFlats.ejs", {misc, flatList}) %> 
-    <%- include("./partials/footer.ejs") %>
+    <%- include("./partials/navbar.ejs") %> <%-
+    include('./partials/advanced_search.ejs', { misc }) %> <%- include
+    ("./partials/showFlats.ejs", {misc, flatList}) %> <%-
+    include("./partials/footer.ejs") %>
   </body>
 </html>

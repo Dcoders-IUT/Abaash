@@ -25,8 +25,6 @@ async function get(command) {
 async function getUnique(command) {
     const queryResult = await connection.query(command);
 
-    console.log(command);
-
     if (queryResult.length > 1) throw new Error('Not Unique');
     if (queryResult.length === 0) throw new Error('Not Found');
 
