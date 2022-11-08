@@ -69,7 +69,7 @@ app.post('/profile/request', async (req, res) => {
     const { flatID } = req.body;
 
     await database.exec(
-        `INSERT INTO flatrequest VALUES (${studentID}, ${flatID}, '${hash.salt()}')`,
+        `INSERT INTO flatrequest VALUES (${studentID}, ${flatID}, '${hash.salt()}')`, 
     );
 
     res.redirect(`../profile/${flatID}`);
@@ -230,7 +230,7 @@ app.route('/edit/:id')
         await database.exec(
             `UPDATE flat
             SET name='${name}', address='${address}', gender=${gender}, x=${x}, y=${y}, level=${level}, lift=${lift}, generator=${generator}
-            WHERE flatID=${flatID}`, 
+            WHERE flatID=${flatID}`,
         );
 
         res.redirect(`../profile/${flatID}`);

@@ -35,10 +35,11 @@ async function getRoom(roomID) {
         record = await database.getUnique(`SELECT type FROM room WHERE roomID=${roomID}`);
         roomType = record.type;
         roomTable = misc.roomTableName(roomType);
+        roomTable = null;
 
         if (roomTable !== null) {
             room = await database.getUnique(
-                `SELECT * FROM room NATURAL JOIN ${roomTable} WHERE roomID=${roomID}`,
+                `SELECT * FROM room NATURAL JOIN ${roomTable} WHERE roomID=${roomID}`, 
             );
         } else {
             room = await database.getUnique(`SELECT * FROM room WHERE roomID=${roomID}`);
@@ -193,7 +194,7 @@ app.route('/edit/:id')
         await database.exec(
             `UPDATE room
         SET name='${name}', area=${area}, flooring=${flooring}
-        WHERE roomID=${roomID}`, 
+        WHERE roomID=${roomID}`,
         );
 
         res.redirect(`../profile/${roomID}`);
