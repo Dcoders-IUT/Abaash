@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title><%=flat? flat.name: 'FLAT NOT FOUND'%></title>
     <link rel="stylesheet" href="/css/single-flat.css" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
+      integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14="
+      crossorigin=""
+    />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
       @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap");
@@ -18,11 +24,15 @@
       }
 
       #mapid {
-        width: 10%;
-        height: 400px;
+        width: 25%;
+        height: 350px;
         /* margin-left: 80px; */
         /* margin-top: 35px; */
+        position:absolute;
+        right:120px;
         z-index: 1;
+        position:flex;
+        top:25vh;
       }
       .container {
         width: 100vw;
@@ -180,109 +190,24 @@
         <% if (roomList.bedrooms.length > 0) { %>
         <div class="form-item"> 
           <label class="attribute">Bedroom </label><span class="val"><%= roomList.bedrooms.length %></span> 
-          <!-- <ul>
-            <% roomList.bedrooms.forEach(room => { %>
-            <li>
-              <a href="../../room/profile/<%= room.roomID %> "
-                ><h2><%= room.name %></h2></a
-              >
-            </li>
-            <% }) %>
-          </ul> -->
         </div>
-        <!-- <% } %> <% if (roomList.diningrooms.length > 0) { %>
-        <div class="form-item">
-          <label class="attribute">Dining Room</label> <span class="val"><%= roomList.diningrooms.length %></span> 
-          <div class="rooms">
-            <ul>
-              <% roomList.diningrooms.forEach(room => { %>
-              <li >
-                <a href="../../room/profile/<%= room.roomID %> "
-                  ><div class="attribute"><%= room.name %></></a
-                >
-              </li>
-              <% }) %>
-            </ul>
-          </div>
-        </div> -->
-        <% } %> <% if (roomList.livingrooms.length > 0) { %>
-        <div class="form-item">
-          <label class="attribute">Living Room</label><span class="val"><%= roomList.livingrooms.length %></span> 
-          <ul>
-            <% roomList.livingrooms.forEach(room => { %>
-            <li>
-              <a href="../../room/profile/<%= room.roomID %> "
-                ><h2><%= room.name %></h2></a
-              >
-            </li>
-            <% }) %>
-          </ul>
-        </div>
+      
+    
         <% } %> <% if (roomList.kitchens.length > 0) { %>
         <div class="form-item">
           <label class="attribute">Kitchen</label><span class="val"><%= roomList.kitchens.length %></span> 
-          <!-- <ul>
-            <% roomList.kitchens.forEach(room => { %>
-            <li>
-              <a href="../../room/profile/<%= room.roomID %> "
-                ><h2><%= room.name %></h2></a
-              >
-            </li>
-            <% }) %>
-          </ul> -->
         </div>
         <% } %> <% if (roomList.bathrooms.length > 0) { %>
         <div class="form-item">
           <label class="attribute">Bathroom</label><span class="val"><%= roomList.bathrooms.length %></span> 
-          <!-- <ul>
-            <% roomList.bathrooms.forEach(room => { %>
-            <li>
-              <a href="../../room/profile/<%= room.roomID %> "
-                ><h2><%= room.name %></h2></a
-              >
-            </li>
-            <% }) %>
-          </ul> -->
         </div>
         <% } %> <% if (roomList.balconies.length > 0) { %>
         <div class="form-item">
           <label class="attribute">Balcony</label><span class="val"><%= roomList.balconies.length %></span> 
-          <ul>
-            <% roomList.balconies.forEach(room => { %>
-            <li>
-              <a href="../../room/profile/<%= room.roomID %> "
-                ><span class="attribute"><%= room.name %></ span></a
-              >
-            </li>
-            <% }) %>
-          </ul>
         </div>
-        <!-- <% } %> <% if (roomList.storerooms.length > 0) { %>
-        <div>
-          <h1>Store Room: <%= roomList.storerooms.length %></h1>
-          <ul>
-            <% roomList.storerooms.forEach(room => { %>
-            <li>
-              <a href="../../room/profile/<%= room.roomID %> "
-                ><h2><%= room.name %></h2></a
-              >
-            </li>
-            <% }) %>
-          </ul>
-        </div> -->
+         <% } %> <!--<% if (roomList.storerooms.length > 0) { %>
+       
         <!-- <% } %> <% if (roomList.xtrarooms.length > 0) { %>
-        <div>
-          <h1>Extra Room: <%= roomList.xtrarooms.length %></h1>
-          <ul>
-            <% roomList.xtrarooms.forEach(room => { %>
-            <li>
-              <a href="../../room/profile/<%= room.roomID %> "
-                ><h2><%= room.name %></h2></a
-              >
-            </li>
-            <% }) %>
-          </ul>
-        </div>
         <% } %> -->
         <div class="form-item">
           <label class="attribute">Rent</label><span class="val"><%=flat.rent%></span>
@@ -310,6 +235,87 @@
       <% } %>
 
 
+       <!-- map -->
+       <div class="map" id="mapid"></div>
+
+       <script
+         src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
+         integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg="
+         crossorigin=""
+       ></script>
+ 
+       <!-- map js  -->
+       <script>
+         // Geolocation api
+         // navigator.geolocation object provides current location of user
+         // if (navigator.geolocation) {
+         //   navigator.geolocation.getCurrentPosition(success, error);
+         // } else {
+         //   console.log("browser does not support geolocation api");
+         // }
+ 
+         // function success(position) {
+         //   const lat = position.coords.latitude;
+         //   const long = position.coords.longitude;
+ 
+         //   var map = L.map("mapid").setView([lat, long], 17);
+ 
+         // const layer = L.tileLayer(
+         //   "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+         //   {
+         //     maxZoom: 19,
+         //     attribution:
+         //       '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+         //   }
+         // ).addTo(map);
+ 
+         // let markerOptions = {
+         //   // title: 'My Location',
+         //   clickable: true,
+         //   draggable: true,
+         // };
+         // // creating marker
+         // let marker = L.marker([lat, long]);
+ 
+         // // add marker to map
+         // marker.addTo(map);
+         // }
+ 
+         // function error(error){
+         //   alert('we could not get current locaiton.');
+         // }
+ 
+         var map = L.map("mapid").setView([23.9481, 90.3793], 17);
+ 
+         const lat = 23.9481;
+         const long = 90.3793;
+ 
+         const layer = L.tileLayer(
+           "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+           {
+             maxZoom: 19,
+             attribution:
+               '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+           }
+         ).addTo(map);
+ 
+         let markerOptions = {
+           // title: 'My Location',
+           clickable: true,
+           draggable: true,
+         };
+         // creating marker
+ 
+         // let l = coords.legth;
+         // for(let i = 0; i<l; i++){
+         //   var marker = L.marker(coords[i].addTo(map));
+         // }
+ 
+         let marker = L.marker([lat, long]);
+ 
+         // add marker to map
+         marker.addTo(map);
+       </script>
     </div>
   </body>
 </html>
