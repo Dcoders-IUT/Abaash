@@ -2,7 +2,7 @@ const express = require('express');
 const store = require('store');
 const database = require('./util/database');
 const misc = require('./util/misc');
-const mlr = require('./util/mlr');
+// const mlr = require('./util/mlr');
 
 const app = express();
 const port = 3001;
@@ -16,15 +16,13 @@ app.set('view engine', 'ejs');
 
 async function allFlats() {
     try {
-        return await database.get('SELECT *, flatarea(flatID) AS area FROM flat');
+        return await database.get('SELECT * FROM flat');
     } catch (err) {
         return {};
     }
 }
-
-
 async function searchFlats(address, minLevel, maxLevel, gender, lift, generator) {
-    const addressQuery =        address === '' ? 'true' : `LOWER(address) LIKE CONCAT('%', LOWER('${address}'),'%')`;
+    const addressQuery =        address === '' ? 'true' : `LOWER(address) LIKE CONCAT('%', LOWER('${address}'),'%')`; 
     const levelQuery = `level >= ${minLevel} AND level <= ${maxLevel}`;
     const genderQuery = `gender = ${gender} OR gender = 2`;
     const liftQuery = `lift >= ${lift ? 1 : 0}`;
@@ -32,7 +30,7 @@ async function searchFlats(address, minLevel, maxLevel, gender, lift, generator)
 
     try {
         return await database.get(
-            `SELECT *, flatarea(flatID) AS area FROM flat
+            `SELECT * FROM flat
             WHERE (${addressQuery}) AND (${levelQuery}) AND (${genderQuery}) AND (${liftQuery}) AND (${generatorQuery})`,
         );
     } catch (err) {
@@ -141,11 +139,11 @@ app.post('/search', async (req, res) => {
 const studentRouter = require('./routes/student');
 const ownerRouter = require('./routes/owner');
 const flatRouter = require('./routes/flat');
-const roomRouter = require('./routes/room');
+// const roomRouter = require('./routes/room');
 
 app.use('/student', studentRouter);
 app.use('/owner', ownerRouter);
 app.use('/flat', flatRouter);
-app.use('/room', roomRouter);
+// app.use('/room', roomRouter);
 
 app.listen(port);

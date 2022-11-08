@@ -26,50 +26,50 @@ async function newFlatID() {
     return base + offset;
 }
 
-async function getRoomList(flatID) {
-    const bedrooms = await database.get(
-        `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=1`,
-    );
-    const diningrooms = await database.get(
-        `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=2`,
-    );
-    const livingrooms = await database.get(
-        `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=3`,
-    );
-    const kitchens = await database.get(
-        `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=4`,
-    );
-    const bathrooms = await database.get(
-        `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=5`,
-    );
-    const balconies = await database.get(
-        `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=6`,
-    );
-    const storerooms = await database.get(
-        `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=7`,
-    );
-    const xtrarooms = await database.get(
-        `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=8`,
-    );
+// async function getRoomList(flatID) {
+//     const bedrooms = await database.get(
+//         `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=1`
+//     );
+//     const diningrooms = await database.get(
+//         `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=2`
+//     );
+//     const livingrooms = await database.get(
+//         `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=3`
+//     );
+//     const kitchens = await database.get(
+//         `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=4`
+//     );
+//     const bathrooms = await database.get(
+//         `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=5`
+//     );
+//     const balconies = await database.get(
+//         `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=6`
+//     );
+//     const storerooms = await database.get(
+//         `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=7`
+//     );
+//     const xtrarooms = await database.get(
+//         `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=8`
+//     );
 
-    return {
-        bedrooms,
-        diningrooms,
-        livingrooms,
-        kitchens,
-        bathrooms,
-        balconies,
-        storerooms,
-        xtrarooms,
-    };
-}
+//     return {
+//         bedrooms,
+//         diningrooms,
+//         livingrooms,
+//         kitchens,
+//         bathrooms,
+//         balconies,
+//         storerooms,
+//         xtrarooms,
+//     };
+// }
 
 app.post('/profile/request', async (req, res) => {
     const { studentID } = req.body;
     const { flatID } = req.body;
 
     await database.exec(
-        `INSERT INTO flatrequest VALUES (${studentID}, ${flatID}, '${hash.salt()}')`, 
+        `INSERT INTO flatrequest VALUES (${studentID}, ${flatID}, '${hash.salt()}')`,
     );
 
     res.redirect(`../profile/${flatID}`);
@@ -81,31 +81,32 @@ app.get('/profile/:id', async (req, res) => {
     const mode = store.get('mode');
     let flat;
     let owner;
-    let roomList;
+    // let roomList;
 
     try {
-        flat = await database.getUnique(
-            `SELECT *, flatarea(flatID) AS area FROM flat WHERE flatID='${id}'`
-        );
-        roomList = await getRoomList(id);
+        flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${id}'`);
+        // roomList = await getRoomList(id);
         owner = await database.getUnique(`SELECT name FROM owner WHERE username='${flat.owner}'`);
     } catch (err) {
         console.log(err);
-        res.render('flat/profile', { currentUser: store.get('user'), flat: null, roomList: null });
+        res.render('flat/profile', {
+            currentUser: store.get('user'),
+            flat: null /* , roomList: null */,
+        });
         return;
     }
 
     if (mode === 'student') {
         try {
             const student = await database.getUnique(
-                `SELECT * FROM student WHERE studentID=${currentUser}`,
+                `SELECT * FROM student WHERE studentID=${currentUser}`, 
             );
 
             res.render('flat/profile', {
                 currentUser,
                 mode,
                 flat,
-                roomList,
+                // roomList,
                 owner,
                 student,
             });
@@ -114,7 +115,7 @@ app.get('/profile/:id', async (req, res) => {
                 currentUser,
                 mode,
                 flat,
-                roomList,
+                // roomList,
                 owner,
             });
         }
@@ -126,7 +127,7 @@ app.get('/profile/:id', async (req, res) => {
         currentUser,
         mode,
         flat,
-        roomList,
+        // roomList,
         owner,
     });
 });
@@ -196,9 +197,7 @@ app.route('/edit/:id')
         }
 
         try {
-            flat = await database.getUnique(
-                `SELECT *, flatarea(flatID) AS area FROM flat WHERE flatID='${id}'`
-            );
+            flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${id}'`);
             owner = await database.getUnique(
                 `SELECT name FROM owner WHERE username='${flat.owner}'`
             );

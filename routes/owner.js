@@ -96,7 +96,7 @@ app.get('/profile/:id', async (req, res) => {
         return;
     }
     const flatList = await database.get(
-        `SELECT *, flatarea(flatID) AS area FROM flat WHERE owner='${id}'`
+        `SELECT * FROM flat WHERE owner='${id}'`
     );
 
     res.render('owner/profile', {
@@ -181,7 +181,7 @@ app.get('/requests', async (req, res) => {
 
     try {
         const flatRequestList = await database.get(
-            `SELECT *, flatarea(flatID) AS area FROM flatrequest WHERE (SELECT owner FROM flat WHERE flatrequest.flatid=flat.flatid)='${currentUser}'`
+            `SELECT * FROM flatrequest WHERE (SELECT owner FROM flat WHERE flatrequest.flatid=flat.flatid)='${currentUser}'`
         );
 
         for (let i = 0; i < flatRequestList.length; i++) {
@@ -190,7 +190,7 @@ app.get('/requests', async (req, res) => {
             );
 
             const flatDetails = await database.getUnique(
-                `SELECT *, flatarea(flatID) AS area FROM flat WHERE flatID='${flatRequestList[i].flatID}'`
+                `SELECT * FROM flat WHERE flatID='${flatRequestList[i].flatID}'`
             );
 
             detailedRequestList.push({
