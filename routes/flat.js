@@ -26,44 +26,6 @@ async function newFlatID() {
     return base + offset;
 }
 
-// async function getRoomList(flatID) {
-//     const bedrooms = await database.get(
-//         `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=1`
-//     );
-//     const diningrooms = await database.get(
-//         `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=2`
-//     );
-//     const livingrooms = await database.get(
-//         `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=3`
-//     );
-//     const kitchens = await database.get(
-//         `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=4`
-//     );
-//     const bathrooms = await database.get(
-//         `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=5`
-//     );
-//     const balconies = await database.get(
-//         `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=6`
-//     );
-//     const storerooms = await database.get(
-//         `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=7`
-//     );
-//     const xtrarooms = await database.get(
-//         `SELECT roomID, name FROM room WHERE flatID=${flatID} AND type=8`
-//     );
-
-//     return {
-//         bedrooms,
-//         diningrooms,
-//         livingrooms,
-//         kitchens,
-//         bathrooms,
-//         balconies,
-//         storerooms,
-//         xtrarooms,
-//     };
-// }
-
 app.post('/profile/request', async (req, res) => {
     const { studentID } = req.body;
     const { flatID } = req.body;
@@ -81,17 +43,18 @@ app.get('/profile/:id', async (req, res) => {
     const mode = store.get('mode');
     let flat;
     let owner;
-    // let roomList;
+    let rooms;
 
     try {
         flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${id}'`);
-        // roomList = await getRoomList(id);
+        rooms = await database.getUnique(`SELECT * FROM room WHERE flatID='${id}'`);
         owner = await database.getUnique(`SELECT name FROM owner WHERE username='${flat.owner}'`);
     } catch (err) {
         console.log(err);
         res.render('flat/profile', {
             currentUser: store.get('user'),
-            flat: null /* , roomList: null */,
+            flat: null,
+            rooms: null,
         });
         return;
     }
@@ -99,14 +62,14 @@ app.get('/profile/:id', async (req, res) => {
     if (mode === 'student') {
         try {
             const student = await database.getUnique(
-                `SELECT * FROM student WHERE studentID=${currentUser}`, 
+                `SELECT * FROM student WHERE studentID=${currentUser}`,
             );
 
             res.render('flat/profile', {
                 currentUser,
                 mode,
                 flat,
-                // roomList,
+                rooms,
                 owner,
                 student,
             });
@@ -115,7 +78,7 @@ app.get('/profile/:id', async (req, res) => {
                 currentUser,
                 mode,
                 flat,
-                // roomList,
+                rooms,
                 owner,
             });
         }
@@ -127,7 +90,7 @@ app.get('/profile/:id', async (req, res) => {
         currentUser,
         mode,
         flat,
-        // roomList,
+        rooms,
         owner,
     });
 });
@@ -167,17 +130,31 @@ app.route('/register')
 
         const { name } = temp;
         const { address } = temp;
+        const { description } = temp;
         const { owner } = temp;
         const gender = Number(temp.gender);
         const level = Number(temp.level);
+        const area = Number(temp.area);
         const x = Number(temp.x);
         const y = Number(temp.y);
         const lift = temp.lift === 'on';
         const generator = temp.generator === 'on';
         const { rent } = temp;
 
+        const bed = Number(temp.bed);
+        const din = Number(temp.din);
+        const liv = Number(temp.liv);
+        const kit = Number(temp.kit);
+        const bath = Number(temp.bath);
+        const balk = Number(temp.balk);
+        const xtra = Number(temp.xtra);
+
         await database.exec(
-            `INSERT INTO flat VALUES (${flatID}, '${name}', '${address}', ${gender}, ${x}, ${y}, ${level}, '${owner}', ${lift}, ${generator}, ${rent})`,
+            `INSERT INTO flat VALUES (${flatID}, '${name}', '${address}', '${description}', '${owner}', ${gender}, ${x}, ${y}, ${level}, ${area}, ${lift}, ${generator}, ${rent})`,
+        );
+
+        await database.exec(
+            `INSERT INTO room VALUES (${flatID}, ${bed}, ${din}, ${liv}, ${kit}, ${bath}, ${balk}, ${xtra})`,
         );
 
         res.redirect(`profile/${flatID}`);
@@ -189,6 +166,7 @@ app.route('/edit/:id')
         const currentUser = store.get('user');
         const mode = store.get('mode');
         let flat;
+        let rooms;
         let owner;
 
         if (mode !== 'owner') {
@@ -197,7 +175,8 @@ app.route('/edit/:id')
         }
 
         try {
-            flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${id}'`);
+            flat = await database.getUnique(`SELECT * FROM flat WHERE flatID=${id}`);
+            rooms = await database.getUnique(`SELECT * FROM room WHERE flatID='${id}'`);
             owner = await database.getUnique(
                 `SELECT name FROM owner WHERE username='${flat.owner}'`
             );
@@ -210,6 +189,7 @@ app.route('/edit/:id')
             misc,
             currentUser,
             flat,
+            rooms,
             owner,
         });
     })
@@ -219,17 +199,32 @@ app.route('/edit/:id')
 
         const { name } = temp;
         const { address } = temp;
+        const { description } = temp;
         const gender = Number(temp.gender);
         const level = Number(temp.level);
-        const x = Number(temp.x);
-        const y = Number(temp.y);
+        const area = Number(temp.area);
         const lift = temp.lift === 'on';
         const generator = temp.generator === 'on';
+        const { rent } = temp;
+
+        const bed = Number(temp.bed);
+        const din = Number(temp.din);
+        const liv = Number(temp.liv);
+        const kit = Number(temp.kit);
+        const bath = Number(temp.bath);
+        const balk = Number(temp.balk);
+        const xtra = Number(temp.xtra);
 
         await database.exec(
             `UPDATE flat
-            SET name='${name}', address='${address}', gender=${gender}, x=${x}, y=${y}, level=${level}, lift=${lift}, generator=${generator}
+            SET name='${name}', address='${address}', description='${description}', gender=${gender}, area=${area}, level=${level}, lift=${lift}, generator=${generator}, rent=${rent}
             WHERE flatID=${flatID}`,
+        );
+
+        await database.exec(
+            `UPDATE room
+            SET bed=${bed}, din=${din}, liv=${liv}, kit=${kit}, bath=${bath}, balk=${balk}, xtra=${xtra}
+            WHERE flatID=${flatID}`, 
         );
 
         res.redirect(`../profile/${flatID}`);

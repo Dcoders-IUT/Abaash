@@ -163,7 +163,7 @@
         <div class="form-item">
           <label class="attribute">For</label
           ><span class="val"
-            ><%=flat.gender? 'Bachelors' : 'Bachelorettes' %></span
+            ><%=flat.gender? 'Male' : 'Female' %></span
           >
         </div>
         <div class="form-item">
@@ -196,9 +196,6 @@
         <div class="buttons">
           <button class="bb">
             <a href="../edit/<%=flat.flatID%>">Edit Info</a>
-          </button>
-          <button class="bb">
-            <!-- <a href="../../room/register/<%#=flat.flatID%>">Add Rooms</a> -->
           </button>
         </div>
       
@@ -263,10 +260,7 @@
          //   alert('we could not get current locaiton.');
          // }
  
-         var map = L.map("mapid").setView([23.9481, 90.3793], 17);
- 
-         const lat = 23.9481;
-         const long = 90.3793;
+         var map = L.map("mapid").setView([<%=flat.x%>, <%=flat.y%>], 17);
  
          const layer = L.tileLayer(
            "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -278,7 +272,7 @@
          ).addTo(map);
  
          let markerOptions = {
-           // title: 'My Location',
+          //  title: <%#= flat.name%>,
            clickable: true,
            draggable: true,
          };
@@ -289,7 +283,7 @@
          //   var marker = L.marker(coords[i].addTo(map));
          // }
  
-         let marker = L.marker([lat, long]);
+         let marker = L.marker([<%=flat.x%>, <%=flat.y%>]);
  
          // add marker to map
          marker.addTo(map);

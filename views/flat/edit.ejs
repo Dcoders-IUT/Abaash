@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/css/edit.css" type="text/css" />
     <title>Edit Flat</title>
-    <style>
+    <!-- <style>
       *{
           margin: 0;
           padding:0;
@@ -22,12 +22,14 @@
           background-size: 100% 100%;
       }
 
-  </style>
+  </style> -->
   </head>
 
+
+
   <body>
+    <% if(currentUser === flat.owner) { %>
     <div class="container">
-      <% if(currentUser === flat.owner) { %>
       <form method="post">
         <h1>Edit Flat</h1>
         <input
@@ -44,6 +46,10 @@
           value="<%= flat.address %>"
         />
         <br />
+        <div class="edit">
+          <input type="text" name="description" placeholder="Description" value =<%=flat.description %> />
+          <br />
+        </div>
         <label>Gender</label>
         <select name="gender">
           <% misc.globalConst.flatGenderList.forEach((gender)=> { %>
@@ -60,20 +66,90 @@
           <% } %>
         </select>
         <br />
+        <div class="edit">
+          <input type="number" name="area" placeholder="Area in square feet" value="<%=flat.area %>" />
+        </div>
         <label>Lift</label>
         <input type="checkbox" name="lift" <%=flat.lift > 0? 'checked': '' %> />
         <label>Generator</label>
         <input type="checkbox" name="generator" <%=flat.generator > 0? 'checked': '' %> /> <br />
+        <div class="edit">
+          <input type="number" name="rent" placeholder="Rent" value="<%=flat.rent %>"/> <br />
+        </div>
         <a href="../../owner/profile/<%=flat.owner%>">Owner: <%=owner.name%></a>
-        <input type="hidden" name="x" value="<%= flat.x %>" />
-        <input type="hidden" name="y" value="<%= flat.y %>" />
         <br />
         <button>Save</button>
       </form>
       <button><a href="../profile/<%=flat.flatID%>">Cancel</a></button>
-      <% } else { %>
-      <p>USER NOT FOUND!</p>
-      <% } %>
+
+      <!-- Rooms Added 9/11/2022 -->
+      <div>
+        <div class="edit">
+          <input type="number" name="bed" placeholder="Bedroom" value="<%=rooms.bed%>" form="register" />
+        </div>
+        <br />
+        <div class="edit">
+          <input
+            type="number"
+            name="din"
+            placeholder="Dining Room"
+            value="<%=rooms.din%>"
+            form="register"
+          />
+        </div>
+        <br />
+        <div class="edit">
+          <input
+            type="number"
+            name="liv"
+            placeholder="Living Room"
+            value="<%=rooms.liv%>"
+            form="register"
+          />
+        </div>
+        <br />
+        <div class="edit">
+          <input type="number" name="kit" placeholder="Kitchen" value="<%=rooms.kit%>" form="register" />
+        </div>
+        <br />
+        <div class="edit">
+          <input
+            type="number"
+            name="bath"
+            placeholder="Bathroom"
+            value="<%=rooms.bath%>"
+            form="register"
+          />
+        </div>
+        <br />
+        <div class="edit">
+          <input
+            type="number"
+            name="balk"
+            placeholder="Balcony"
+            value="<%=rooms.balk%>"
+            form="register"
+          />
+        </div>
+        <br />
+        <div class="edit">
+          <input
+            type="number"
+            name="xtra"
+            placeholder="Extra Room"
+            value="<%=rooms.xtra%>"
+            form="register"
+          />
+        </div>
+        <br />
+      </div>
+      <!-- The End of Rooms -->
     </div>
+
+    
+
+    <% } else { %>
+    <p>USER NOT FOUND!</p>
+    <% } %>
   </body>
 </html>

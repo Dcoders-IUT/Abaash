@@ -13,13 +13,13 @@ obj.bloodgroupList = [
 ];
 
 obj.genderList = [
-    { value: 1, display: 'Boy' },
-    { value: 0, display: 'Girl' },
+    { value: 1, display: 'Male' },
+    { value: 0, display: 'Female' },
 ];
 
 obj.flatGenderList = [
-    { value: 1, display: 'Boys' },
-    { value: 0, display: 'Girls' },
+    { value: 1, display: 'Male' },
+    { value: 0, display: 'Female' },
     { value: 2, display: 'Not Determined Yet' },
 ];
 

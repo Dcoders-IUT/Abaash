@@ -31,15 +31,20 @@
   </head>
 
   <body>
+    <% if(currentUser === owner.username) { %>
     <div class="register-container">
-      <% if(currentUser === owner.username) { %>
-      <form action="register" method="post">
+      <form action="register" id="register" method="post">
         <h1>New Flat</h1>
         <div class="edit">
           <input type="text" name="name" placeholder="Name" /> <br />
-        </div>       
+        </div>
         <div class="edit">
-          <input type="text" name="address" placeholder="Address" autocomplete="off"/> <br />
+          <input type="text" name="address" placeholder="Address" />
+          <br />
+        </div>
+        <div class="edit">
+          <input type="text" name="description" placeholder="Description" />
+          <br />
         </div>
         <div class="edit">
           <label>Gender</label>
@@ -49,6 +54,26 @@
             <% }) %>
           </select>
         </div>
+        <span>
+          <input type="text" name="x" id="x" placeholder="Latitude" />
+          <input type="text" name="y" id="y" placeholder="Longitude" />
+          <button onclick="getlocation()" type="button">
+            Set Current Location
+          </button>
+          <button type="button">Set From Map</button>
+          <script>
+            var x = document.getElementById("location");
+            function getlocation() {
+              xy = navigator.geolocation.getCurrentPosition(setXY);
+              console.log(xy);
+            }
+
+            function setXY(location) {
+              document.getElementById("x").value = location.coords.latitude;
+              document.getElementById("y").value = location.coords.longitude;
+            }
+          </script>
+        </span>
         <div class="edit">
           <label>Level</label>
           <select name="level">
@@ -56,6 +81,9 @@
             <option value="<%=i+1%>"><%=i+1%></option>
             <% } %>
           </select>
+        </div>
+        <div class="edit">
+          <input type="number" name="area" placeholder="Area in square feet" />
         </div>
         <div class="edit">
           <label>Lift</label>
@@ -72,17 +100,71 @@
         <a href="../../owner/profile/<%=owner.username%>"
           >Owner: <%=owner.name%></a
         >
-        <input type="hidden" name="x" value="23.94538493888004" />
-        <input type="hidden" name="y" value="90.38274718424901" />
         <input type="hidden" name="owner" value="<%=owner.username%>" />
         <br />
 
         <button class="save">Save</button>
         <button><a href="../owner/profile">Cancel</a></button>
       </form>
-      <% } else { %>
-      <p>USER NOT FOUND!</p>
-      <% } %>
     </div>
+
+    <div>
+      <div class="edit">
+        <input type="number" name="bed" placeholder="Bedroom" form="register" />
+      </div>
+      <br />
+      <div class="edit">
+        <input
+          type="number"
+          name="din"
+          placeholder="Dining Room"
+          form="register"
+        />
+      </div>
+      <br />
+      <div class="edit">
+        <input
+          type="number"
+          name="liv"
+          placeholder="Living Room"
+          form="register"
+        />
+      </div>
+      <br />
+      <div class="edit">
+        <input type="number" name="kit" placeholder="Kitchen" form="register" />
+      </div>
+      <br />
+      <div class="edit">
+        <input
+          type="number"
+          name="bath"
+          placeholder="Bathroom"
+          form="register"
+        />
+      </div>
+      <br />
+      <div class="edit">
+        <input
+          type="number"
+          name="balk"
+          placeholder="Balcony"
+          form="register"
+        />
+      </div>
+      <br />
+      <div class="edit">
+        <input
+          type="number"
+          name="xtra"
+          placeholder="Extra Room"
+          form="register"
+        />
+      </div>
+      <br />
+    </div>
+    <% } else { %>
+    <p>USER NOT FOUND!</p>
+    <% } %>
   </body>
 </html>

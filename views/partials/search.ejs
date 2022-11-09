@@ -24,7 +24,7 @@
     />
 
     <!-- Main CSS-->
-    <link href="css/advance-search.css" rel="stylesheet" media="all" />
+    <link href="css/search.css" rel="stylesheet" media="all" />
     
   </head>
   <body>
@@ -56,9 +56,34 @@
                     />
                     <i class="zmdi zmdi-pin input-group-symbol"></i>
                   </div>
+
+                  <span>
+                    <table border="2">
+                      <td><button onclick="getMylocation()" type="button"><font color="white">Near me</font></button></td>
+                      <td><button onclick="getIUTLocation()" type="button"><font color="white">Near IUT</font></button></td>
+                      <td><button type="button"><font color="white">Set From Map</font></button></td>
+                    </table>
+                  </span>
+                  <script>
+                    var x = document.getElementById("location");
+                    function getMylocation() {
+                      navigator.geolocation.getCurrentPosition(setAddress);
+                      navigator.geolocation.getCurrentPosition(xy);
+                      console.log(xy);
+                    }
+              
+                    function setAddress(location) {
+                      var x =`#(${location.coords.latitude}, ${location.coords.longitude})`;
+                      document.getElementById("address").value = x;
+                    }
+
+                    function getIUTLocation() {
+                      document.getElementById("address").value = '#(23.947303719314394, 90.38175810807775)';
+                    }
+                  </script>
                   
-                  <!-- level -->
                   <div class="row row-space">
+                    <!-- level -->
                     <div class="col-2">
                       <div class="input-group">
                         <label for="level" class="level">Level</label>
@@ -92,7 +117,7 @@
                   </div>
 
                   <!-- lift & generator -->
-                  <div class="matha" >
+                  <div class="checkdiv" >
                     <span>
                       <label>Lift Required</label>
                       <input type="checkbox" name="lift" />
@@ -101,30 +126,41 @@
                     </span>
                   </div>
 
+                  <div class="row row-space">
+                    <!-- area -->
+                    <div class="col-2">
+                      <div class="input-group">
+                        <label class="label">Minimum Area (ft<sup>2</sup>)</label>
+                        <input
+                          class="input--style-1"
+                          type="number"
+                          name="area"
+                          placeholder="Minimum Area"
+                        />
+                        <i class="zmdi zmdi-pin input-group-symbol"></i>
+                      </div>
+                    </div>
+
+                    <!-- rent -->
+                    <div class="col-2">
+                      <div class="input-group">
+                        <input
+                          class="input--style-1"
+                          type="number"
+                          name="rent"
+                          placeholder="Maximum Rent"
+                        />
+                        <i class="zmdi zmdi-pin input-group-symbol"></i>
+                      </div>
+                    </div>
+
+                  </div>
+
                   <!-- submit -->
                   <button class="btn-submit" type="submit" text-align="center">
                     search
                   </button>
                 </form>
-                <button onclick="getlocation()"><font color="white">Near me</font></button>
-                <button><font color="white">Near IUT</font></button>
-                <button><font color="white">Set From Map</font></button>
-                  <script>
-                    var x = document.getElementById("location");
-                    function getlocation() {
-                      navigator.geolocation.getCurrentPosition(showPosition);
-                    }
-              
-                    function showPosition(position) {
-                      var x =
-                        "#(" +
-                        position.coords.latitude +
-                        ", " +
-                        position.coords.longitude +
-                        ")";
-                      document.getElementById("address").value = x;
-                    }
-                  </script>
               </div>
             </div>
           </div>

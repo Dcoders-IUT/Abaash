@@ -21,17 +21,22 @@ async function allFlats() {
         return {};
     }
 }
-async function searchFlats(address, minLevel, maxLevel, gender, lift, generator) {
-    const addressQuery =        address === '' ? 'true' : `LOWER(address) LIKE CONCAT('%', LOWER('${address}'),'%')`; 
+async function searchFlats(address, minLevel, maxLevel, gender, lift, generator, area, rent) {
+    const addressQuery =        address === '' ? 'true' : `LOWER(address) LIKE CONCAT('%', LOWER('${address}'),'%')`;
     const levelQuery = `level >= ${minLevel} AND level <= ${maxLevel}`;
     const genderQuery = `gender = ${gender} OR gender = 2`;
     const liftQuery = `lift >= ${lift ? 1 : 0}`;
     const generatorQuery = `generator >= ${generator ? 1 : 0}`;
+    const areaQuery = `area >= ${area}`; 
+    const rentQuery = `rent <= ${rent}`;
 
     try {
+        // console.log(`SELECT * FROM flat
+        // WHERE (${addressQuery}) AND (${levelQuery}) AND (${genderQuery}) AND (${liftQuery}) AND (${generatorQuery}) AND (${areaQuery}) AND (${rentQuery})`);
+
         return await database.get(
             `SELECT * FROM flat
-            WHERE (${addressQuery}) AND (${levelQuery}) AND (${genderQuery}) AND (${liftQuery}) AND (${generatorQuery})`,
+            WHERE (${addressQuery}) AND (${levelQuery}) AND (${genderQuery}) AND (${liftQuery}) AND (${generatorQuery}) AND (${areaQuery}) AND (${rentQuery})`,
         );
     } catch (err) {
         return {};
@@ -129,21 +134,30 @@ app.post('/search', async (req, res) => {
     const gender = Number(temp.gender);
     const lift = temp.lift === 'on';
     const generator = temp.lift === 'on';
+    const area = Number(temp.area);
+    const rent = Number(temp.rent);
 
     res.render('searchResults', {
         misc,
-        flatList: await searchFlats(address, minLevel, maxLevel, gender, lift, generator),
+        flatList: await searchFlats(
+            address,
+            minLevel,
+            maxLevel,
+            gender,
+            lift,
+            generator,
+            area,
+            rent,
+        ),
     });
 });
 
 const studentRouter = require('./routes/student');
 const ownerRouter = require('./routes/owner');
 const flatRouter = require('./routes/flat');
-// const roomRouter = require('./routes/room');
 
 app.use('/student', studentRouter);
 app.use('/owner', ownerRouter);
 app.use('/flat', flatRouter);
-// app.use('/room', roomRouter);
 
 app.listen(port);
