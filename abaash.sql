@@ -24,15 +24,15 @@ CREATE TABLE IF NOT EXISTS `flat` (
   `flatID` int(12) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `address` varchar(200) DEFAULT NULL,
+  `description` text DEFAULT NULL,
   `owner` varchar(50) NOT NULL,
-  `gender` smallint(2) NOT NULL DEFAULT 2,
-  `x` double NOT NULL DEFAULT 23.94538493888004,
-  `y` double NOT NULL DEFAULT 90.38274718424901,
+  `gender` smallint(2) NOT NULL,
+  `x` double NOT NULL,
+  `y` double NOT NULL,
   `level` int(3) NOT NULL,
-  `area` double NOT NULL DEFAULT 0,
+  `area` double NOT NULL,
   `lift` tinyint(1) NOT NULL,
   `generator` tinyint(1) NOT NULL,
-  `lightsource` tinyint(1) NOT NULL,
   `rent` int(10) DEFAULT NULL,
   PRIMARY KEY (`flatID`) USING BTREE,
   KEY `flat_ibfk_1` (`owner`),
@@ -42,13 +42,14 @@ CREATE TABLE IF NOT EXISTS `flat` (
 -- Dumping data for table abaash.flat: ~6 rows (approximately)
 DELETE FROM `flat`;
 /*!40000 ALTER TABLE `flat` DISABLE KEYS */;
-INSERT INTO `flat` (`flatID`, `name`, `address`, `owner`, `gender`, `x`, `y`, `level`, `area`, `lift`, `generator`, `lightsource`, `rent`) VALUES
-	(1001734, 'Ork er Flat 1', 'In Our Hearts', 'ork', 1, 23.94897163115608, 90.3798185760795, 2, 0, 0, 1, 0, 0),
-	(1002726, 'Ork er Flat 2', 'In Our Hearts', 'ork', 1, 23.94897163115608, 90.3798185760795, 1, 0, 1, 0, 0, 0),
-	(1003432, 'Ork er Flat 3', 'In Our Hearts', 'ork', 1, 23.94897163115608, 90.3798185760795, 2, 0, 0, 1, 0, 0),
-	(1004979, 'Ork er Flat 4', 'In Our Hearts', 'ork', 2, 23.94897163115608, 90.3798185760795, 3, 0, 0, 1, 0, 0),
-	(1158151, 'gultu', 'Dhaka', 'arifin', 1, 23.819028104444815, 90.45262759742008, 20, 0, 1, 1, 0, 0),
-	(1438758, 'Ork er Flat 5', 'In Our Hearts', 'ork', 1, 23.94897163115608, 90.3798185760795, 4, 0, 1, 1, 0, 7000);
+INSERT INTO `flat` (`flatID`, `name`, `address`, `description`, `owner`, `gender`, `x`, `y`, `level`, `area`, `lift`, `generator`, `rent`) VALUES
+	(1001734, 'Ork er Flat 1', 'In Our Hearts', '', 'ork', 1, 23.94897163115608, 90.3798185760795, 2, 500, 0, 1, 0),
+	(1002726, 'Ork er Flat 2', 'In Our Hearts', '', 'ork', 1, 23.94897163115608, 90.3798185760795, 1, 500, 1, 0, 0),
+	(1003432, 'Ork er Flat 3', 'In Our Hearts', '', 'ork', 1, 23.94897163115608, 90.3798185760795, 2, 500, 0, 1, 0),
+	(1004979, 'Ork er Flat 4', 'In Our Hearts', '', 'ork', 2, 23.94897163115608, 90.3798185760795, 3, 500, 0, 1, 0),
+	(1129304, 'Ork er Flat 6', 'In Our Hearts', '', 'ork', 1, 23.9489922, 90.3797594, 6, 700, 0, 0, 4000),
+	(1158151, 'gultu', 'Dhaka', '', 'arifin', 1, 23.819028104444815, 90.45262759742008, 20, 0, 1, 1, 0),
+	(1438758, 'Ork er Flat 5', 'In Our Hearts', '', 'ork', 1, 23.94897163115608, 90.3798185760795, 4, 500, 1, 1, 7000);
 /*!40000 ALTER TABLE `flat` ENABLE KEYS */;
 
 -- Dumping structure for table abaash.flatrequest
@@ -99,20 +100,28 @@ INSERT INTO `owner` (`name`, `username`, `password`, `passwordLastChanged`, `pho
 DROP TABLE IF EXISTS `room`;
 CREATE TABLE IF NOT EXISTS `room` (
   `flatid` int(11) NOT NULL,
-  `bed` int(11) DEFAULT NULL,
-  `din` int(11) DEFAULT NULL,
-  `liv` int(11) DEFAULT NULL,
-  `kit` int(11) DEFAULT NULL,
-  `bath` int(11) DEFAULT NULL,
-  `balk` int(11) DEFAULT NULL,
-  `xtra` int(11) DEFAULT NULL,
+  `bed` int(11) NOT NULL,
+  `din` int(11) NOT NULL,
+  `liv` int(11) NOT NULL,
+  `kit` int(11) NOT NULL,
+  `bath` int(11) NOT NULL,
+  `balk` int(11) NOT NULL,
+  `xtra` int(11) NOT NULL,
   PRIMARY KEY (`flatid`),
   CONSTRAINT `room_ibfk_1` FOREIGN KEY (`flatid`) REFERENCES `flat` (`flatID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table abaash.room: ~0 rows (approximately)
+-- Dumping data for table abaash.room: ~7 rows (approximately)
 DELETE FROM `room`;
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
+INSERT INTO `room` (`flatid`, `bed`, `din`, `liv`, `kit`, `bath`, `balk`, `xtra`) VALUES
+	(1001734, 3, 1, 1, 1, 3, 3, 0),
+	(1002726, 0, 0, 0, 0, 0, 0, 0),
+	(1003432, 0, 0, 0, 0, 0, 0, 0),
+	(1004979, 0, 0, 0, 0, 0, 0, 0),
+	(1129304, 3, 1, 1, 1, 2, 2, 0),
+	(1158151, 0, 0, 0, 0, 0, 0, 0),
+	(1438758, 0, 0, 0, 0, 0, 0, 0);
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 
 -- Dumping structure for table abaash.student
