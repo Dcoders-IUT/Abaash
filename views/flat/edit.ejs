@@ -30,8 +30,12 @@
   <body>
     <% if(currentUser === flat.owner) { %>
     <div class="container">
-      <form method="post">
+      <form id="register" method="post">
         <h1>Edit Flat</h1>
+        <div>
+          <label>Photo</label>
+        <input name="photo" type="file" accept="image/png, image/jpeg">
+      </div>
         <input
           type="text"
           name="name"

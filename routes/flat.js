@@ -19,7 +19,7 @@ async function newFlatID() {
     do {
         offset = crypto.randomInt(divisor);
         row = await database.getUnique(
-            `SELECT COUNT(*) AS count FROM flat WHERE flatID=${base + offset}`
+            `SELECT COUNT(*) AS count FROM flat WHERE flatID=${base + offset}`,
         );
     } while (row.count > 0);
 
@@ -31,7 +31,7 @@ app.post('/profile/request', async (req, res) => {
     const { flatID } = req.body;
 
     await database.exec(
-        `INSERT INTO flatrequest VALUES (${studentID}, ${flatID}, '${hash.salt()}')`,
+        `INSERT INTO flatrequest VALUES (${studentID}, ${flatID}, '${hash.salt()}')`
     );
 
     res.redirect(`../profile/${flatID}`);
@@ -62,7 +62,7 @@ app.get('/profile/:id', async (req, res) => {
     if (mode === 'student') {
         try {
             const student = await database.getUnique(
-                `SELECT * FROM student WHERE studentID=${currentUser}`,
+                `SELECT * FROM student WHERE studentID=${currentUser}`
             );
 
             res.render('flat/profile', {
@@ -108,7 +108,7 @@ app.route('/register')
 
         try {
             owner = await database.getUnique(
-                `SELECT username, name FROM owner WHERE username='${currentUser}'`,
+                `SELECT username, name FROM owner WHERE username='${currentUser}'`
             );
         } catch (err) {
             res.redirect('../');
@@ -150,11 +150,11 @@ app.route('/register')
         const xtra = Number(temp.xtra);
 
         await database.exec(
-            `INSERT INTO flat VALUES (${flatID}, '${name}', '${address}', '${description}', '${owner}', ${gender}, ${x}, ${y}, ${level}, ${area}, ${lift}, ${generator}, ${rent})`,
+            `INSERT INTO flat VALUES (${flatID}, '${name}', '${address}', '${description}', '${owner}', ${gender}, ${x}, ${y}, ${level}, ${area}, ${lift}, ${generator}, ${rent})`
         );
 
         await database.exec(
-            `INSERT INTO room VALUES (${flatID}, ${bed}, ${din}, ${liv}, ${kit}, ${bath}, ${balk}, ${xtra})`,
+            `INSERT INTO room VALUES (${flatID}, ${bed}, ${din}, ${liv}, ${kit}, ${bath}, ${balk}, ${xtra})`
         );
 
         res.redirect(`profile/${flatID}`);
@@ -178,7 +178,7 @@ app.route('/edit/:id')
             flat = await database.getUnique(`SELECT * FROM flat WHERE flatID=${id}`);
             rooms = await database.getUnique(`SELECT * FROM room WHERE flatID='${id}'`);
             owner = await database.getUnique(
-                `SELECT name FROM owner WHERE username='${flat.owner}'`
+                `SELECT name FROM owner WHERE username='${flat.owner}'`,
             );
         } catch (err) {
             res.redirect('../../');
@@ -196,6 +196,8 @@ app.route('/edit/:id')
     .post(async (req, res) => {
         const temp = req.body;
         const flatID = req.params.id;
+
+        console.log(temp); 
 
         const { name } = temp;
         const { address } = temp;
@@ -218,13 +220,13 @@ app.route('/edit/:id')
         await database.exec(
             `UPDATE flat
             SET name='${name}', address='${address}', description='${description}', gender=${gender}, area=${area}, level=${level}, lift=${lift}, generator=${generator}, rent=${rent}
-            WHERE flatID=${flatID}`,
+            WHERE flatID=${flatID}`
         );
 
         await database.exec(
             `UPDATE room
             SET bed=${bed}, din=${din}, liv=${liv}, kit=${kit}, bath=${bath}, balk=${balk}, xtra=${xtra}
-            WHERE flatID=${flatID}`, 
+            WHERE flatID=${flatID}`
         );
 
         res.redirect(`../profile/${flatID}`);
