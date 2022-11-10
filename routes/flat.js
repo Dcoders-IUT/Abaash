@@ -1,6 +1,7 @@
 const express = require('express');
 const store = require('store');
 const crypto = require('crypto');
+const fileUpload = require('express-fileupload');
 const database = require('../util/database');
 const misc = require('../util/misc');
 const hash = require('../util/hash');
@@ -9,6 +10,7 @@ const app = express.Router();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(fileUpload); 
 
 async function newFlatID() {
     const base = 1000000;
@@ -197,7 +199,7 @@ app.route('/edit/:id')
         const temp = req.body;
         const flatID = req.params.id;
 
-        console.log(temp); 
+        console.log(req.files);
 
         const { name } = temp;
         const { address } = temp;
