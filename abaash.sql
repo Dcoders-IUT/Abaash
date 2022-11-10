@@ -43,8 +43,8 @@ CREATE TABLE IF NOT EXISTS `flat` (
 DELETE FROM `flat`;
 /*!40000 ALTER TABLE `flat` DISABLE KEYS */;
 INSERT INTO `flat` (`flatID`, `name`, `address`, `description`, `owner`, `gender`, `x`, `y`, `level`, `area`, `lift`, `generator`, `rent`) VALUES
-	(1001734, 'Ork er Flat 1', 'In Our Hearts', '', 'ork', 1, 23.94897163115608, 90.3798185760795, 2, 500, 0, 1, 0),
-	(1002726, 'Ork er Flat 2', 'In Our Hearts', '', 'ork', 1, 23.94897163115608, 90.3798185760795, 1, 500, 1, 0, 0),
+	(1001734, 'Ork er Flat 1', 'In Our Hearts', '/', 'ork', 1, 23.94897163115608, 90.3798185760795, 2, 500, 0, 1, 0),
+	(1002726, 'Ork er Flat 2', 'In Our Hearts', '/', 'ork', 1, 23.94897163115608, 90.3798185760795, 1, 500, 1, 0, 0),
 	(1003432, 'Ork er Flat 3', 'In Our Hearts', '', 'ork', 1, 23.94897163115608, 90.3798185760795, 2, 500, 0, 1, 0),
 	(1004979, 'Ork er Flat 4', 'In Our Hearts', '', 'ork', 2, 23.94897163115608, 90.3798185760795, 3, 500, 0, 1, 0),
 	(1129304, 'Ork er Flat 6', 'In Our Hearts', '', 'ork', 1, 23.9489922, 90.3797594, 6, 700, 0, 0, 4000),
