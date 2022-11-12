@@ -1,29 +1,25 @@
 const express = require('express');
 const store = require('store');
 const crypto = require('crypto');
+const multer = require('multer');
+const path = require('path');
 const database = require('../util/database');
 const misc = require('../util/misc');
 const hash = require('../util/hash');
-const multer  = require('multer');
-const path = require('path');
 
 const app = express.Router();
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+const storage = multer.diskStorage({
+    destination(req, file, cb) {
         cb(null, 'public/img/flat');
     },
-    filename: function (req, file, cb) {
-        cb(null, store.get('user')+Date.now()+path.extname(file.originalname));
-    }
+    filename(req, file, cb) {
+        cb(null, store.get('user') + Date.now() + path.extname(file.originalname));
+    },
 });
-const upload = multer({storage: storage, limits: {fileSize: 10*1024*1024}});
+const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-<<<<<<< HEAD
-=======
-// app.use(fileUpload); 
->>>>>>> 3f0ba0bdd981a1dc0026af009711101d3b93e0b7
 
 async function newFlatID() {
     const base = 1000000;
@@ -34,7 +30,7 @@ async function newFlatID() {
     do {
         offset = crypto.randomInt(divisor);
         row = await database.getUnique(
-            `SELECT COUNT(*) AS count FROM flat WHERE flatID=${base + offset}`,
+            `SELECT COUNT(*) AS count FROM flat WHERE flatID=${base + offset}`
         );
     } while (row.count > 0);
 
@@ -46,7 +42,7 @@ app.post('/profile/request', async (req, res) => {
     const { flatID } = req.body;
 
     await database.exec(
-        `INSERT INTO flatrequest VALUES (${studentID}, ${flatID}, '${hash.salt()}')`
+        `INSERT INTO flatrequest VALUES (${studentID}, ${flatID}, '${hash.salt()}')`,
     );
 
     res.redirect(`../profile/${flatID}`);
@@ -77,7 +73,7 @@ app.get('/profile/:id', async (req, res) => {
     if (mode === 'student') {
         try {
             const student = await database.getUnique(
-                `SELECT * FROM student WHERE studentID=${currentUser}`
+                `SELECT * FROM student WHERE studentID=${currentUser}`,
             );
 
             res.render('flat/profile', {
@@ -123,7 +119,7 @@ app.route('/register')
 
         try {
             owner = await database.getUnique(
-                `SELECT username, name FROM owner WHERE username='${currentUser}'`
+                `SELECT username, name FROM owner WHERE username='${currentUser}'`,
             );
         } catch (err) {
             res.redirect('../');
@@ -165,11 +161,11 @@ app.route('/register')
         const xtra = Number(temp.xtra);
 
         await database.exec(
-            `INSERT INTO flat VALUES (${flatID}, '${name}', '${address}', '${description}', '${owner}', ${gender}, ${x}, ${y}, ${level}, ${area}, ${lift}, ${generator}, ${rent})`
+            `INSERT INTO flat VALUES (${flatID}, '${name}', '${address}', '${description}', '${owner}', ${gender}, ${x}, ${y}, ${level}, ${area}, ${lift}, ${generator}, ${rent})`,
         );
 
         await database.exec(
-            `INSERT INTO room VALUES (${flatID}, ${bed}, ${din}, ${liv}, ${kit}, ${bath}, ${balk}, ${xtra})`
+            `INSERT INTO room VALUES (${flatID}, ${bed}, ${din}, ${liv}, ${kit}, ${bath}, ${balk}, ${xtra})`,
         );
 
         res.redirect(`profile/${flatID}`);
@@ -183,21 +179,15 @@ app.get('/edit/:id', async (req, res) => {
     let rooms;
     let owner;
 
-<<<<<<< HEAD
     if (mode !== 'owner') {
         res.redirect('../../');
         return;
     }
-=======
-        // console.log(req.files);
->>>>>>> 3f0ba0bdd981a1dc0026af009711101d3b93e0b7
 
     try {
         flat = await database.getUnique(`SELECT * FROM flat WHERE flatID=${id}`);
         rooms = await database.getUnique(`SELECT * FROM room WHERE flatID='${id}'`);
-        owner = await database.getUnique(
-            `SELECT name FROM owner WHERE username='${flat.owner}'`,
-        );
+        owner = await database.getUnique(`SELECT name FROM owner WHERE username='${flat.owner}'`);
     } catch (err) {
         res.redirect('../../');
         return;
@@ -210,7 +200,7 @@ app.get('/edit/:id', async (req, res) => {
         rooms,
         owner,
     });
-})
+});
 
 app.post('/edit/:id', upload.single('photo'), async (req, res) => {
     const temp = req.body;
@@ -239,13 +229,13 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
     await database.exec(
         `UPDATE flat
         SET name='${name}', address='${address}', description='${description}', gender=${gender}, area=${area}, level=${level}, lift=${lift}, generator=${generator}, rent=${rent}, photo='${photo}'
-        WHERE flatID=${flatID}`
+        WHERE flatID=${flatID}`,
     );
 
     await database.exec(
         `UPDATE room
         SET bed=${bed}, din=${din}, liv=${liv}, kit=${kit}, bath=${bath}, balk=${balk}, xtra=${xtra}
-        WHERE flatID=${flatID}`
+        WHERE flatID=${flatID}`,
     );
 
     res.redirect(`../profile/${flatID}`);
