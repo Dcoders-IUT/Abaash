@@ -190,7 +190,14 @@
         <div class="form-item">
           <label class="attribute">Rent</label><span class="val"><%=flat.rent%></span>
         </div>
+
+        <% if (flat.photo) { %>
+          <div class="form-item">
+            <span class="val"><img src="../img/<%=flat.photo%>"></span>
+          </div>
+        <% } %>
       </div>
+
       <% if(currentUser===flat.owner) { %>
 
         <div class="buttons">

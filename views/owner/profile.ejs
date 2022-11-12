@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/css/owner-profile.css" type="text/css">
+    <link rel="stylesheet" href="/css/owner-profile.css" type="text/css" />
     <title>Owner Profile</title>
     <style>
-      .container{
+      .container {
         display: grid;
         grid-template-columns: 1fr 2fr;
     }
@@ -19,9 +19,9 @@
       padding-top:10%;
     }
 
-    h2{
-      margin-top:15px;
-    }
+      h2 {
+        margin-top: 15px;
+      }
 
     .profile{
       box-shadow: 0 5px 20px -6px #000;
@@ -36,25 +36,31 @@
     <a href="../..">Home</a>
     <div class="container">
       <div class="profile">
-        <img class="owner-img" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+        <img
+          class="owner-img"
+          src="<%= photo? `../img/${photo}` : 'https://bootdey.com/img/Content/avatar/avatar7.png' %>"
+          alt="Admin"
+          class="rounded-circle"
+          width="150"
+        />
         <% if(profileUser) { %>
         <h2><%=name%></h2>
         <% if(currentUser===profileUser) { %>
-          <div class="buttons">
-            <button class="button-3">
-              <a href="../../flat/register">Add Flat</a>
-            </button>
-            <button class="button-3">
-              <a href="../edit/<%= profileUser %> ">Edit Profile</a>
-            </button>
-          </div>
+        <div class="buttons">
+          <button class="button-3">
+            <a href="../../flat/register">Add Flat</a>
+          </button>
+          <button class="button-3">
+            <a href="../edit/<%= profileUser %> ">Edit Profile</a>
+          </button>
+        </div>
         <% } %>
       </div>
 
       <div class="lol">
         <%- include ("../partials/showOwnerAllFlats.ejs", {misc, flatList}) %>
       </div>
-      <% } else { %>
+    <%} else { %>
       <p>USER NOT FOUND!</p>
       <% } %>
     </div>

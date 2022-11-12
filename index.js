@@ -22,8 +22,7 @@ async function allFlats() {
     }
 }
 async function searchFlats(address, minLevel, maxLevel, gender, lift, generator, area, rent) {
-    const addressQuery =
-        address === '' ? 'true' : `LOWER(address) LIKE CONCAT('%', LOWER('${address}'),'%')`;
+    const addressQuery =        address === '' ? 'true' : `LOWER(address) LIKE CONCAT('%', LOWER('${address}'),'%')`;
     const levelQuery = `level >= ${minLevel} AND level <= ${maxLevel}`;
     const genderQuery = `gender = ${gender} OR gender = 2`;
     const liftQuery = `lift >= ${lift ? 1 : 0}`;
@@ -37,7 +36,7 @@ async function searchFlats(address, minLevel, maxLevel, gender, lift, generator,
 
         return await database.get(
             `SELECT * FROM flat
-            WHERE (${addressQuery}) AND (${levelQuery}) AND (${genderQuery}) AND (${liftQuery}) AND (${generatorQuery}) AND (${areaQuery}) AND (${rentQuery})`
+            WHERE (${addressQuery}) AND (${levelQuery}) AND (${genderQuery}) AND (${liftQuery}) AND (${generatorQuery}) AND (${areaQuery}) AND (${rentQuery})`,
         );
     } catch (err) {
         return {};
@@ -70,7 +69,7 @@ async function openHomeEJS(res) {
         currentUserData = await database.getUnique(
             `SELECT name FROM $,{mode} WHERE ${
                 mode === 'student' ? 'studentID' : 'username'
-            }='${currentUser}'`,
+            }='${currentUser}'`
         );
     } catch (err) {
         res.render('home', {
@@ -119,7 +118,7 @@ app.get('/logout', (req, res) => {
 app.get('/test', (req, res) => {
     store.set('user', 'ork');
     store.set('mode', 'owner');
-    res.redirect('./'); 
+    res.redirect('./');
 });
 
 app.get('/profile', (req, res) => {
@@ -154,7 +153,7 @@ app.post('/search', async (req, res) => {
             lift,
             generator,
             area,
-            rent
+            rent,
         ),
     });
 });

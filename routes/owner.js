@@ -1,10 +1,21 @@
 const express = require('express');
 const store = require('store');
+const multer = require('multer');
+const path = require('path');
 const database = require('../util/database');
 const hash = require('../util/hash');
 const misc = require('../util/misc');
 
 const app = express.Router();
+const storage = multer.diskStorage({
+    destination(req, file, cb) {
+        cb(null, 'public/owner/img');
+    },
+    filename(req, file, cb) {
+        cb(null, store.get('user') + Date.now() + path.extname(file.originalname));
+    },
+});
+const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -14,7 +25,7 @@ async function getUser(id, pass) {
 
     try {
         const record = await database.getUnique(
-            `SELECT username, password, passwordLastChanged FROM owner WHERE username='${id}' OR email='${id}' OR phone='${id}'`,
+            `SELECT username, password, passwordLastChanged FROM owner WHERE username='${id}' OR email='${id}' OR phone='${id}'`
         );
         const { username } = record;
 
@@ -58,7 +69,7 @@ app.route('/register')
         const { name } = temp;
         const { username } = temp;
         const plc = hash.salt();
-        const pass = hash.create(`${temp.pass + plc}Home Is Where The Start Is!`); 
+        const pass = hash.create(`${temp.pass + plc}Home Is Where The Start Is!`);
         const phone = Number(temp.phone);
         const { email } = temp;
         const nid = Number(temp.nid);
@@ -70,7 +81,7 @@ app.route('/register')
         '${plc}',
         ${phone},
         '${email}',
-        ${nid})`
+        ${nid})`,
         );
 
         store.set('user', username);
@@ -95,85 +106,83 @@ app.get('/profile/:id', async (req, res) => {
         res.render('owner/profile', { currentUser: store.get('user'), profileUser: null });
         return;
     }
-    const flatList = await database.get(
-        `SELECT * FROM flat WHERE owner='${id}'`
-    );
+    const flatList = await database.get(`SELECT * FROM flat WHERE owner='${id}'`);
 
     res.render('owner/profile', {
         misc,
         currentUser: store.get('user'),
         profileUser: id,
         name: profileUserData.name,
+        photo: profileUserData.photo,
         flatList,
     });
 });
 
-app.route('/edit/:id')
-    .get(async (req, res) => {
-        const { id } = req.params;
-        const currentUser = store.get('user');
-        const mode = store.get('mode');
-        let profileUserData;
+app.get('/edit/:id', async (req, res) => {
+    const { id } = req.params;
+    const currentUser = store.get('user');
+    const mode = store.get('mode');
+    let profileUserData;
 
-        if (mode !== 'owner') {
-            res.redirect('../../');
-            return;
-        }
+    if (mode !== 'owner') {
+        res.redirect('../../');
+        return;
+    }
 
-        try {
-            profileUserData = await database.getUnique(
-                `SELECT * FROM owner WHERE username='${id}'`
-            );
-        } catch (err) {
-            res.redirect('../../');
-            return;
-        }
+    try {
+        profileUserData = await database.getUnique(`SELECT * FROM owner WHERE username='${id}'`);
+    } catch (err) {
+        res.redirect('../../');
+        return;
+    }
 
-        if (currentUser !== profileUserData.username) {
-            res.redirect('../../');
-            return;
-        }
+    if (currentUser !== profileUserData.username) {
+        res.redirect('../../');
+        return;
+    }
 
-        res.render('owner/edit', { currentUser, profileUserData });
-    })
-    .post(async (req, res) => {
-        const temp = req.body;
-        const currentUser = store.get('user');
-        const mode = store.get('mode');
+    res.render('owner/edit', { currentUser, profileUserData });
+});
 
-        if (mode !== 'owner') {
-            res.redirect('../../');
-            return;
-        }
+app.post('/edit/:id', upload.single('photo'), async (req, res) => {
+    const temp = req.body;
+    const currentUser = store.get('user');
+    const mode = store.get('mode');
 
-        const { name } = temp;
-        const { username } = temp;
-        const { profileID } = temp;
-        const phone = Number(temp.phone);
-        const { email } = temp;
-        const nid = Number(temp.nid);
-        const { pass } = temp;
+    if (mode !== 'owner') {
+        res.redirect('../../');
+        return;
+    }
 
-        if (currentUser !== profileID) {
-            res.redirect('../../');
-            return;
-        }
+    const { name } = temp;
+    const { username } = temp;
+    const { profileID } = temp;
+    const phone = Number(temp.phone);
+    const { email } = temp;
+    const nid = Number(temp.nid);
+    const { pass } = temp;
+    const photo = req.file.filename;
 
-        try {
-            await getUser(currentUser, pass);
-        } catch (err) {
-            res.redirect('../../');
-            return;
-        }
+    if (currentUser !== profileID) {
+        res.redirect('../../');
+        return;
+    }
 
-        await database.exec(
-            `UPDATE owner
-            SET name='${name}', username='${username}', phone=${phone}, email='${email}', nid=${nid}
-            WHERE username='${currentUser}'`
-        );
+    try {
+        await getUser(currentUser, pass);
+    } catch (err) {
+        res.redirect('../../');
+        return;
+    }
 
-        res.redirect('../profile');
-    });
+    await database.exec(
+        `UPDATE owner
+        SET name='${name}', username='${username}', phone=${phone}, email='${email}', nid=${nid}, photo='${photo}'
+        WHERE username='${currentUser}'`,
+    );
+
+    res.redirect('../profile');
+});
 
 app.get('/requests', async (req, res) => {
     const currentUser = store.get('user');
@@ -181,16 +190,16 @@ app.get('/requests', async (req, res) => {
 
     try {
         const flatRequestList = await database.get(
-            `SELECT * FROM flatrequest WHERE (SELECT owner FROM flat WHERE flatrequest.flatid=flat.flatid)='${currentUser}'`
+            `SELECT * FROM flatrequest WHERE (SELECT owner FROM flat WHERE flatrequest.flatid=flat.flatid)='${currentUser}'`,
         );
 
         for (let i = 0; i < flatRequestList.length; i++) {
             const studentDetails = await database.getUnique(
-                `SELECT * FROM student WHERE studentID='${flatRequestList[i].studentID}'`
+                `SELECT * FROM student WHERE studentID='${flatRequestList[i].studentID}'`,
             );
 
             const flatDetails = await database.getUnique(
-                `SELECT * FROM flat WHERE flatID='${flatRequestList[i].flatID}'`
+                `SELECT * FROM flat WHERE flatID='${flatRequestList[i].flatID}'`,
             );
 
             detailedRequestList.push({
