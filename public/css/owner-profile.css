@@ -6,12 +6,59 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
-
 }
 
-.button-3>a {
-  color: whitesmoke;
-  text-decoration: none;
+.image-container {
+  max-height: 100%;
+  max-width: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-right: 20%;
+}
+
+.owner-img {
+  height: 40vh;
+  width: 20vw;
+  border-radius: 50%;
+  /* border: 0.5px solid #4b4b4d; */
+}
+
+.profile {
+  display: flex;
+  justify-content: space-around;
+  margin-left: 20%;
+  margin-right: 20%;
+  margin-top: 5%;
+  box-shadow: 0 5px 20px -6px #000;
+  border-radius: 8px;
+  height: 60vh;
+  text-align: center;
+}
+
+.info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  font-size: 28px;
+  margin-right: auto;
+}
+
+.info>h4 {
+  color: #4b4b4d;
+}
+
+.line {
+  width: 70rem;
+  display: block;
+  height: 5px;
+  background-color: #4b4b4d;
+  margin: 60px auto 0;
+}
+
+.lol {
+  display: flex;
+  justify-content: center;
 }
 
 .buttons {
@@ -30,11 +77,10 @@
   color: #fff;
   cursor: pointer;
   display: inline-block;
-  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 500;
   line-height: 20px;
-  padding: 6px 16px;
+  padding: 16px 16px;
   position: relative;
   text-align: center;
   text-decoration: none;

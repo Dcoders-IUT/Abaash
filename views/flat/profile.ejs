@@ -197,98 +197,100 @@
             <span class="val"><img src="../img/<%=flat.photo%>"></span>
           </div>
           <% } %>
+            <!-- </div> -->
+
+            <% if(currentUser===flat.owner) { %>
+
+              <div class="buttons">
+                <button class="bb">
+                  <a href="../edit/<%=flat.flatID%>">Edit Info</a>
+                </button>
+              </div>
+
+              <% } else if (mode==='student' ) { %>
+                <form action="request" method="post">
+                  <input type="hidden" name="studentID" value="<%= currentUser %>" />
+                  <input type="hidden" name="flatID" value="<%= flat.flatID %>" />
+                  <button>Request Reservation</button>
+                </form>
+                <% } %>
+                  <% } else { %>
+                    <span>FLAT NOT FOUND!</span>
+                    <% } %>
+                      <!-- correct closing div?? -->
     </div>
 
-    <% if(currentUser===flat.owner) { %>
+    <!-- map -->
+    <div class="map" id="mapid"></div>
 
-      <div class="buttons">
-        <button class="bb">
-          <a href="../edit/<%=flat.flatID%>">Edit Info</a>
-        </button>
-      </div>
+    <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
+      integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
 
-      <% } else if (mode==='student' ) { %>
-        <form action="request" method="post">
-          <input type="hidden" name="studentID" value="<%= currentUser %>" />
-          <input type="hidden" name="flatID" value="<%= flat.flatID %>" />
-          <button>Request Reservation</button>
-        </form>
-        <% } %>
-          <% } else { %>
-            <span>FLAT NOT FOUND!</span>
-            <% } %>
+    <!-- map js  -->
+    <script>
+      // Geolocation api
+      // navigator.geolocation object provides current location of user
+      // if (navigator.geolocation) {
+      //   navigator.geolocation.getCurrentPosition(success, error);
+      // } else {
+      //   console.log("browser does not support geolocation api");
+      // }
 
+      // function success(position) {
+      //   const lat = position.coords.latitude;
+      //   const long = position.coords.longitude;
 
-              <!-- map -->
-              <div class="map" id="mapid"></div>
+      //   var map = L.map("mapid").setView([lat, long], 17);
 
-              <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
-                integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
+      // const layer = L.tileLayer(
+      //   "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+      //   {
+      //     maxZoom: 19,
+      //     attribution:
+      //       '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      //   }
+      // ).addTo(map);
 
-              <!-- map js  -->
-              <script>
-                // Geolocation api
-                // navigator.geolocation object provides current location of user
-                // if (navigator.geolocation) {
-                //   navigator.geolocation.getCurrentPosition(success, error);
-                // } else {
-                //   console.log("browser does not support geolocation api");
-                // }
+      // let markerOptions = {
+      //   // title: 'My Location',
+      //   clickable: true,
+      //   draggable: true,
+      // };
+      // // creating marker
+      // let marker = L.marker([lat, long]);
 
-                // function success(position) {
-                //   const lat = position.coords.latitude;
-                //   const long = position.coords.longitude;
+      // // add marker to map
+      // marker.addTo(map);
+      // }
 
-                //   var map = L.map("mapid").setView([lat, long], 17);
+      // function error(error){
+      //   alert('we could not get current locaiton.');
+      // }
 
-                // const layer = L.tileLayer(
-                //   "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                //   {
-                //     maxZoom: 19,
-                //     attribution:
-                //       '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-                //   }
-                // ).addTo(map);
+      var map = L.map("mapid").setView([<%#=flat.x %>, <%#=flat.y %>], 17);
 
-                // let markerOptions = {
-                //   // title: 'My Location',
-                //   clickable: true,
-                //   draggable: true,
-                // };
-                // // creating marker
-                // let marker = L.marker([lat, long]);
+      const layer = L.tileLayer(
+        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+          maxZoom: 19,
+          attribution:
+            '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        }
+      ).addTo(map);
 
-                // // add marker to map
-                // marker.addTo(map);
-                // }
+      let markerOptions = {
+        //  title: <%#= flat.name%>,
+        clickable: true,
+        draggable: true,
+      };
 
-                // function error(error){
-                //   alert('we could not get current locaiton.');
-                // }
+      // creating marker
+      let marker = L.marker([<%#=flat.x %>, <%#=flat.y %>]);
 
-                var map = L.map("mapid").setView([<%=flat.x %>, <%=flat.y %>], 17);
+      // add marker to map
+      marker.addTo(map);
+    </script>
 
-                const layer = L.tileLayer(
-                  "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                  {
-                    maxZoom: 19,
-                    attribution:
-                      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-                  }
-                ).addTo(map);
-
-                let markerOptions = {
-                  //  title: <%#= flat.name%>,
-                  clickable: true,
-                  draggable: true,
-                };
-
-                // creating marker
-                let marker = L.marker([<%=flat.x %>, <%=flat.y %>]);
-
-                // add marker to map
-                marker.addTo(map);
-              </script>
   </div>
 </body>
 

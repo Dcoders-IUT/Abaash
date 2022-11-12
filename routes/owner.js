@@ -113,6 +113,7 @@ app.get('/profile/:id', async (req, res) => {
         currentUser: store.get('user'),
         profileUser: id,
         name: profileUserData.name,
+        username: profileUserData.username,
         photo: profileUserData.photo,
         flatList,
     });
