@@ -11,7 +11,12 @@
     <h1>Name: <%=name%></h1>
     <h1>Gender: <%=gender? 'Male': 'Female'%></h1>
     <h1>Blood Group: <%=bloodgroup%></h1>
-    <% if(flat) { %>
+
+    <% if (photo) { %>
+    <div class="form-item">
+      <span class="val"><img src="../img/<%=photo%>" /></span>
+    </div>
+    <% } %> <% if(flat) { %>
     <h1>
       Flat: <a href="../../flat/profile/<%=flat.flatID%>"><%=flat.name%></a>
     </h1>

@@ -7,7 +7,7 @@
   </head>
   <body>
     <% if(currentUser === profileUserData.studentID) { %>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
       <h1>Edit Student Profile</h1>
       <input
         type="hidden"
@@ -62,6 +62,12 @@
       <label>Enter Password </label>
       <input type="password" name="pass" placeholder="Password" />
       <br />
+
+      <div>
+        <label>Photo (Size Limit = 10 MB)</label>
+        <input name="photo" type="file" accept="image/png, image/jpg" />
+      </div>
+      
       <button>Save</button>
     </form>
     <button>

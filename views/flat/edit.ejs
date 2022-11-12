@@ -30,12 +30,12 @@
   <body>
     <% if(currentUser === flat.owner) { %>
     <div class="container">
-      <form id="register" method="post">
+      <form id="register" method="post" enctype="multipart/form-data">
         <h1>Edit Flat</h1>
         <div>
-          <label>Photo</label>
-        <input name="photo" type="file" accept="image/*">
-      </div>
+          <label>Photo (Size Limit = 10 MB)</label>
+          <input name="photo" type="file" accept="image/png, image/jpg">
+        </div>
         <input
           type="text"
           name="name"

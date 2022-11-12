@@ -3,11 +3,19 @@ const store = require('store');
 const database = require('../util/database');
 const hash = require('../util/hash');
 const misc = require('../util/misc');
+const multer  = require('multer');
+const path = require('path');
 
 const app = express.Router();
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/student/img');
+    },
+    filename: function (req, file, cb) {
+        cb(null, store.get('user')+Date.now()+path.extname(file.originalname));
+    }
+});
+const upload = multer({storage: storage, limits: {fileSize: 10*1024*1024}});
 
 async function getUser(id, pass) {
     const wrongpass = 'WRONG PASSWORD!';
@@ -118,6 +126,7 @@ app.get('/profile/:id', async (req, res) => {
         name: profileUserData.name,
         gender: profileUserData.gender,
         bloodgroup: profileUserData.bloodgroup,
+        photo: profileUserData.photo,
         flat,
     });
 });
@@ -150,7 +159,7 @@ app.route('/edit/:id')
 
         res.render('student/edit', { misc, currentUser, profileUserData });
     })
-    .post(async (req, res) => {
+    .post(upload.single('photo'), async (req, res) => {
         const temp = req.body;
         const currentUser = store.get('user');
         const mode = store.get('mode');
@@ -167,6 +176,7 @@ app.route('/edit/:id')
         const { email } = temp;
         const nid = Number(temp.nid);
         const { pass } = temp;
+        const photo = req.file.filename;
 
         if (currentUser !== profileID) {
             res.redirect('../../');
@@ -182,7 +192,7 @@ app.route('/edit/:id')
 
         await database.exec(
             `UPDATE student
-            SET name='${name}', studentID='${studentID}', phone=${phone}, email='${email}', nid=${nid}
+            SET name='${name}', studentID='${studentID}', phone=${phone}, email='${email}', nid=${nid}, photo=${photo}
             WHERE studentID='${currentUser}'`
         );
 
