@@ -20,6 +20,10 @@ const upload = multer({storage: storage, limits: {fileSize: 10*1024*1024}});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+<<<<<<< HEAD
+=======
+// app.use(fileUpload); 
+>>>>>>> 3f0ba0bdd981a1dc0026af009711101d3b93e0b7
 
 async function newFlatID() {
     const base = 1000000;
@@ -179,10 +183,14 @@ app.get('/edit/:id', async (req, res) => {
     let rooms;
     let owner;
 
+<<<<<<< HEAD
     if (mode !== 'owner') {
         res.redirect('../../');
         return;
     }
+=======
+        // console.log(req.files);
+>>>>>>> 3f0ba0bdd981a1dc0026af009711101d3b93e0b7
 
     try {
         flat = await database.getUnique(`SELECT * FROM flat WHERE flatID=${id}`);

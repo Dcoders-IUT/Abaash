@@ -5,6 +5,7 @@ ul {
 }
 
 
+
 :root {
 
   /**
@@ -129,7 +130,8 @@ html {
 }
 
 body {
-  background: var(--white);
+  /* background: var(--white); */
+  background: #efefef;
   overflow-x: hidden;
 }
 
