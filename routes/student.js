@@ -105,9 +105,10 @@ app.get('/profile/:id', async (req, res) => {
 
     try {
         profileUserData = await database.getUnique(
-            `SELECT name, gender, bloodgroup, flatID FROM student WHERE studentID='${id}'`
+            `SELECT * FROM student WHERE studentID=${id}`
         );
     } catch (err) {
+        console.log(err);
         res.render('student/profile', { currentUser: store.get('user'), profileUser: null });
         return;
     }
@@ -119,6 +120,8 @@ app.get('/profile/:id', async (req, res) => {
     } catch (err) {
         flat = null;
     }
+
+    console.log(profileUserData);
 
     res.render('student/profile', {
         currentUser: store.get('user'),
