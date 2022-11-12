@@ -1,0 +1,13 @@
+<% if(flatList) { %>
+    <div
+      style="display: grid; grid-template-columns: 400px 400px; column-gap: 100px"
+    >
+      <% flatList.forEach((flat)=> { %>
+      <div><%- include ("./showOwnerFlat.ejs",{misc, flat}) %></div>
+      <% }) %>
+    </div>
+    <% } else { %>
+      <img src="/public/images/upload.png">
+      <% } %>
+    
+    

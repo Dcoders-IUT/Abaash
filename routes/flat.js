@@ -10,7 +10,7 @@ const app = express.Router();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(fileUpload); 
+// app.use(fileUpload); 
 
 async function newFlatID() {
     const base = 1000000;
@@ -199,7 +199,7 @@ app.route('/edit/:id')
         const temp = req.body;
         const flatID = req.params.id;
 
-        console.log(req.files);
+        // console.log(req.files);
 
         const { name } = temp;
         const { address } = temp;

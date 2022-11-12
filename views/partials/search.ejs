@@ -57,12 +57,13 @@
                     <i class="zmdi zmdi-pin input-group-symbol"></i>
                   </div>
 
+                  <span class="map-buttons">
+                      <button class="button-33" onclick="getMylocation()" type="button">Near me</button>
+                      <button class="button-33" onclick="getIUTLocation()" type="button">Near IUT</button>
+                      <button class="button-33" type="button">Set From Map</button>
+                  </span>
                   <span>
-                    <table border="2">
-                      <td><button onclick="getMylocation()" type="button"><font color="white">Near me</font></button></td>
-                      <td><button onclick="getIUTLocation()" type="button"><font color="white">Near IUT</font></button></td>
-                      <td><button type="button"><font color="white">Set From Map</font></button></td>
-                    </table>
+                    
                   </span>
                   <script>
                     var x = document.getElementById("location");
@@ -82,24 +83,53 @@
                     }
                   </script>
                   
-                  <div class="row row-space">
                     <!-- level -->
-                    <div class="col-2">
-                      <div class="input-group">
-                        <label for="level" class="level">Level</label>
-                        <br />
-                        <label>Min</label>
-                        <select name="minLevel">
+                      <div class="input-group" style="padding-bottom:13px; padding-top: 13px;">
+                        <label for="level" class="label">Level:   </label>
+                        <label class="label">Min</label>
+                        <select class="dropdown" name="minLevel">
                           <% for(let i=1; i<=20; i++) { %>
                           <option value="<%=i%>"> <%=i%> </option>
                           <% } %>
                         </select>
-                        <label>Max</label>
+                        <label class="label">Max</label>
                         <select name="maxLevel">
                           <% for(let i=1; i<=20; i++) { %>
                           <option value="<%=i%>" <%= i==20? "selected": '' %> > <%=i%> </option>
                           <% } %>
                         </select>
+                      </div>
+
+                    
+                    
+
+
+                    <div class="row row-space" style="margin:15px 0px ">
+                      <!-- area -->
+                      <div class="col-2">
+                        <div class="input-group">
+                          <!-- <label class="label">Minimum Area (ft<sup>2</sup>)</label> -->
+                          <input
+                            class="input--style-1"
+                            type="number"
+                            name="area"
+                            placeholder="Min Area"
+                          />
+                          <i class="zmdi zmdi-pin input-group-symbol"></i>
+                        </div>
+                      </div>
+  
+                      <!-- rent -->
+                      <div class="col-2">
+                        <div class="input-group">
+                          <input
+                            class="input--style-1"
+                            type="number"
+                            name="rent"
+                            placeholder="Max Rent"
+                          />
+                          <i class="zmdi zmdi-pin input-group-symbol"></i>
+                        </div>
                       </div>
                     </div>
 
@@ -114,47 +144,21 @@
                         </select>
                       </div>
                     </div>
-                  </div>
-
                   <!-- lift & generator -->
-                  <div class="checkdiv" >
-                    <span>
-                      <label>Lift Required</label>
+                  <!-- <div class="checkdiv" >
+                      <label for="lift">Lift Required</label>
                       <input type="checkbox" name="lift" />
                       <label>Generator Required</label>
                       <input type="checkbox" name="generator" />
-                    </span>
+                  </div> -->
+
+                  <div class="checkdiv" style="display:flex; flex-direction: row; justify-content: center;  align-items: center;">
+                    <label for="lift">Lift</label>
+                      <input style="width: 100%;" type="checkbox" name="lift" />
+                      <label>Generator</label>
+                      <input type="checkbox" name="generator" />
                   </div>
-
-                  <div class="row row-space">
-                    <!-- area -->
-                    <div class="col-2">
-                      <div class="input-group">
-                        <label class="label">Minimum Area (ft<sup>2</sup>)</label>
-                        <input
-                          class="input--style-1"
-                          type="number"
-                          name="area"
-                          placeholder="Minimum Area"
-                        />
-                        <i class="zmdi zmdi-pin input-group-symbol"></i>
-                      </div>
-                    </div>
-
-                    <!-- rent -->
-                    <div class="col-2">
-                      <div class="input-group">
-                        <input
-                          class="input--style-1"
-                          type="number"
-                          name="rent"
-                          placeholder="Maximum Rent"
-                        />
-                        <i class="zmdi zmdi-pin input-group-symbol"></i>
-                      </div>
-                    </div>
-
-                  </div>
+                  
 
                   <!-- submit -->
                   <button class="btn-submit" type="submit" text-align="center">
