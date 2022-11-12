@@ -1,28 +1,24 @@
 <div class="nav">
   <ul class="navbar-list">
     <li>
-      <a
-        class="fa fa-home fa-2x"
-        href="#"
-        style="margin-right: -10px; margin-left: 10px"
-      ></a>
+      <a class="fa fa-home fa-2x" href="#" style="margin-right: -10px; margin-left: 10px"></a>
     </li>
     <% if(currentUser) { %>
-    <li>
-      <a href="<%=mode%>/profile/<%=currentUser%>">
-        <%=nameOfCurrentUser? nameOfCurrentUser: currentUser%>
-      </a>
-    </li>
-    <li><a href="logout">Log Out</a></li>
+      <li>
+        <a href="<%=mode%>/profile/<%=currentUser%>">
+          <%=nameOfCurrentUser? nameOfCurrentUser: currentUser%>
+        </a>
+      </li>
+      <li><a href="logout">Log Out</a></li>
 
-    <% if(mode==='student' ) { %>
-    <li><a href="student/coupon">Coupon</a></li>
-    <% } %>
+      <% if(mode==='student' ) { %>
+        <li><a href="student/coupon">Coupon</a></li>
+        <% } %>
 
-    <li><a href="<%=mode%>/requests">Requests</a></li>
+          <li><a href="<%=mode%>/requests">Requests</a></li>
 
-    <% } else { %>
-    <li><a href="student/login">Log In</a></li>
-    <% } %>
+          <% } else { %>
+            <li><a href="student/login">Log In</a></li>
+            <% } %>
   </ul>
 </div>

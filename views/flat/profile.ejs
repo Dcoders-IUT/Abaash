@@ -1,295 +1,295 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title><%=flat? flat.name: 'FLAT NOT FOUND'%></title>
-    <link rel="stylesheet" href="/css/single-flat.css" type="text/css" />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
-      integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14="
-      crossorigin=""
-    />
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
-      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap");
 
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        /* font-family: Lato, Helvetica,sans-serif; */
-        font-family: "Montserrat", sans-serif;
-      }
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>
+    <%=flat? flat.name: 'FLAT NOT FOUND' %>
+  </title>
+  <link rel="stylesheet" href="/css/single-flat.css" type="text/css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
+    integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin="" />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap");
 
-      #mapid {
-        width: 25%;
-        height: 350px;
-        /* margin-left: 80px; */
-        /* margin-top: 35px; */
-        position:absolute;
-        right:120px;
-        z-index: 1;
-        position:flex;
-        top:25vh;
-      }
-      .container {
-        width: 100vw;
-        height: 95vh;
-        background-image: linear-gradient(
-            110deg,
-            rgba(255, 255, 255, 0.7) 50%,
-            transparent 50%
-          ),
-          url("/images/home5.jpg");
-        background-size: 100% 100%;
-        /* display: flex;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      /* font-family: Lato, Helvetica,sans-serif; */
+      font-family: "Montserrat", sans-serif;
+    }
+
+    #mapid {
+      width: 25%;
+      height: 350px;
+      /* margin-left: 80px; */
+      /* margin-top: 35px; */
+      position: absolute;
+      right: 120px;
+      z-index: 1;
+      position: flex;
+      top: 25vh;
+    }
+
+    .container {
+      width: 100vw;
+      height: 95vh;
+      background-image: linear-gradient(110deg,
+          rgba(255, 255, 255, 0.7) 50%,
+          transparent 50%),
+        url("/images/home5.jpg");
+      background-size: 100% 100%;
+      /* display: flex;
           align-items: center; */
-      }
+    }
 
-      .details {
-        /* border:2px solid; */
-        box-shadow: 0 5px 20px -6px #000;
-        width: 25vw;
-        height: fit-content;
-        background-color: rgba(255, 255, 255, 0.7);
-        color: #20247b;
-        margin-left: 10vw;
-        padding: 23px;
-        position: fixed;
-        top: 28vh;
-        left: 3vw;
-        border-radius: 8px;
-      }
+    .details {
+      /* border:2px solid; */
+      box-shadow: 0 5px 20px -6px #000;
+      width: 25vw;
+      height: fit-content;
+      background-color: rgba(255, 255, 255, 0.7);
+      color: #20247b;
+      margin-left: 10vw;
+      padding: 23px;
+      position: fixed;
+      top: 28vh;
+      left: 3vw;
+      border-radius: 8px;
+    }
 
-      .form-item {
-        /* border-bottom: 0.1rem solid #f5f5f5; */
-        margin: 7px;
-      }
+    .form-item {
+      /* border-bottom: 0.1rem solid #f5f5f5; */
+      margin: 7px;
+    }
 
-      .attribute {
-        width: 88px;
-        position: absolute;
-      }
+    .attribute {
+      width: 88px;
+      position: absolute;
+    }
 
-      .val {
-        font-weight: 700;
-        position: relative;
-        left: 140px;
-        color: #3f7fb7;
-      }
+    .val {
+      font-weight: 700;
+      position: relative;
+      left: 140px;
+      color: #3f7fb7;
+    }
 
-      h1 {
-        margin-bottom: 30px;
-      }
+    h1 {
+      margin-bottom: 30px;
+    }
 
-      a {
-        text-decoration: none;
-      }
+    a {
+      text-decoration: none;
+    }
 
-      .bb > a {
-        color: whitesmoke;
-        text-decoration: none;
-      }
+    .bb>a {
+      color: whitesmoke;
+      text-decoration: none;
+    }
 
-      .bb {
-        appearance: none;
-        background-color: #3f7fb7;
-        border: 1px solid rgba(27, 31, 35, 0.15);
-        border-radius: 6px;
-        box-shadow: rgba(27, 31, 35, 0.1) 0 1px 0;
-        box-sizing: border-box;
-        color: #fff;
-        cursor: pointer;
-        display: inline-block;
-        font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
-          sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-        font-size: 14px;
-        font-weight: 600;
-        line-height: 20px;
-        padding: 6px 16px;
-        position: relative;
-        text-align: center;
-        text-decoration: none;
-        user-select: none;
-        -webkit-user-select: none;
-        touch-action: manipulation;
-        vertical-align: middle;
-        white-space: nowrap;
-        margin: 15px;
-      }
+    .bb {
+      appearance: none;
+      background-color: #3f7fb7;
+      border: 1px solid rgba(27, 31, 35, 0.15);
+      border-radius: 6px;
+      box-shadow: rgba(27, 31, 35, 0.1) 0 1px 0;
+      box-sizing: border-box;
+      color: #fff;
+      cursor: pointer;
+      display: inline-block;
+      font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
+        sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 20px;
+      padding: 6px 16px;
+      position: relative;
+      text-align: center;
+      text-decoration: none;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      vertical-align: middle;
+      white-space: nowrap;
+      margin: 15px;
+    }
 
-      .bb:focus:not(:focus-visible):not(.focus-visible) {
-        box-shadow: none;
-        outline: none;
-      }
+    .bb:focus:not(:focus-visible):not(.focus-visible) {
+      box-shadow: none;
+      outline: none;
+    }
 
-      .bb:hover {
-        background-color: #1e64a1;
-      }
+    .bb:hover {
+      background-color: #1e64a1;
+    }
 
-      .bb:focus {
-        box-shadow: rgba(20, 35, 172, 0.4) 0 0 0 3px;
-        outline: none;
-      }
+    .bb:focus {
+      box-shadow: rgba(20, 35, 172, 0.4) 0 0 0 3px;
+      outline: none;
+    }
 
-      .bb:disabled {
-        background-color: #94d3a2;
-        border-color: rgba(27, 31, 35, 0.1);
-        color: rgba(255, 255, 255, 0.8);
-        cursor: default;
-      }
+    .bb:disabled {
+      background-color: #94d3a2;
+      border-color: rgba(27, 31, 35, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+      cursor: default;
+    }
 
-      .bb:active {
-        background-color: #2c379d;
-        box-shadow: rgba(20, 70, 32, 0.2) 0 1px 0 inset;
-      }
-    </style>
-  </head>
+    .bb:active {
+      background-color: #2c379d;
+      box-shadow: rgba(20, 70, 32, 0.2) 0 1px 0 inset;
+    }
+  </style>
+</head>
 
-  <body>
-    <a href="../..">Home</a>
-    <div class="container">
-      <div class="details">
-        <% if(flat) { %>
-        <h1><%=flat.name%></h1>
+<body>
+  <a href="../..">Home</a>
+  <div class="container">
+    <div class="details">
+      <% if(flat) { %>
+        <h1>
+          <%=flat.name%>
+        </h1>
         <div class="form-item">
-          <label class="attribute">Address</label
-          ><span class="val"><a
-            href="<%="https://www.google.com/maps/search/?api=1&query="+flat.x+"%2C"+flat.y%>"
-            ><%=flat.address%></a></span>
+          <label class="attribute">Address</label><span class="val"><a href="<%="
+              https://www.google.com/maps/search/?api=1&query="+flat.x+" %2C"+flat.y%>"
+              ><%=flat.address%></a></span>
         </div>
         <div class="form-item">
-          <label class="attribute">For</label
-          ><span class="val"
-            ><%=flat.gender? 'Male' : 'Female' %></span
-          >
+          <label class="attribute">For</label><span class="val">
+            <%=flat.gender? 'Male' : 'Female' %>
+          </span>
         </div>
         <div class="form-item">
-          <label class="attribute">Level</label
-          ><span class="val"><%=flat.level%></span>
+          <label class="attribute">Level</label><span class="val">
+            <%=flat.level%>
+          </span>
         </div>
         <div class="form-item">
           <label class="attribute"> Owner</label>
-          <span class="val"
-            ><a href="../../owner/profile/<%=flat.owner%>"
-              ><%=owner.name%></a
-            ></span
-          >
+          <span class="val"><a href="../../owner/profile/<%=flat.owner%>">
+              <%=owner.name%>
+            </a></span>
         </div>
         <div class="form-item">
-          <label class="attribute">Lift</label
-          ><span class="val"><%=flat.lift? 'YES' : 'NO' %></span>
+          <label class="attribute">Lift</label><span class="val">
+            <%=flat.lift? 'YES' : 'NO' %>
+          </span>
         </div>
         <div class="form-item">
-          <label class="attribute">Generator</label
-          ><span class="val"><%=flat.generator? 'YES' : 'NO' %></span>
+          <label class="attribute">Generator</label><span class="val">
+            <%=flat.generator? 'YES' : 'NO' %>
+          </span>
         </div>
 
         <div class="form-item">
-          <label class="attribute">Rent</label><span class="val"><%=flat.rent%></span>
+          <label class="attribute">Rent</label><span class="val">
+            <%=flat.rent%>
+          </span>
         </div>
 
         <% if (flat.photo) { %>
           <div class="form-item">
             <span class="val"><img src="../img/<%=flat.photo%>"></span>
           </div>
-        <% } %>
+          <% } %>
+    </div>
+
+    <% if(currentUser===flat.owner) { %>
+
+      <div class="buttons">
+        <button class="bb">
+          <a href="../edit/<%=flat.flatID%>">Edit Info</a>
+        </button>
       </div>
 
-      <% if(currentUser===flat.owner) { %>
-
-        <div class="buttons">
-          <button class="bb">
-            <a href="../edit/<%=flat.flatID%>">Edit Info</a>
-          </button>
-        </div>
-      
-      <% } else if (mode==='student') { %>
-      <form action="request" method="post">
-        <input type="hidden" name="studentID" value="<%= currentUser %>" />
-        <input type="hidden" name="flatID" value="<%= flat.flatID %>" />
-        <button>Request Reservation</button>
-      </form>
-      <% } %> <% } else { %>
-      <span>FLAT NOT FOUND!</span>
-      <% } %>
+      <% } else if (mode==='student' ) { %>
+        <form action="request" method="post">
+          <input type="hidden" name="studentID" value="<%= currentUser %>" />
+          <input type="hidden" name="flatID" value="<%= flat.flatID %>" />
+          <button>Request Reservation</button>
+        </form>
+        <% } %>
+          <% } else { %>
+            <span>FLAT NOT FOUND!</span>
+            <% } %>
 
 
-       <!-- map -->
-       <div class="map" id="mapid"></div>
+              <!-- map -->
+              <div class="map" id="mapid"></div>
 
-       <script
-         src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
-         integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg="
-         crossorigin=""
-       ></script>
- 
-       <!-- map js  -->
-       <script>
-         // Geolocation api
-         // navigator.geolocation object provides current location of user
-         // if (navigator.geolocation) {
-         //   navigator.geolocation.getCurrentPosition(success, error);
-         // } else {
-         //   console.log("browser does not support geolocation api");
-         // }
- 
-         // function success(position) {
-         //   const lat = position.coords.latitude;
-         //   const long = position.coords.longitude;
- 
-         //   var map = L.map("mapid").setView([lat, long], 17);
- 
-         // const layer = L.tileLayer(
-         //   "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-         //   {
-         //     maxZoom: 19,
-         //     attribution:
-         //       '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-         //   }
-         // ).addTo(map);
- 
-         // let markerOptions = {
-         //   // title: 'My Location',
-         //   clickable: true,
-         //   draggable: true,
-         // };
-         // // creating marker
-         // let marker = L.marker([lat, long]);
- 
-         // // add marker to map
-         // marker.addTo(map);
-         // }
- 
-         // function error(error){
-         //   alert('we could not get current locaiton.');
-         // }
- 
-         var map = L.map("mapid").setView([<%=flat.x%>, <%=flat.y%>], 17);
- 
-         const layer = L.tileLayer(
-           "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-           {
-             maxZoom: 19,
-             attribution:
-               '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-           }
-         ).addTo(map);
- 
-         let markerOptions = {
-          //  title: <%#= flat.name%>,
-           clickable: true,
-           draggable: true,
-         };
-         
-         // creating marker
-         let marker = L.marker([<%=flat.x%>, <%=flat.y%>]);
- 
-         // add marker to map
-         marker.addTo(map);
-       </script>
-    </div>
-  </body>
+              <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
+                integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
+
+              <!-- map js  -->
+              <script>
+                // Geolocation api
+                // navigator.geolocation object provides current location of user
+                // if (navigator.geolocation) {
+                //   navigator.geolocation.getCurrentPosition(success, error);
+                // } else {
+                //   console.log("browser does not support geolocation api");
+                // }
+
+                // function success(position) {
+                //   const lat = position.coords.latitude;
+                //   const long = position.coords.longitude;
+
+                //   var map = L.map("mapid").setView([lat, long], 17);
+
+                // const layer = L.tileLayer(
+                //   "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                //   {
+                //     maxZoom: 19,
+                //     attribution:
+                //       '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                //   }
+                // ).addTo(map);
+
+                // let markerOptions = {
+                //   // title: 'My Location',
+                //   clickable: true,
+                //   draggable: true,
+                // };
+                // // creating marker
+                // let marker = L.marker([lat, long]);
+
+                // // add marker to map
+                // marker.addTo(map);
+                // }
+
+                // function error(error){
+                //   alert('we could not get current locaiton.');
+                // }
+
+                var map = L.map("mapid").setView([<%=flat.x %>, <%=flat.y %>], 17);
+
+                const layer = L.tileLayer(
+                  "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                  {
+                    maxZoom: 19,
+                    attribution:
+                      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                  }
+                ).addTo(map);
+
+                let markerOptions = {
+                  //  title: <%#= flat.name%>,
+                  clickable: true,
+                  draggable: true,
+                };
+
+                // creating marker
+                let marker = L.marker([<%=flat.x %>, <%=flat.y %>]);
+
+                // add marker to map
+                marker.addTo(map);
+              </script>
+  </div>
+</body>
+
 </html>

@@ -134,7 +134,7 @@ body {
   z-index: 1;
 }
 
-.img-overlay img:hover + div {
+.img-overlay img:hover+div {
   width: 100%;
 }
 
@@ -161,7 +161,7 @@ figcaption {
   width: 100%;
 }
 
-.overlay:hover > a {
+.overlay:hover>a {
   display: block;
   text-align: center;
   border-color: var(--border-view-color);
@@ -248,7 +248,7 @@ figcaption {
   justify-content: space-evenly;
 }
 
-.name-icon > span {
+.name-icon>span {
   text-transform: capitalize;
   color: var(--h2-text-color);
 }

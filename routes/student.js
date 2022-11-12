@@ -3,7 +3,7 @@ const store = require('store');
 const database = require('../util/database');
 const hash = require('../util/hash');
 const misc = require('../util/misc');
-const multer  = require('multer');
+const multer = require('multer');
 const path = require('path');
 
 const app = express.Router();
@@ -12,10 +12,10 @@ const storage = multer.diskStorage({
         cb(null, 'public/student/img');
     },
     filename: function (req, file, cb) {
-        cb(null, store.get('user')+Date.now()+path.extname(file.originalname));
+        cb(null, store.get('user') + Date.now() + path.extname(file.originalname));
     }
 });
-const upload = multer({storage: storage, limits: {fileSize: 10*1024*1024}});
+const upload = multer({ storage: storage, limits: { fileSize: 10 * 1024 * 1024 } });
 
 async function getUser(id, pass) {
     const wrongpass = 'WRONG PASSWORD!';
@@ -115,7 +115,7 @@ app.get('/profile/:id', async (req, res) => {
 
     try {
         flat = await database.getUnique(
-            `SELECT flatID, name FROM flat WHERE flatID=${profileUserData.flatID}` 
+            `SELECT flatID, name FROM flat WHERE flatID=${profileUserData.flatID}`
         );
     } catch (err) {
         flat = null;
