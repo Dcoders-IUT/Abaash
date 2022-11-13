@@ -160,28 +160,28 @@ a {
 
 /* navbar */
 
-.nav{
-    border: 1px solid #a2a2a2;
-    background-color: #f4f4f4;
-    -webkit-box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.75);
-    border-radius: 2px;
-    position: fixed;
-    z-index: 5;
-    width: 100%;
+.nav {
+  border: 1px solid #a2a2a2;
+  background-color: #f4f4f4;
+  -webkit-box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.75);
+  border-radius: 2px;
+  position: fixed;
+  z-index: 5;
+  width: 100%;
 }
 
-li>a{
-	color: #34495e;
+li>a {
+  color: #34495e;
   font-size: 16px;
 }
 
 .navbar-list a {
-	padding: 10px 2px;
-	text-transform: uppercase;
-	text-align: center;
-	display: block;
+  padding: 10px 2px;
+  text-transform: uppercase;
+  text-align: center;
+  display: block;
   font-weight: 600;
 }
 
@@ -1736,7 +1736,7 @@ li>a{
   /**
    * FOOTER
    */
-/* 
+  /* 
   .footer-top .container {
     display: flex;
     justify-content: space-between;
@@ -1753,48 +1753,54 @@ li>a{
 
 } */
 
-/* footer */
+  /* footer */
 
-#footer{
-  padding:100px 0 20px;
-  background: #efefef;
-}
+  #footer {
+    padding: 100px 0 20px;
+    background: #efefef;
+  }
 
-.title-text h1{
-  display: flex;
-  justify-content: center;
-}
+  .title-text h1 {
+    display: flex;
+    justify-content: center;
+  }
 
-.footer-row{
-  width:80%;
-  margin:auto;
-  display:flex;
-  justify-content: space-between;
-  flex-wrap:wrap;
-}
+  .footer-row {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
 
-.footer-left,.footer-right{
-  flex-basis:45%;
-  padding:10px;
-  margin-bottom:20px;
-}
-.footer-left p{
-  width:400px;
-}
-.footer-right{
-  text-align:right;
-}
-.footer-row h1{
-  margin:10px 0;
-}
-.footer-left .fa,.footer-right .fa{
-  font-size: 20px;
-  color:#009688;
-  margin: 10px;
-}
+  .footer-left,
+  .footer-right {
+    flex-basis: 45%;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
 
-/* footer end */
+  .footer-left p {
+    width: 400px;
+  }
 
+  .footer-right {
+    text-align: right;
+  }
+
+  .footer-row h1 {
+    margin: 10px 0;
+  }
+
+  .footer-left .fa,
+  .footer-right .fa {
+    font-size: 20px;
+    color: #009688;
+    margin: 10px;
+  }
+
+  /* footer end */
+}
 
 /**
  * responsive for larger than 1200px screen

@@ -1,31 +1,44 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title><%=name%></title>
-  </head>
-  <body>
-    <a href="../..">Home</a>
-    <% if(profileUser) { %>
-    <h1>Name: <%=name%></h1>
-    <h1>Gender: <%=gender? 'Male': 'Female'%></h1>
-    <h1>Blood Group: <%=bloodgroup%></h1>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>
+    <%=name%>
+  </title>
+</head>
+
+<body>
+  <a href="../..">Home</a>
+  <% if(profileUser) { %>
+    <h1>Name: <%=name%>
+    </h1>
+    <h1>Gender: <%=gender? 'Male' : 'Female' %>
+    </h1>
+    <h1>Blood Group: <%=bloodgroup%>
+    </h1>
 
     <% if (photo) { %>
-    <div class="form-item">
-      <span class="val"><img src="../img/<%=photo%>" /></span>
-    </div>
-    <% } %> <% if(flat) { %>
-    <h1>
-      Flat: <a href="../../flat/profile/<%=flat.flatID%>"><%=flat.name%></a>
-    </h1>
-    <% } %> <% if(Number(currentUser)===Number(profileUser)) { %>
-    <button>
-      <a href="../edit/<%= profileUser %> ">Edit Profile Info</a>
-    </button>
-    <% } %> <% } else { %>
-    <p>USER NOT FOUND!</p>
-    <% } %>
-  </body>
+      <div class="form-item">
+        <span class="val"><img src="../img/<%=photo%>" /></span>
+      </div>
+      <% } %>
+        <% if(flat) { %>
+          <h1>
+            Flat: <a href="../../flat/profile/<%=flat.flatID%>">
+              <%=flat.name%>
+            </a>
+          </h1>
+          <% } %>
+            <% if(Number(currentUser)===Number(profileUser)) { %>
+              <button>
+                <a href="../edit/<%= profileUser %> ">Edit Profile Info</a>
+              </button>
+              <% } %>
+                <% } else { %>
+                  <p>USER NOT FOUND!</p>
+                  <% } %>
+</body>
+
 </html>

@@ -1,175 +1,160 @@
 <html>
-  <head>
-    <!-- Required meta tags-->
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
 
-    <!-- Title Page-->
-    <!-- <title>Advanced Search</title> -->
+<head>
+  <!-- Required meta tags-->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <!-- Icons font CSS-->
-    
-    <link
-      href="vendor/font-awesome-4.7/css/font-awesome.min.css"
-      rel="stylesheet"
-      media="all"
-    />
-    <!-- Font special for pages-->
-    <link
-      href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
-      rel="stylesheet"
-    />
+  <!-- Title Page-->
+  <!-- <title>Advanced Search</title> -->
 
-    <!-- Main CSS-->
-    <link href="css/search.css" rel="stylesheet" media="all" />
-    
-  </head>
-  <body>
-    <div class="page-wrapper bg-img-1 p-t-165 p-b-100">
-      <div class="wrapper wrapper--w720">
-        <div class="card card-3">
-          <div class="card-body">
-            <!-- advance search heading -->
-            <ul class="tab-list">
-              <li class="tab-list__item active">
-                <h1 >Search</h1>
-              </li>
-            </ul>
+  <!-- Icons font CSS-->
 
-            <!-- starting of form div -->
-            <div class="tab-content">
-              <div class="tab-pane active" id="tab1">
-                <form action="search" method="post">
-                  <!-- address -->
-                  <div class="input-group">
-                    <label class="label">Address</label>
-                    <input
-                      class="input--style-1"
-                      type="text"
-                      name="address"
-                      id="address"
-                      placeholder="ex:32 kolomesshor"
-                      autocomplete="off"
-                    />
-                    <i class="zmdi zmdi-pin input-group-symbol"></i>
+  <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all" />
+  <!-- Font special for pages-->
+  <link
+    href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet" />
+
+  <!-- Main CSS-->
+  <link href="css/search.css" rel="stylesheet" media="all" />
+
+</head>
+
+<body>
+  <div class="page-wrapper bg-img-1 p-t-165 p-b-100">
+    <div class="wrapper wrapper--w720">
+      <div class="card card-3">
+        <div class="card-body">
+          <!-- advance search heading -->
+          <ul class="tab-list">
+            <li class="tab-list__item active">
+              <h1>Search</h1>
+            </li>
+          </ul>
+
+          <!-- starting of form div -->
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab1">
+              <form action="search" method="post">
+                <!-- address -->
+                <div class="input-group">
+                  <label class="label">Address</label>
+                  <input class="input--style-1" type="text" name="address" id="address" placeholder="ex:32 kolomesshor"
+                    autocomplete="off" />
+                  <i class="zmdi zmdi-pin input-group-symbol"></i>
+                </div>
+
+                <span class="map-buttons">
+                  <button class="button-33" onclick="getMylocation()" type="button">Near me</button>
+                  <button class="button-33" onclick="getIUTLocation()" type="button">Near IUT</button>
+                  <button class="button-33" type="button">Set From Map</button>
+                </span>
+                <span>
+
+                </span>
+                <script>
+                  var x = document.getElementById("location");
+                  function getMylocation() {
+                    navigator.geolocation.getCurrentPosition(setAddress);
+                    navigator.geolocation.getCurrentPosition(xy);
+                    console.log(xy);
+                  }
+
+                  function setAddress(location) {
+                    var x = `#(${location.coords.latitude}, ${location.coords.longitude})`;
+                    document.getElementById("address").value = x;
+                  }
+
+                  function getIUTLocation() {
+                    document.getElementById("address").value = '#(23.947303719314394, 90.38175810807775)';
+                  }
+                </script>
+
+                <!-- level -->
+                <div class="input-group" style="padding-bottom:13px; padding-top: 13px;">
+                  <label for="level" class="label">Level: </label>
+                  <label class="label">Min</label>
+                  <select class="dropdown" name="minLevel">
+                    <% for(let i=1; i<=20; i++) { %>
+                      <option value="<%=i%>">
+                        <%=i%>
+                      </option>
+                      <% } %>
+                  </select>
+                  <label class="label">Max</label>
+                  <select name="maxLevel">
+                    <% for(let i=1; i<=20; i++) { %>
+                      <option value="<%=i%>" <%=i==20? "selected" : '' %> > <%=i%>
+                      </option>
+                      <% } %>
+                  </select>
+                </div>
+
+
+
+
+
+                <div class="row row-space" style="margin:15px 0px ">
+                  <!-- area -->
+                  <div class="col-2">
+                    <div class="input-group">
+                      <!-- <label class="label">Minimum Area (ft<sup>2</sup>)</label> -->
+                      <input class="input--style-1" type="number" name="area" placeholder="Min Area" />
+                      <i class="zmdi zmdi-pin input-group-symbol"></i>
+                    </div>
                   </div>
 
-                  <span class="map-buttons">
-                      <button class="button-33" onclick="getMylocation()" type="button">Near me</button>
-                      <button class="button-33" onclick="getIUTLocation()" type="button">Near IUT</button>
-                      <button class="button-33" type="button">Set From Map</button>
-                  </span>
-                  <span>
-                    
-                  </span>
-                  <script>
-                    var x = document.getElementById("location");
-                    function getMylocation() {
-                      navigator.geolocation.getCurrentPosition(setAddress);
-                      navigator.geolocation.getCurrentPosition(xy);
-                      console.log(xy);
-                    }
-              
-                    function setAddress(location) {
-                      var x =`#(${location.coords.latitude}, ${location.coords.longitude})`;
-                      document.getElementById("address").value = x;
-                    }
-
-                    function getIUTLocation() {
-                      document.getElementById("address").value = '#(23.947303719314394, 90.38175810807775)';
-                    }
-                  </script>
-                  
-                    <!-- level -->
-                      <div class="input-group" style="padding-bottom:13px; padding-top: 13px;">
-                        <label for="level" class="label">Level:   </label>
-                        <label class="label">Min</label>
-                        <select class="dropdown" name="minLevel">
-                          <% for(let i=1; i<=20; i++) { %>
-                          <option value="<%=i%>"> <%=i%> </option>
-                          <% } %>
-                        </select>
-                        <label class="label">Max</label>
-                        <select name="maxLevel">
-                          <% for(let i=1; i<=20; i++) { %>
-                          <option value="<%=i%>" <%= i==20? "selected": '' %> > <%=i%> </option>
-                          <% } %>
-                        </select>
-                      </div>
-
-                    
-                    
-
-
-                    <div class="row row-space" style="margin:15px 0px ">
-                      <!-- area -->
-                      <div class="col-2">
-                        <div class="input-group">
-                          <!-- <label class="label">Minimum Area (ft<sup>2</sup>)</label> -->
-                          <input
-                            class="input--style-1"
-                            type="number"
-                            name="area"
-                            placeholder="Min Area"
-                          />
-                          <i class="zmdi zmdi-pin input-group-symbol"></i>
-                        </div>
-                      </div>
-  
-                      <!-- rent -->
-                      <div class="col-2">
-                        <div class="input-group">
-                          <input
-                            class="input--style-1"
-                            type="number"
-                            name="rent"
-                            placeholder="Max Rent"
-                          />
-                          <i class="zmdi zmdi-pin input-group-symbol"></i>
-                        </div>
-                      </div>
+                  <!-- rent -->
+                  <div class="col-2">
+                    <div class="input-group">
+                      <input class="input--style-1" type="number" name="rent" placeholder="Max Rent" />
+                      <i class="zmdi zmdi-pin input-group-symbol"></i>
                     </div>
+                  </div>
+                </div>
 
-                    <!-- gender -->
-                    <div class="col-2">
-                      <div class="input-group">
-                        <label for="gender" class="gender">Gender</label>
-                        <select name="gender">
-                          <% misc.globalConst.genderList.forEach((gender)=> { %>
-                            <option  value="<%=gender.value%>"><%= gender.display %></option>
-                          <% }) %>
-                        </select>
-                      </div>
-                    </div>
-                  <!-- lift & generator -->
-                  <!-- <div class="checkdiv" >
+                <!-- gender -->
+                <div class="col-2">
+                  <div class="input-group">
+                    <label for="gender" class="gender">Gender</label>
+                    <select name="gender">
+                      <% misc.globalConst.genderList.forEach((gender)=> { %>
+                        <option value="<%=gender.value%>">
+                          <%= gender.display %>
+                        </option>
+                        <% }) %>
+                    </select>
+                  </div>
+                </div>
+                <!-- lift & generator -->
+                <!-- <div class="checkdiv" >
                       <label for="lift">Lift Required</label>
                       <input type="checkbox" name="lift" />
                       <label>Generator Required</label>
                       <input type="checkbox" name="generator" />
                   </div> -->
 
-                  <div class="checkdiv" style="display:flex; flex-direction: row; justify-content: center;  align-items: center;">
-                    <label for="lift">Lift</label>
-                      <input style="width: 100%;" type="checkbox" name="lift" />
-                      <label>Generator</label>
-                      <input type="checkbox" name="generator" />
-                  </div>
-                  
+                <div class="checkdiv"
+                  style="display:flex; flex-direction: row; justify-content: center;  align-items: center;">
+                  <label for="lift">Lift</label>
+                  <input style="width: 100%;" type="checkbox" name="lift" />
+                  <label>Generator</label>
+                  <input type="checkbox" name="generator" />
+                </div>
 
-                  <!-- submit -->
-                  <button class="btn-submit" type="submit" text-align="center">
-                    search
-                  </button>
-                </form>
-              </div>
+
+                <!-- submit -->
+                <button class="btn-submit" type="submit" text-align="center">
+                  search
+                </button>
+              </form>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>

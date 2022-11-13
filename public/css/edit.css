@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
 * {
-    margin : 0;
-    padding : 0;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
     /* background-color: #1c2833; */
 
 }
 
-body{
+body {
     background: url("../images/home3.jpg");
     /* background-size: 1000px;
     background-repeat: no-repeat; */
@@ -20,18 +20,18 @@ body{
 
 }
 
-.container{
+.container {
     display: flex;
     justify-content: center;
     margin-top: 30px;
     padding-top: 25px;
     /* background-color: #1c2833; */
-    background-color:rgba(0,0,0,0.8);
+    background-color: rgba(0, 0, 0, 0.8);
     /* align-items: center; */
     width: 400px;
     /* height: 450px; */
-    height:fit-content;
-    border:2px solid black;
+    height: fit-content;
+    border: 2px solid black;
     border-radius: 5px;
     /* overflow: hidden; */
     /* Center vertically and horizontally */
@@ -39,25 +39,25 @@ body{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    box-shadow: -3px -3px 7px #ffffff73
-                3px 3px 5px rgba(94,104,121,0.288) ;
-                border-radius: 5px;
+    box-shadow: -3px -3px 7px #ffffff73 3px 3px 5px rgba(94, 104, 121, 0.288);
+    border-radius: 5px;
 
 
 }
-.register-container{
+
+.register-container {
     color: white;
     display: flex;
     justify-content: center;
     margin-top: 30px;
     padding-top: 25px;
     /* background-color: #1c2833; */
-    background-color:rgba(0,0,0,0.8);
+    background-color: rgba(0, 0, 0, 0.8);
     /* align-items: center; */
     width: 400px;
     /* height: 450px; */
-    height:fit-content;
-    border:2px solid black;
+    height: fit-content;
+    border: 2px solid black;
     border-radius: 5px;
     /* overflow: hidden; */
     /* Center vertically and horizontally */
@@ -65,19 +65,18 @@ body{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    box-shadow: -3px -3px 7px #ffffff73
-                3px 3px 5px rgba(94,104,121,0.288) ;
-                border-radius: 5px;
+    box-shadow: -3px -3px 7px #ffffff73 3px 3px 5px rgba(94, 104, 121, 0.288);
+    border-radius: 5px;
 
 
 }
 
-.register-container h1{
+.register-container h1 {
     position: relative;
-    text-align:center;
+    text-align: center;
 }
 
-.icon{
+.icon {
     font-size: 50px;
     /* margin-left:50px ; */
     display: flex;
@@ -86,12 +85,12 @@ body{
     color: white;
 }
 
-.edit{
+.edit {
     margin-bottom: 15px;
 }
 
-input{
-    border:none;
+input {
+    border: none;
     /* background-color: #EEEEEE; */
     border-bottom: 1px solid #0082e6;
     display: block;
@@ -102,33 +101,34 @@ input{
     width: 300px;
 }
 
-input:focus{
+input:focus {
     border-bottom: 2px solid #3498db;
-    color:#3498db;
+    color: #3498db;
     transition: 0.2s;
 }
 
-h1{
-    text-align:center;
+h1 {
+    text-align: center;
     margin-top: 65px;
     font-family: 'Roboto';
 }
 
 
-a{
+a {
     text-decoration: none;
 }
 
-button{
+button {
     font-size: 16px;
     margin-bottom: 20px;
 }
-.cancel{
+
+.cancel {
     width: 80px;
-    
+
 }
 
-.save{
+.save {
     width: 80px;
     margin-right: 100px;
     margin-left: 17px;
