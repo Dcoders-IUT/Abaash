@@ -34,22 +34,23 @@ CREATE TABLE IF NOT EXISTS `flat` (
   `lift` tinyint(1) NOT NULL,
   `generator` tinyint(1) NOT NULL,
   `rent` int(10) DEFAULT NULL,
+  `photo` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`flatID`) USING BTREE,
   KEY `flat_ibfk_1` (`owner`),
   CONSTRAINT `flat_ibfk_1` FOREIGN KEY (`owner`) REFERENCES `owner` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table abaash.flat: ~6 rows (approximately)
+-- Dumping data for table abaash.flat: ~7 rows (approximately)
 DELETE FROM `flat`;
 /*!40000 ALTER TABLE `flat` DISABLE KEYS */;
-INSERT INTO `flat` (`flatID`, `name`, `address`, `description`, `owner`, `gender`, `x`, `y`, `level`, `area`, `lift`, `generator`, `rent`) VALUES
-	(1001734, 'Ork er Flat 1', 'In Our Hearts', '/', 'ork', 1, 23.94897163115608, 90.3798185760795, 2, 500, 0, 1, 0),
-	(1002726, 'Ork er Flat 2', 'In Our Hearts', '/', 'ork', 1, 23.94897163115608, 90.3798185760795, 1, 500, 1, 0, 0),
-	(1003432, 'Ork er Flat 3', 'In Our Hearts', '', 'ork', 1, 23.94897163115608, 90.3798185760795, 2, 500, 0, 1, 0),
-	(1004979, 'Ork er Flat 4', 'In Our Hearts', '', 'ork', 2, 23.94897163115608, 90.3798185760795, 3, 500, 0, 1, 0),
-	(1129304, 'Ork er Flat 6', 'In Our Hearts', '', 'ork', 1, 23.9489922, 90.3797594, 6, 700, 0, 0, 4000),
-	(1158151, 'gultu', 'Dhaka', '', 'arifin', 1, 23.819028104444815, 90.45262759742008, 20, 0, 1, 1, 0),
-	(1438758, 'Ork er Flat 5', 'In Our Hearts', '', 'ork', 1, 23.94897163115608, 90.3798185760795, 4, 500, 1, 1, 7000);
+INSERT INTO `flat` (`flatID`, `name`, `address`, `description`, `owner`, `gender`, `x`, `y`, `level`, `area`, `lift`, `generator`, `rent`, `photo`) VALUES
+	(1001734, 'Ork er Flat 1', 'In Our Hearts', '/', 'ork', 1, 23.94897163115608, 90.3798185760795, 2, 500, 0, 1, 0, NULL),
+	(1002726, 'Ork er Flat 2', 'In Our Hearts', '/', 'ork', 1, 23.94897163115608, 90.3798185760795, 1, 500, 1, 0, 0, NULL),
+	(1003432, 'Ork er Flat 3', 'In Our Hearts', '/', 'ork', 1, 23.94897163115608, 90.3798185760795, 2, 500, 0, 1, 0, NULL),
+	(1004979, 'Ork er Flat 4', 'In Our Hearts', '/', 'ork', 2, 23.94897163115608, 90.3798185760795, 3, 500, 0, 1, 0, NULL),
+	(1129304, 'Ork er Flat 6', 'In Our Hearts', '/', 'ork', 1, 23.9489922, 90.3797594, 6, 700, 0, 0, 4000, NULL),
+	(1158151, 'gultu', 'Dhaka', '', 'arifin', 1, 23.819028104444815, 90.45262759742008, 20, 0, 1, 1, 0, NULL),
+	(1438758, 'Ork er Flat 5', 'In Our Hearts', '/', 'ork', 1, 23.94897163115608, 90.3798185760795, 4, 500, 1, 1, 7000, 'ork1668103907226.png');
 /*!40000 ALTER TABLE `flat` ENABLE KEYS */;
 
 -- Dumping structure for table abaash.flatrequest
@@ -82,18 +83,20 @@ CREATE TABLE IF NOT EXISTS `owner` (
   `phone` int(12) NOT NULL,
   `email` varchar(200) NOT NULL,
   `nid` int(20) NOT NULL,
+  `photo` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`username`),
   UNIQUE KEY `phone` (`phone`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `nid` (`nid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table abaash.owner: ~1 rows (approximately)
+-- Dumping data for table abaash.owner: ~2 rows (approximately)
 DELETE FROM `owner`;
 /*!40000 ALTER TABLE `owner` DISABLE KEYS */;
-INSERT INTO `owner` (`name`, `username`, `password`, `passwordLastChanged`, `phone`, `email`, `nid`) VALUES
-	('Sherajul Arifin', 'arifin', '65ca3d04be0cc68c1a7003f8aab5e7c9f93d83fa94351f91925e4dcabb5065fe', '2022-9-25T14:13:17.638', 111, 'gmail@arifin.com', 111),
-	('Ork the Bariola', 'ork', 'f6c3a82f8d5ed8b78bfd15d639410719ce24d8393fb020a722c298831d8a6555', '2022-9-15T3:29:21.858', 1731969827, 'ork@bariola.com', 123);
+INSERT INTO `owner` (`name`, `username`, `password`, `passwordLastChanged`, `phone`, `email`, `nid`, `photo`) VALUES
+	('Sherajul Arifin', 'arifin', '65ca3d04be0cc68c1a7003f8aab5e7c9f93d83fa94351f91925e4dcabb5065fe', '2022-9-25T14:13:17.638', 111, 'gmail@arifin.com', 111, NULL),
+	('Ork the Bariola', 'ork', 'f6c3a82f8d5ed8b78bfd15d639410719ce24d8393fb020a722c298831d8a6555', '2022-9-15T3:29:21.858', 1731969827, 'ork@bariola.com', 123, ''),
+	('Tanvir Hasan Saikat', 'saikat', 'c3f604b8a8b797a0d402738c7f588511555702ef8e73bd78dfd37a9ef3c50877', '2022-10-12T13:6:8.284', 1745986461, 'saikat@gmail.com', 46541646, NULL);
 /*!40000 ALTER TABLE `owner` ENABLE KEYS */;
 
 -- Dumping structure for table abaash.room
@@ -136,20 +139,20 @@ CREATE TABLE IF NOT EXISTS `student` (
   `email` varchar(200) NOT NULL,
   `nid` int(20) NOT NULL,
   `bloodgroup` varchar(4) NOT NULL DEFAULT ' ',
+  `photo` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`studentID`),
   UNIQUE KEY `phone` (`phone`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `nid` (`nid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table abaash.student: ~4 rows (approximately)
+-- Dumping data for table abaash.student: ~3 rows (approximately)
 DELETE FROM `student`;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` (`name`, `gender`, `studentID`, `password`, `passwordLastChanged`, `phone`, `email`, `nid`, `bloodgroup`) VALUES
-	('Fardin', 1, 112, '519211b1c823753d0db208af050b9fe855b7379aeacf1f7e4b834c5e7378390e', '2022-9-28T7:15:16.53', 543156464, 'fardinnur12@gmail.com', 56466, 'AB+'),
-	('Jubayer', 1, 129, 'bc8e7191c2fae4af85e6b728bcec435a48fe18faf0ee58d710800d0da33be456', '2022-9-14T16:12:16.155', 182, 'jubayer@gmail.com', 1223, 'A+'),
-	('Saikat', 1, 190041103, 'e841f92b85fb790790fdd318e2ad50ba9e63a1cee9f8f4dfb129d4664b053a76', '2022-10-7T4:50:46.152', 1710845597, 'saikat@gmail.com', 100456789, ' '),
-	('Nafi', 1, 190041120, 'ff20e2239111482880e23eb82ddce6e3ad3ea4ec9914fa231181a76ff220a3da', '2022-9-28T6:50:41.680', 49871497, 'nafi@gmail.com', 123164867, 'B+');
+INSERT INTO `student` (`name`, `gender`, `studentID`, `password`, `passwordLastChanged`, `phone`, `email`, `nid`, `bloodgroup`, `photo`) VALUES
+	('Fardin', 1, 112, '519211b1c823753d0db208af050b9fe855b7379aeacf1f7e4b834c5e7378390e', '2022-9-28T7:15:16.53', 543156464, 'fardinnur12@gmail.com', 56466, 'AB+', NULL),
+	('Jubayer', 1, 129, 'bc8e7191c2fae4af85e6b728bcec435a48fe18faf0ee58d710800d0da33be456', '2022-9-14T16:12:16.155', 182, 'jubayer@gmail.com', 1223, 'A+', NULL),
+	('Nafi', 1, 190041120, 'ff20e2239111482880e23eb82ddce6e3ad3ea4ec9914fa231181a76ff220a3da', '2022-9-28T6:50:41.680', 49871497, 'nafi@gmail.com', 123164867, 'B+', NULL);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
