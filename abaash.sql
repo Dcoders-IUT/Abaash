@@ -14,12 +14,10 @@
 
 
 -- Dumping database structure for abaash
-DROP DATABASE IF EXISTS `abaash`;
 CREATE DATABASE IF NOT EXISTS `abaash` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `abaash`;
 
 -- Dumping structure for table abaash.flat
-DROP TABLE IF EXISTS `flat`;
 CREATE TABLE IF NOT EXISTS `flat` (
   `flatID` int(12) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
@@ -54,7 +52,6 @@ INSERT INTO `flat` (`flatID`, `name`, `address`, `description`, `owner`, `gender
 /*!40000 ALTER TABLE `flat` ENABLE KEYS */;
 
 -- Dumping structure for table abaash.flatrequest
-DROP TABLE IF EXISTS `flatrequest`;
 CREATE TABLE IF NOT EXISTS `flatrequest` (
   `studentID` int(9) NOT NULL,
   `flatID` int(12) NOT NULL,
@@ -74,7 +71,6 @@ INSERT INTO `flatrequest` (`studentID`, `flatID`, `date`) VALUES
 /*!40000 ALTER TABLE `flatrequest` ENABLE KEYS */;
 
 -- Dumping structure for table abaash.owner
-DROP TABLE IF EXISTS `owner`;
 CREATE TABLE IF NOT EXISTS `owner` (
   `name` varchar(50) NOT NULL,
   `username` varchar(50) NOT NULL,
@@ -90,17 +86,16 @@ CREATE TABLE IF NOT EXISTS `owner` (
   UNIQUE KEY `nid` (`nid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table abaash.owner: ~2 rows (approximately)
+-- Dumping data for table abaash.owner: ~3 rows (approximately)
 DELETE FROM `owner`;
 /*!40000 ALTER TABLE `owner` DISABLE KEYS */;
 INSERT INTO `owner` (`name`, `username`, `password`, `passwordLastChanged`, `phone`, `email`, `nid`, `photo`) VALUES
 	('Sherajul Arifin', 'arifin', '65ca3d04be0cc68c1a7003f8aab5e7c9f93d83fa94351f91925e4dcabb5065fe', '2022-9-25T14:13:17.638', 111, 'gmail@arifin.com', 111, NULL),
-	('Ork the Bariola', 'ork', 'f6c3a82f8d5ed8b78bfd15d639410719ce24d8393fb020a722c298831d8a6555', '2022-9-15T3:29:21.858', 1731969827, 'ork@bariola.com', 123, ''),
+	('Ork the Bariola', 'ork', 'f6c3a82f8d5ed8b78bfd15d639410719ce24d8393fb020a722c298831d8a6555', '2022-9-15T3:29:21.858', 1731969827, 'ork@bariola.com', 123, 'ork1668330854451.png'),
 	('Tanvir Hasan Saikat', 'saikat', 'c3f604b8a8b797a0d402738c7f588511555702ef8e73bd78dfd37a9ef3c50877', '2022-10-12T13:6:8.284', 1745986461, 'saikat@gmail.com', 46541646, NULL);
 /*!40000 ALTER TABLE `owner` ENABLE KEYS */;
 
 -- Dumping structure for table abaash.room
-DROP TABLE IF EXISTS `room`;
 CREATE TABLE IF NOT EXISTS `room` (
   `flatid` int(11) NOT NULL,
   `bed` int(11) NOT NULL,
@@ -128,7 +123,6 @@ INSERT INTO `room` (`flatid`, `bed`, `din`, `liv`, `kit`, `bath`, `balk`, `xtra`
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 
 -- Dumping structure for table abaash.student
-DROP TABLE IF EXISTS `student`;
 CREATE TABLE IF NOT EXISTS `student` (
   `name` varchar(50) NOT NULL,
   `gender` tinyint(1) NOT NULL,
