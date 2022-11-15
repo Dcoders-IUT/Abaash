@@ -1,28 +1,28 @@
 const express = require('express');
 const store = require('store');
+const multer = require('multer');
+const path = require('path');
 const database = require('../util/database');
 const hash = require('../util/hash');
 const misc = require('../util/misc');
-const multer = require('multer');
-const path = require('path');
 
 const app = express.Router();
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+    destination(req, file, cb) {
         cb(null, 'public/student/img');
     },
-    filename: function (req, file, cb) {
+    filename(req, file, cb) {
         cb(null, store.get('user') + Date.now() + path.extname(file.originalname));
-    }
+    },
 });
-const upload = multer({ storage: storage, limits: { fileSize: 10 * 1024 * 1024 } });
+const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
 
 async function getUser(id, pass) {
     const wrongpass = 'WRONG PASSWORD!';
 
     try {
         const record = await database.getUnique(
-            `SELECT studentID, password, passwordLastChanged FROM student WHERE studentID='${id}' OR email='${id}' OR phone='${id}'`
+            `SELECT studentID, password, passwordLastChanged FROM student WHERE studentID='${id}' OR email='${id}' OR phone='${id}'`,
         );
         const { studentID } = record;
 
@@ -83,7 +83,7 @@ app.route('/register')
         '${email}',
         ${nid},
         '${blg}',
-        null)`
+        null)`,
         );
 
         store.set('user', id);
@@ -104,9 +104,7 @@ app.get('/profile/:id', async (req, res) => {
     let flat;
 
     try {
-        profileUserData = await database.getUnique(
-            `SELECT * FROM student WHERE studentID=${id}`
-        );
+        profileUserData = await database.getUnique(`SELECT * FROM student WHERE studentID=${id}`);
     } catch (err) {
         console.log(err);
         res.render('student/profile', { currentUser: store.get('user'), profileUser: null });
@@ -115,7 +113,7 @@ app.get('/profile/:id', async (req, res) => {
 
     try {
         flat = await database.getUnique(
-            `SELECT flatID, name FROM flat WHERE flatID=${profileUserData.flatID}`
+            `SELECT flatID, name FROM flat WHERE flatID=${profileUserData.flatID}`,
         );
     } catch (err) {
         flat = null;
@@ -146,7 +144,7 @@ app.route('/edit/:id')
 
         try {
             profileUserData = await database.getUnique(
-                `SELECT * FROM student WHERE studentID='${id}'`
+                `SELECT * FROM student WHERE studentID='${id}'`,
             );
         } catch (err) {
             res.redirect('../../');
@@ -179,7 +177,7 @@ app.route('/edit/:id')
         const gender = Number(temp.gender);
         const { blg } = temp;
         const { pass } = temp;
-        const photo = temp.photo? req.file.filename: null;
+        const photo = temp.photo ? req.file.filename : null;
 
         if (currentUser !== profileID) {
             res.redirect('../../');
@@ -196,7 +194,7 @@ app.route('/edit/:id')
         await database.exec(
             `UPDATE student
             SET name='${name}', studentID=${studentID}, phone=${phone}, email='${email}', nid=${nid}, gender=${gender}, bloodgroup='${blg}', photo=${photo}
-            WHERE studentID=${currentUser}`
+            WHERE studentID=${currentUser}`,
         );
 
         res.redirect('../profile');

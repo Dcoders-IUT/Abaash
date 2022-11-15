@@ -81,9 +81,9 @@ app.route('/register')
         '${plc}',
         ${phone},
         '${email}',
-        ${nid})`,
+        ${nid},
+        null)`,
         );
-
         store.set('user', username);
         store.set('mode', req.body.mode);
 
