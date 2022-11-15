@@ -25,7 +25,7 @@ async function getUser(id, pass) {
 
     try {
         const record = await database.getUnique(
-            `SELECT username, password, passwordLastChanged FROM owner WHERE username='${id}' OR email='${id}' OR phone='${id}'`
+            `SELECT username, password, passwordLastChanged FROM owner WHERE username='${id}' OR email='${id}' OR phone='${id}'`,
         );
         const { username } = record;
 
@@ -82,6 +82,7 @@ app.route('/register')
         ${phone},
         '${email}',
         ${nid})`,
+            null
         );
 
         store.set('user', username);
@@ -179,7 +180,7 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
     await database.exec(
         `UPDATE owner
         SET name='${name}', username='${username}', phone=${phone}, email='${email}', nid=${nid}, photo='${photo}'
-        WHERE username='${currentUser}'`,
+        WHERE username='${currentUser}'`
     );
 
     res.redirect('../profile');
@@ -191,16 +192,16 @@ app.get('/requests', async (req, res) => {
 
     try {
         const flatRequestList = await database.get(
-            `SELECT * FROM flatrequest WHERE (SELECT owner FROM flat WHERE flatrequest.flatid=flat.flatid)='${currentUser}'`,
+            `SELECT * FROM flatrequest WHERE (SELECT owner FROM flat WHERE flatrequest.flatid=flat.flatid)='${currentUser}'`
         );
 
         for (let i = 0; i < flatRequestList.length; i++) {
             const studentDetails = await database.getUnique(
-                `SELECT * FROM student WHERE studentID='${flatRequestList[i].studentID}'`,
+                `SELECT * FROM student WHERE studentID='${flatRequestList[i].studentID}'`
             );
 
             const flatDetails = await database.getUnique(
-                `SELECT * FROM flat WHERE flatID='${flatRequestList[i].flatID}'`,
+                `SELECT * FROM flat WHERE flatID='${flatRequestList[i].flatID}'`
             );
 
             detailedRequestList.push({
