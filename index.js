@@ -22,7 +22,7 @@ async function allFlats() {
     }
 }
 async function searchFlats(address, minLevel, maxLevel, gender, lift, generator, area, rent) {
-    const addressQuery =        address === '' ? 'true' : `LOWER(address) LIKE CONCAT('%', LOWER('${address}'),'%')`;
+    const addressQuery = address === '' ? 'true' : `LOWER(address) LIKE CONCAT('%', LOWER('${address}'),'%')`;
     const levelQuery = `level >= ${minLevel} AND level <= ${maxLevel}`;
     const genderQuery = `gender = ${gender} OR gender = 2`;
     const liftQuery = `lift >= ${lift ? 1 : 0}`;
@@ -67,8 +67,7 @@ async function openHomeEJS(res) {
 
     try {
         currentUserData = await database.getUnique(
-            `SELECT name FROM $,{mode} WHERE ${
-                mode === 'student' ? 'studentID' : 'username'
+            `SELECT name FROM $,{mode} WHERE ${mode === 'student' ? 'studentID' : 'username'
             }='${currentUser}'`
         );
     } catch (err) {

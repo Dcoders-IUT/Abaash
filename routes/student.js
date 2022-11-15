@@ -3,7 +3,7 @@ const store = require('store');
 const database = require('../util/database');
 const hash = require('../util/hash');
 const misc = require('../util/misc');
-const multer  = require('multer');
+const multer = require('multer');
 const path = require('path');
 
 const app = express.Router();
@@ -12,10 +12,10 @@ const storage = multer.diskStorage({
         cb(null, 'public/student/img');
     },
     filename: function (req, file, cb) {
-        cb(null, store.get('user')+Date.now()+path.extname(file.originalname));
+        cb(null, store.get('user') + Date.now() + path.extname(file.originalname));
     }
 });
-const upload = multer({storage: storage, limits: {fileSize: 10*1024*1024}});
+const upload = multer({ storage: storage, limits: { fileSize: 10 * 1024 * 1024 } });
 
 async function getUser(id, pass) {
     const wrongpass = 'WRONG PASSWORD!';
@@ -115,13 +115,11 @@ app.get('/profile/:id', async (req, res) => {
 
     try {
         flat = await database.getUnique(
-            `SELECT flatID, name FROM flat WHERE flatID=${profileUserData.flatID}` 
+            `SELECT flatID, name FROM flat WHERE flatID=${profileUserData.flatID}`
         );
     } catch (err) {
         flat = null;
     }
-
-    console.log(profileUserData);
 
     res.render('student/profile', {
         currentUser: store.get('user'),
@@ -172,14 +170,16 @@ app.route('/edit/:id')
             return;
         }
 
+        const profileID = Number(temp.profileID);
         const { name } = temp;
         const { studentID } = temp;
-        const profileID = Number(temp.profileID);
         const phone = Number(temp.phone);
         const { email } = temp;
         const nid = Number(temp.nid);
+        const gender = Number(temp.gender);
+        const { blg } = temp;
         const { pass } = temp;
-        const photo = req.file.filename;
+        const photo = temp.photo? req.file.filename: null;
 
         if (currentUser !== profileID) {
             res.redirect('../../');
@@ -195,8 +195,8 @@ app.route('/edit/:id')
 
         await database.exec(
             `UPDATE student
-            SET name='${name}', studentID='${studentID}', phone=${phone}, email='${email}', nid=${nid}, photo=${photo}
-            WHERE studentID='${currentUser}'`
+            SET name='${name}', studentID=${studentID}, phone=${phone}, email='${email}', nid=${nid}, gender=${gender}, bloodgroup='${blg}', photo=${photo}
+            WHERE studentID=${currentUser}`
         );
 
         res.redirect('../profile');

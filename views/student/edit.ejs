@@ -1,62 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Edit Profile</title>
-  </head>
-  <body>
-    <% if(currentUser === profileUserData.studentID) { %>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Edit Profile</title>
+</head>
+
+<body>
+  <% if(currentUser===profileUserData.studentID) { %>
     <form method="post" enctype="multipart/form-data">
       <h1>Edit Student Profile</h1>
-      <input
-        type="hidden"
-        name="profileID"
-        value="<%= profileUserData.studentID %>"
-      />
-      <input
-        type="text"
-        name="name"
-        placeholder="Name"
-        value="<%=profileUserData.name%>"
-      />
-      <input
-        type="text"
-        name="studentID"
-        placeholder="Student ID"
-        value="<%=profileUserData.studentID%>"
-      />
-      <input
-        type="number"
-        name="phone"
-        placeholder="Phone Number"
-        value="<%=profileUserData.phone%>"
-      />
-      <input
-        type="email"
-        name="email"
-        placeholder="Email Address"
-        value="<%=profileUserData.email%>"
-      />
-      <input
-        type="number"
-        name="nid"
-        placeholder="NID Number"
-        value="<%=profileUserData.nid%>"
-      />
+      <input type="hidden" name="profileID" value="<%= profileUserData.studentID %>" />
+      <input type="text" name="name" placeholder="Name" value="<%=profileUserData.name%>" />
+      <input type="text" name="studentID" placeholder="Student ID" value="<%=profileUserData.studentID%>" />
+      <input type="number" name="phone" placeholder="Phone Number" value="<%=profileUserData.phone%>" />
+      <input type="email" name="email" placeholder="Email Address" value="<%=profileUserData.email%>" />
+      <input type="number" name="nid" placeholder="NID Number" value="<%=profileUserData.nid%>" />
       <label>Gender</label>
       <select name="gender">
         <% misc.globalConst.genderList.forEach((gender)=> { %>
-          <option value="<%=gender.value%>" <%= profileUserData.gender===gender.value? 'selected': '' %>>
+          <option value="<%=gender.value%>" <%=profileUserData.gender===gender.value? 'selected' : '' %>>
             <%= gender.display %>
           </option>
-        <% }) %>
+          <% }) %>
       </select>
       <label>Blood Group</label>
       <select name="blg">
         <% misc.globalConst.bloodgroupList.forEach((blg)=> { %>
-          <option value="<%=blg.value%>" <%= profileUserData.bloodgroup===blg.value? 'selected': '' %>> <%= blg.display %> </option>
-        <% }) %>
+          <option value="<%=blg.value%>" <%=profileUserData.bloodgroup===blg.value? 'selected' : '' %>> <%= blg.display
+              %>
+          </option>
+          <% }) %>
       </select>
       <br />
       <label>Enter Password </label>
@@ -67,14 +42,15 @@
         <label>Photo (Size Limit = 10 MB)</label>
         <input name="photo" type="file" accept="image/png, image/jpg" />
       </div>
-      
+
       <button>Save</button>
     </form>
     <button>
       <a href="../profile/<%=profileUserData.studentID%>">Cancel</a>
     </button>
     <% } else { %>
-    <p>USER NOT FOUND!</p>
-    <% } %>
-  </body>
+      <p>USER NOT FOUND!</p>
+      <% } %>
+</body>
+
 </html>

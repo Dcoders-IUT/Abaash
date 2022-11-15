@@ -5,18 +5,16 @@
 </style>
 
 <% if(flatList) { %>
-    <div
-      style="display: grid; grid-template-columns: 400px 400px; column-gap: 100px"
-    >
-   
-      <% flatList.forEach((flat)=> { %>
-      <div><%- include ("./showOwnerFlat.ejs",{misc, flat}) %></div>
+  <div style="display: grid; grid-template-columns: 400px 400px; column-gap: 100px">
+
+    <% flatList.forEach((flat)=> { %>
+      <div>
+        <%- include ("./showOwnerFlat.ejs",{misc, flat}) %>
+      </div>
       <% }) %>
-    </div>
-    <% } %>
+  </div>
+  <% } %>
 
 <% if(flatList.length==0){%>
         <img class ="upload" src="https://www.google.com/imgres?imgurl=https%3A%2F%2Fwww.surveylegend.com%2Fimg%2Ficons%2Ffields-smart-file-upload.svg&imgrefurl=https%3A%2F%2Fwww.surveylegend.com%2Fuser-guide%2Ffile-upload%2F&tbnid=dkDT3Sz0BY2N5M&vet=10CBgQxiAoCGoXChMIgM3Y_4Ko-wIVAAAAAB0AAAAAEC4..i&docid=RbqZp6wmvr7PhM&w=800&h=800&itg=1&q=upload%20image%20here%20&ved=0CBgQxiAoCGoXChMIgM3Y_4Ko-wIVAAAAAB0AAAAAEC4" alt="No Flats" />
       <% } %>
-    
-    
