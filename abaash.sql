@@ -14,10 +14,12 @@
 
 
 -- Dumping database structure for abaash
+DROP DATABASE IF EXISTS `abaash`;
 CREATE DATABASE IF NOT EXISTS `abaash` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `abaash`;
 
 -- Dumping structure for table abaash.flat
+DROP TABLE IF EXISTS `flat`;
 CREATE TABLE IF NOT EXISTS `flat` (
   `flatID` int(12) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
@@ -38,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `flat` (
   CONSTRAINT `flat_ibfk_1` FOREIGN KEY (`owner`) REFERENCES `owner` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table abaash.flat: ~7 rows (approximately)
+-- Dumping data for table abaash.flat: ~0 rows (approximately)
 DELETE FROM `flat`;
 /*!40000 ALTER TABLE `flat` DISABLE KEYS */;
 INSERT INTO `flat` (`flatID`, `name`, `address`, `description`, `owner`, `gender`, `x`, `y`, `level`, `area`, `lift`, `generator`, `rent`, `photo`) VALUES
@@ -52,6 +54,7 @@ INSERT INTO `flat` (`flatID`, `name`, `address`, `description`, `owner`, `gender
 /*!40000 ALTER TABLE `flat` ENABLE KEYS */;
 
 -- Dumping structure for table abaash.flatrequest
+DROP TABLE IF EXISTS `flatrequest`;
 CREATE TABLE IF NOT EXISTS `flatrequest` (
   `studentID` int(9) NOT NULL,
   `flatID` int(12) NOT NULL,
@@ -71,6 +74,7 @@ INSERT INTO `flatrequest` (`studentID`, `flatID`, `date`) VALUES
 /*!40000 ALTER TABLE `flatrequest` ENABLE KEYS */;
 
 -- Dumping structure for table abaash.owner
+DROP TABLE IF EXISTS `owner`;
 CREATE TABLE IF NOT EXISTS `owner` (
   `name` varchar(50) NOT NULL,
   `username` varchar(50) NOT NULL,
@@ -96,6 +100,7 @@ INSERT INTO `owner` (`name`, `username`, `password`, `passwordLastChanged`, `pho
 /*!40000 ALTER TABLE `owner` ENABLE KEYS */;
 
 -- Dumping structure for table abaash.room
+DROP TABLE IF EXISTS `room`;
 CREATE TABLE IF NOT EXISTS `room` (
   `flatid` int(11) NOT NULL,
   `bed` int(11) NOT NULL,
@@ -123,6 +128,7 @@ INSERT INTO `room` (`flatid`, `bed`, `din`, `liv`, `kit`, `bath`, `balk`, `xtra`
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 
 -- Dumping structure for table abaash.student
+DROP TABLE IF EXISTS `student`;
 CREATE TABLE IF NOT EXISTS `student` (
   `name` varchar(50) NOT NULL,
   `gender` tinyint(1) NOT NULL,
@@ -140,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `student` (
   UNIQUE KEY `nid` (`nid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table abaash.student: ~3 rows (approximately)
+-- Dumping data for table abaash.student: ~4 rows (approximately)
 DELETE FROM `student`;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
 INSERT INTO `student` (`name`, `gender`, `studentID`, `password`, `passwordLastChanged`, `phone`, `email`, `nid`, `bloodgroup`, `photo`) VALUES
