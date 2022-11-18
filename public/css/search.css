@@ -1,3 +1,15 @@
+input[type="radio"]:blank {
+  /* width: 3em; */
+  height: 1rem;
+  /* accent-color: #009973; */
+}
+
+input[type="radio"]:checked {
+  /* width: 3em; */
+  /* height: 1rem; */
+  accent-color: #009973;
+}
+
 /* button  */
 .button-33 {
   background-color: #c2fbd7;
@@ -817,6 +829,7 @@ button {
 
 .quantity>input {
   -webkit-appearance: none;
+  appearance: none;
   width: 55px;
   text-align: center;
   font-size: 18px;
@@ -906,6 +919,7 @@ button {
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
+  appearance: none;
   margin: 0;
 }
 

@@ -1,58 +1,55 @@
-const express = require('express');
-const store = require('store');
-const database = require('./util/database');
-const misc = require('./util/misc');
-// const mlr = require('./util/mlr');
+const express = require('express')
+const store = require('store')
+const database = require('./util/database')
+const misc = require('./util/misc')
+// const mlr = require('./util/mlr')
 
-const app = express();
-const port = 3001;
+const app = express()
+const port = 3001
 
-app.use(express.static('public'));
-app.use(express.urlencoded({ extended: true }));
-app.set('views', './views');
-app.set('view engine', 'ejs');
+app.use(express.static('public'))
+app.use(express.urlencoded({ extended: true }))
+app.set('views', './views')
+app.set('view engine', 'ejs')
 
 // console.log(mlr.test().predict([3, 4]))
 
 async function allFlats() {
     try {
-        return await database.get('SELECT * FROM flat');
+        return await database.get('SELECT * FROM flat')
     } catch (err) {
-        return {};
+        return {}
     }
 }
 async function searchFlats(address, minLevel, maxLevel, gender, lift, generator, area, rent) {
-    const addressQuery = address === '' ? 'true' : `LOWER(address) LIKE CONCAT('%', LOWER('${address}'),'%')`;
-    const levelQuery = `level >= ${minLevel} AND level <= ${maxLevel}`;
-    const genderQuery = `gender = ${gender} OR gender = 2`;
-    const liftQuery = `lift >= ${lift ? 1 : 0}`;
-    const generatorQuery = `generator >= ${generator ? 1 : 0}`;
-    const areaQuery = `area >= ${area}`;
-    const rentQuery = `rent <= ${rent}`;
+    const addressQuery = address === '' ? 'true' : `LOWER(address) LIKE CONCAT('%', LOWER('${address}'),'%')`
+    const levelQuery = `level >= ${minLevel} AND level <= ${maxLevel}`
+    const genderQuery = `gender = ${gender} OR gender = 2`
+    const liftQuery = `lift >= ${lift ? 1 : 0}`
+    const generatorQuery = `generator >= ${generator ? 1 : 0}`
+    const areaQuery = `area >= ${area}`
+    const rentQuery = `rent <= ${rent}`
 
     try {
-        // console.log(`SELECT * FROM flat
-        // WHERE (${addressQuery}) AND (${levelQuery}) AND (${genderQuery}) AND (${liftQuery}) AND (${generatorQuery}) AND (${areaQuery}) AND (${rentQuery})`);
-
         return await database.get(
             `SELECT * FROM flat
             WHERE (${addressQuery}) AND (${levelQuery}) AND (${genderQuery}) AND (${liftQuery}) AND (${generatorQuery}) AND (${areaQuery}) AND (${rentQuery})`,
-        );
+        )
     } catch (err) {
-        return {};
+        return {}
     }
 }
 
 function openEJS(page, res) {
-    const currentUser = store.get('user');
-    const mode = store.get('mode');
+    const currentUser = store.get('user')
+    const mode = store.get('mode')
 
-    res.render(page, { currentUser, mode });
+    res.render(page, { currentUser, mode })
 }
 
 async function openHomeEJS(res) {
-    const currentUser = store.get('user');
-    const mode = store.get('mode');
+    const currentUser = store.get('user')
+    const mode = store.get('mode')
 
     if (!store.get('mode') || !store.get('user')) {
         res.render('home', {
@@ -60,16 +57,16 @@ async function openHomeEJS(res) {
             currentUser,
             mode,
             flatList: misc.shuffle(await allFlats()),
-        });
-        return;
+        })
+        return
     }
-    let currentUserData;
+    let currentUserData
 
     try {
         currentUserData = await database.getUnique(
             `SELECT name FROM $,{mode} WHERE ${mode === 'student' ? 'studentID' : 'username'
             }='${currentUser}'`
-        );
+        )
     } catch (err) {
         res.render('home', {
             misc,
@@ -77,8 +74,8 @@ async function openHomeEJS(res) {
             mode,
             nameOfCurrentUser: null,
             flatList: misc.shuffle(await allFlats()),
-        });
-        return;
+        })
+        return
     }
     res.render('home', {
         misc,
@@ -86,61 +83,61 @@ async function openHomeEJS(res) {
         mode,
         nameOfCurrentUser: currentUserData.name,
         flatList: misc.shuffle(await allFlats()),
-    });
+    })
 }
 
 app.route('/')
     .get(async (req, res) => openHomeEJS(res))
-    .post(async (req, res) => openHomeEJS(res));
+    .post(async (req, res) => openHomeEJS(res))
 
 app.get('/map', (req, res) => {
-    if (!store.get('mode') || !store.get('user')) res.redirect('./');
-    else openEJS('map', res);
-});
+    if (!store.get('mode') || !store.get('user')) res.redirect('./')
+    else openEJS('map', res)
+})
 
 app.get('/notifications', (req, res) => {
-    if (!store.get('mode') || !store.get('user')) res.redirect('./');
-    else openEJS('notifications', res);
-});
+    if (!store.get('mode') || !store.get('user')) res.redirect('./')
+    else openEJS('notifications', res)
+})
 
 app.get('/sos', (req, res) => {
-    if (!store.get('mode') || !store.get('user')) res.redirect('./');
-    else openEJS('sos', res);
-});
+    if (!store.get('mode') || !store.get('user')) res.redirect('./')
+    else openEJS('sos', res)
+})
 
 app.get('/logout', (req, res) => {
-    store.remove('user');
-    store.remove('mode');
-    res.redirect('./');
-});
+    store.remove('user')
+    store.remove('mode')
+    res.redirect('./')
+})
 
 app.get('/test', (req, res) => {
-    store.set('user', 'ork');
-    store.set('mode', 'owner');
-    res.redirect('./');
-});
+    store.set('user', 'ork')
+    store.set('mode', 'owner')
+    res.redirect('./')
+})
 
 app.get('/profile', (req, res) => {
-    if (!store.get('mode') || !store.get('user')) res.redirect('./');
+    if (!store.get('mode') || !store.get('user')) res.redirect('./')
     else {
-        const currentUser = store.get('user');
-        const mode = store.get('mode');
+        const currentUser = store.get('user')
+        const mode = store.get('mode')
 
-        res.redirect(`${mode}/profile/${currentUser}`);
+        res.redirect(`${mode}/profile/${currentUser}`)
     }
-});
+})
 
 app.post('/search', async (req, res) => {
-    const temp = req.body;
+    const temp = req.body
 
-    const { address } = temp;
-    const minLevel = Number(temp.minLevel);
-    const maxLevel = Number(temp.maxLevel);
-    const gender = Number(temp.gender);
-    const lift = temp.lift === 'on';
-    const generator = temp.lift === 'on';
-    const area = Number(temp.area);
-    const rent = Number(temp.rent);
+    const { address } = temp
+    const minLevel = Number(temp.minLevel)
+    const maxLevel = Number(temp.maxLevel)
+    const gender = Number(temp.gender)
+    const lift = temp.lift === 'on'
+    const generator = temp.lift === 'on'
+    const area = Number(temp.area)
+    const rent = Number(temp.rent)
 
     res.render('searchResults', {
         misc,
@@ -154,15 +151,15 @@ app.post('/search', async (req, res) => {
             area,
             rent,
         ),
-    });
-});
+    })
+})
 
-const studentRouter = require('./routes/student');
-const ownerRouter = require('./routes/owner');
-const flatRouter = require('./routes/flat');
+const studentRouter = require('./routes/student')
+const ownerRouter = require('./routes/owner')
+const flatRouter = require('./routes/flat')
 
-app.use('/student', studentRouter);
-app.use('/owner', ownerRouter);
-app.use('/flat', flatRouter);
+app.use('/student', studentRouter)
+app.use('/owner', ownerRouter)
+app.use('/flat', flatRouter)
 
-app.listen(port);
+app.listen(port)

@@ -1,6 +1,6 @@
-const linearRegression = require('ml-regression-multivariate-linear');
+const linearRegression = require('ml-regression-multivariate-linear')
 
-const obj = {};
+const obj = {}
 
 obj.test = () => {
     const x = [
@@ -20,13 +20,13 @@ obj.test = () => {
         [4, 8, 6],
         [10, 8, 9],
     ];
-    const predictor = new linearRegression(x, y);
-    return predictor;
+    const predictor = new linearRegression(x, y)
+    return predictor
 };
 
 obj.model = (x, y) => {
-    const predictor = new linearRegression(x, y);
-    return predictor;
+    const predictor = new linearRegression(x, y)
+    return predictor
 };
 
-module.exports = obj;
+module.exports = obj

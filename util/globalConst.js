@@ -1,4 +1,4 @@
-const obj = {};
+const obj = {}
 
 obj.bloodgroupList = [
     { value: ' ', display: "I don't know" },
@@ -10,17 +10,17 @@ obj.bloodgroupList = [
     { value: 'AB-', display: 'AB-' },
     { value: 'O+', display: 'O+' },
     { value: 'O-', display: 'O-' },
-];
+]
 
 obj.genderList = [
     { value: 1, display: 'Male' },
     { value: 0, display: 'Female' },
-];
+]
 
 obj.flatGenderList = [
     { value: 1, display: 'Male' },
     { value: 0, display: 'Female' },
     { value: 2, display: 'Not Determined Yet' },
-];
+]
 
-module.exports = obj;
+module.exports = obj

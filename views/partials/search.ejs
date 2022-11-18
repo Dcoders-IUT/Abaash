@@ -73,7 +73,8 @@
 
                 <!-- level -->
                 <div class="input-group" style="padding-bottom:13px; padding-top: 13px;">
-                  <label for="level" class="label">Level: </label>
+                  <label for="level" class="label">Level </label>
+                  <br />
                   <label class="label">Min</label>
                   <select class="dropdown" name="minLevel">
                     <% for(let i=1; i<=20; i++) { %>
@@ -82,6 +83,7 @@
                       </option>
                       <% } %>
                   </select>
+                  <br />
                   <label class="label">Max</label>
                   <select name="maxLevel">
                     <% for(let i=1; i<=20; i++) { %>
@@ -117,7 +119,7 @@
                 <!-- gender -->
                 <div class="col-2">
                   <div class="input-group">
-                    <label for="gender" class="gender">Gender</label>
+                    <label for="gender" class="gender">For</label>
                     <select name="gender">
                       <% misc.globalConst.genderList.forEach((gender)=> { %>
                         <option value="<%=gender.value%>">
@@ -138,15 +140,15 @@
                 <div class="checkdiv"
                   style="display:flex; flex-direction: row; justify-content: center;  align-items: center;">
                   <label for="lift">Lift</label>
-                  <input style="width: 100%;" type="checkbox" name="lift" />
+                  <input style="width: 100%;" type="radio" name="lift" />
                   <label>Generator</label>
-                  <input type="checkbox" name="generator" />
+                  <input type="radio" name="generator" />
                 </div>
 
 
                 <!-- submit -->
                 <button class="btn-submit" type="submit" text-align="center">
-                  search
+                  Search
                 </button>
               </form>
             </div>
