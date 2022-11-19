@@ -177,7 +177,8 @@ app.route('/edit/:id')
         const gender = Number(temp.gender)
         const { blg } = temp
         const { pass } = temp
-        const photo = temp.photo ? req.file.filename : null
+    
+        const photo = req.file? `'${req.file.filename}'`: 'NULL'
 
         if (currentUser !== profileID) {
             res.redirect('../../')
@@ -193,7 +194,8 @@ app.route('/edit/:id')
 
         await database.exec(
             `UPDATE student
-            SET name='${name}', studentID=${studentID}, phone=${phone}, email='${email}', nid=${nid}, gender=${gender}, bloodgroup='${blg}', photo=${photo}
+            SET name='${name}', studentID=${studentID}, phone=${phone}, email='${email}', nid=${nid},
+            gender=${gender}, bloodgroup='${blg}', photo=${photo}
             WHERE studentID=${currentUser}`,
         )
 

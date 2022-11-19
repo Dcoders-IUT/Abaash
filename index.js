@@ -28,14 +28,15 @@ async function searchFlats(address, minLevel, maxLevel, gender, lift, generator,
     const liftQuery = `lift >= ${lift ? 1 : 0}`
     const generatorQuery = `generator >= ${generator ? 1 : 0}`
     const areaQuery = `area >= ${area}`
-    const rentQuery = `rent <= ${rent}`
+    const rentQuery = rent>0? `rent <= ${rent}`: 'true'
 
     try {
         return await database.get(
             `SELECT * FROM flat
-            WHERE (${addressQuery}) AND (${levelQuery}) AND (${genderQuery}) AND (${liftQuery}) AND (${generatorQuery}) AND (${areaQuery}) AND (${rentQuery})`,
+            WHERE (${addressQuery}) AND (${levelQuery}) AND (${genderQuery}) AND (${liftQuery}) AND (${generatorQuery}) AND (${areaQuery}) AND (${rentQuery})`
         )
     } catch (err) {
+        console.log(err);
         return {}
     }
 }
@@ -139,6 +140,17 @@ app.post('/search', async (req, res) => {
     const area = Number(temp.area)
     const rent = Number(temp.rent)
 
+    console.log(await searchFlats(
+        address,
+        minLevel,
+        maxLevel,
+        gender,
+        lift,
+        generator,
+        area,
+        rent,
+    ));
+
     res.render('searchResults', {
         misc,
         flatList: await searchFlats(
@@ -150,7 +162,7 @@ app.post('/search', async (req, res) => {
             generator,
             area,
             rent,
-        ),
+        )
     })
 })
 

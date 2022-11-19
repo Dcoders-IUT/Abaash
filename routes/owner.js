@@ -162,7 +162,8 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
     const { email } = temp
     const nid = Number(temp.nid)
     const { pass } = temp
-    const photo = req.file.filename
+    
+    const photo = req.file? `'${req.file.filename}'`: 'NULL'
 
     if (currentUser !== profileID) {
         res.redirect('../../')
@@ -178,7 +179,7 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
 
     await database.exec(
         `UPDATE owner
-        SET name='${name}', username='${username}', phone=${phone}, email='${email}', nid=${nid}, photo='${photo}'
+        SET name='${name}', username='${username}', phone=${phone}, email='${email}', nid=${nid}, photo=${photo}
         WHERE username='${currentUser}'`,
     )
 

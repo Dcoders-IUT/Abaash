@@ -8,10 +8,14 @@ const connection = mariadb.createPool({
 })
 
 async function exec(command) {
+    console.log(command)
+
     await connection.query(command)
 }
 
 async function get(command) {
+    console.log(command)
+
     const queryResult = await connection.query(command)
     const recordList = []
 
@@ -23,6 +27,8 @@ async function get(command) {
 }
 
 async function getUnique(command) {
+    console.log(command)
+    
     const queryResult = await connection.query(command)
 
     if (queryResult.length > 1) throw new Error('Not Unique')
