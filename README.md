@@ -28,8 +28,10 @@
 * Flat Cards (Description)
 * Send Flat Request (Flat/Request)
 * View Requests (Owner/Requests)
+* Flat Edit
 
 ## Bugs:
 * Lift/Generator Button
 * Using numbers for checking Student ID
 * Can't view OLD HOME
+* Shows Wrong Month in hash.salt()
