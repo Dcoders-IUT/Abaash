@@ -2,12 +2,9 @@
 
 ## New Features:
 * Search by Coordinates
-* Request Handling
-* Photo Gallery
-* Message Passing
+* Photo Gallery for Flats
 * Change Password
 * Delete Stuff
-* Delete Photo
 * Remove NID
 * Verification
 * Account Recovery
