@@ -144,6 +144,7 @@
     text-transform: capitalize;
     color: var(--h2-text-color);
     font-size: 1.2rem;
+    background-color: white;
   }
   
   .overlay {
@@ -228,6 +229,7 @@
     justify-content: space-between;
     height: 200px;
     font-size: 14px;
+    background-color: white;
   }
   
   .card-content p {
