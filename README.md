@@ -21,6 +21,7 @@
 
 ## Page Redesigns:
 * New Flat
+* Flat Edit
 
 ## Bugs:
 * Lift/Generator Button
