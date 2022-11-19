@@ -12,7 +12,7 @@
   <% if(flat.rent>0) { %>
     <div class="container">
       <form method="post">
-        <input type="hidden" name="studentID" value="<%=currentUser%>" />
+        <input type="hidden" name="studentID" value="<%=user.id%>" />
         <h1>Flat Request for <a href="/flat/profile/<%=flat.id %>"><%=flat.name %></a> </h1>
         <br />
         <h1>Message From <a href="/owner/profile/<%=owner.username %>"><%=owner.name %></a></h1>
@@ -25,6 +25,9 @@
           <input type="text" name="msg" placeholder="Request Message" />
           <br />
         </div>
+        <h1>Contact Info</h1>
+        <h2>Phone Number: <%=user.phone%></h2>
+        <h2>Email Address: <%=user.email%></h2>
         <button>Send Request</button>
       </form>
       <button><a href="../profile/<%=flat.flatID%>">Cancel</a></button>

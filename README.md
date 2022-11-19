@@ -32,3 +32,6 @@
 * Using numbers for checking Student ID
 * Can't view OLD HOME
 * Shows Wrong Month in hash.salt()
+* Deleted Photo Problem
+* Fix Edit Pages
+* Profile Info Passing

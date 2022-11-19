@@ -1,5 +1,6 @@
 const express = require('express')
 const store = require('store')
+const userData = require('./util/userData')
 const database = require('./util/database')
 const misc = require('./util/misc')
 const hash = require('./util/hash')
@@ -45,48 +46,10 @@ async function searchFlats(address, minLevel, maxLevel, gender, lift, generator,
     }
 }
 
-function openEJS(page, res) {
-    const currentUser = store.get('user')
-    const mode = store.get('mode')
-
-    res.render(page, { currentUser, mode })
-}
-
 async function openHomeEJS(res) {
-    const currentUser = store.get('user')
-    const mode = store.get('mode')
-
-    if (!store.get('mode') || !store.get('user')) {
-        res.render('home', {
-            misc,
-            currentUser,
-            mode,
-            flatList: misc.shuffle(await allFlats()),
-        })
-        return
-    }
-    let currentUserData
-
-    try {
-        currentUserData = await database.getUnique(
-            `SELECT name FROM ${mode} WHERE ${mode === 'student' ? 'studentID' : 'username'
-            }='${currentUser}'`
-        )
-    } catch (err) {
-        res.render('home', {
-            misc,
-            currentUser,
-            mode,
-            nameOfCurrentUser: null,
-            flatList: misc.shuffle(await allFlats()),
-        })
-        return
-    }
     res.render('home', {
         misc,
-        currentUser,
-        mode,
-        nameOfCurrentUser: currentUserData.name,
+        user: await userData.allInfo(),
         flatList: misc.shuffle(await allFlats()),
     })
 }
@@ -94,21 +57,6 @@ async function openHomeEJS(res) {
 app.route('/')
     .get(async (req, res) => openHomeEJS(res))
     .post(async (req, res) => openHomeEJS(res))
-
-app.get('/map', (req, res) => {
-    if (!store.get('mode') || !store.get('user')) res.redirect('./')
-    else openEJS('map', res)
-})
-
-app.get('/notifications', (req, res) => {
-    if (!store.get('mode') || !store.get('user')) res.redirect('./')
-    else openEJS('notifications', res)
-})
-
-app.get('/sos', (req, res) => {
-    if (!store.get('mode') || !store.get('user')) res.redirect('./')
-    else openEJS('sos', res)
-})
 
 app.get('/logout', (req, res) => {
     store.remove('user')
@@ -123,12 +71,12 @@ app.get('/test', (req, res) => {
 })
 
 app.get('/profile', (req, res) => {
-    if (!store.get('mode') || !store.get('user')) res.redirect('./')
+    if (userData.missing()) res.redirect('./')
     else {
-        const currentUser = store.get('user')
-        const mode = store.get('mode')
+        const userID = userData.id()
+        const mode = userData.mode()
 
-        res.redirect(`${mode}/profile/${currentUser}`)
+        res.redirect(`${mode}/profile/${userID}`)
     }
 })
 
@@ -144,19 +92,9 @@ app.post('/search', async (req, res) => {
     const area = Number(temp.area)
     const rent = Number(temp.rent)
 
-    console.log(await searchFlats(
-        address,
-        minLevel,
-        maxLevel,
-        gender,
-        lift,
-        generator,
-        area,
-        rent,
-    ));
-
     res.render('searchResults', {
         misc,
+        user: await userData.allInfo(),
         flatList: await searchFlats(
             address,
             minLevel,

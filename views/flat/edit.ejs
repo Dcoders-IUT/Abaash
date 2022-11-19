@@ -26,10 +26,8 @@
   </style> -->
 </head>
 
-
-
 <body>
-  <% if(currentUser===flat.owner) { %>
+  <% if(user.id===flat.owner) { %>
     <div class="container">
       <form id="register" method="post" enctype="multipart/form-data">
         <h1>Edit Flat</h1>

@@ -11,9 +11,11 @@
 </head>
 
 <body>
+  <%- include("./partials/navbar.ejs") %>
   <a href="../">Home</a>
   <h2>Search Results</h2>
-  <%- include ("./partials/showHomeAllFlats.ejs", {misc, flatList:flatList}) %>
+  <%- include ("./partials/showHomeAllFlats.ejs") %>
+  <%- include("./partials/footer.ejs") %>
 </body>
 
 </html>
