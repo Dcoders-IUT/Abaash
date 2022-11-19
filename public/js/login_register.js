@@ -23,7 +23,7 @@ const containsUnderScore = str => /[_]/.test(str)
 const validateName = name => !containsNumbers(name) && !containsSpecialChars(name) && !containsUnderScore(name)
 const validateUserName = user => !containsSpace(user) && !containsSpecialChars(user) && !/^(\d|_)/.test(user)
 const confirmPass = (pass, pass2) => pass === pass2
-const validateNID = nid => nid.length > 7 //nid.length === 17 // CHANGE
+const validateNID = nid => nid.length > 3 //nid.length === 17 // CHANGE
 
 // Here ^ and $ wrapping ensures that we are checking the whole string and not part of it
 // ^ beginning and $ end. in some cases ^ means negation wrapped with [] ie [^ means negated set

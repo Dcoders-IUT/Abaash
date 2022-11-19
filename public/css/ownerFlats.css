@@ -1,49 +1,49 @@
 /* globale variable */
 
 :root {
-    --bg-body: #f4f4f4;
-    --bg-hot: #dd3333;
-    --bg-featured: #ea723d;
-    --p-text-color: #7e8186;
-    --icon-info-color: #808080;
-    --icon-image-color: white;
-    --h2-text-color: #1a1a1a;
-    --price-text-color: #2fa89e;
-    --backgound-imgage: #3b9f93;
-    --border-view-color: #a4d2c3;
-  }
-  
-  /* all element */
-  /* 
+  --bg-body: #f4f4f4;
+  --bg-hot: #dd3333;
+  --bg-featured: #ea723d;
+  --p-text-color: #7e8186;
+  --icon-info-color: #808080;
+  --icon-image-color: white;
+  --h2-text-color: #1a1a1a;
+  --price-text-color: #2fa89e;
+  --backgound-imgage: #3b9f93;
+  --border-view-color: #a4d2c3;
+}
+
+/* all element */
+/* 
   * {
     box-sizing: border-box;
     margin: 0;
   } */
-  
-  /* reset element */
-  
-  /* comman style */
-  
-  .overlay,
-  .img-overlay img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-  }
-  
-  .nameAnchor {
-    text-decoration: none;
-    color: orangered;
-  }
-  
-  .nameAnchor:hover {
-    color: red;
-  }
-  
-  /* body style */
-  /* 
+
+/* reset element */
+
+/* comman style */
+
+.overlay,
+.img-overlay img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.nameAnchor {
+  text-decoration: none;
+  color: orangered;
+}
+
+.nameAnchor:hover {
+  color: red;
+}
+
+/* body style */
+/* 
   body {
     font-family: "Open Sans", sans-serif;
     background-color: var(--bg-body);
@@ -317,23 +317,23 @@
       font-size: 20px;
     }
   }
-  
-  @media screen and (max-width: 500px) {
-    .container {
-      grid-template-columns: 20px repeat(12, minmax(auto, 1fr)) 20px;
-      grid-gap: 10px;
-    }
-  
-    .cards {
-      grid-template-columns: repeat(12, minmax(auto, 1fr));
-      grid-column-gap: 10px;
-      grid-row-gap: 30px;
-    }
-  
-    .card {
-      grid-column-end: span 12;
-    }
-  
-    /* card-content style */
+}
+
+@media screen and (max-width: 500px) {
+  .container {
+    grid-template-columns: 20px repeat(12, minmax(auto, 1fr)) 20px;
+    grid-gap: 10px;
   }
-  
+
+  .cards {
+    grid-template-columns: repeat(12, minmax(auto, 1fr));
+    grid-column-gap: 10px;
+    grid-row-gap: 30px;
+  }
+
+  .card {
+    grid-column-end: span 12;
+  }
+
+  /* card-content style */
+}

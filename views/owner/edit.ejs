@@ -1,76 +1,45 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script
-      src="https://kit.fontawesome.com/53732d670c.js"
-      crossorigin="anonymous"
-    ></script>
-    <link rel="stylesheet" href="/css/edit.css" type="text/css" />
-    <title>Edit Profile</title>
-  </head>
 
-  <body>
-    <h1>Edit Owner Profile</h1>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://kit.fontawesome.com/53732d670c.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/css/edit.css" type="text/css" />
+  <title>Edit Profile</title>
+</head>
 
-    <div class="container">
-      <% if(currentUser === profileUserData.username) { %>
+<body>
+  <h1>Edit Owner Profile</h1>
+
+  <div class="container">
+    <% if(currentUser===profileUserData.username) { %>
       <form method="post" enctype="multipart/form-data">
         <div class="icon">
           <i class="fa-regular fa-user"></i>
         </div>
         <div class="edit">
-          <input
-            type="hidden"
-            name="profileID"
-            value="<%= profileUserData.username %>"
-          />
+          <input type="hidden" name="profileID" value="<%= profileUserData.username %>" />
         </div>
 
         <div class="edit">
-          <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            value="<%=profileUserData.name%>"
-          />
+          <input type="text" name="name" placeholder="Name" value="<%=profileUserData.name%>" />
         </div>
 
         <div class="edit">
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value="<%=profileUserData.username%>"
-          />
+          <input type="text" name="username" placeholder="Username" value="<%=profileUserData.username%>" />
         </div>
 
         <div class="edit">
-          <input
-            type="number"
-            name="phone"
-            placeholder="Phone Number"
-            value="<%=profileUserData.phone%>"
-          />
+          <input type="number" name="phone" placeholder="Phone Number" value="<%=profileUserData.phone%>" />
         </div>
 
         <div class="edit">
-          <input
-            type="email"
-            name="email"
-            placeholder="Email Address"
-            value="<%=profileUserData.email%>"
-          />
+          <input type="email" name="email" placeholder="Email Address" value="<%=profileUserData.email%>" />
         </div>
 
         <div class="edit">
-          <input
-            type="number"
-            name="nid"
-            placeholder="NID Number"
-            value="<%=profileUserData.nid%>"
-          />
+          <input type="number" name="nid" placeholder="NID Number" value="<%=profileUserData.nid%>" />
         </div>
 
         <!-- <label>Enter Password </label> -->
@@ -90,8 +59,9 @@
         </button>
       </form>
       <% } else { %>
-      <p>USER NOT FOUND!</p>
-      <% } %>
-    </div>
-  </body>
+        <p>USER NOT FOUND!</p>
+        <% } %>
+  </div>
+</body>
+
 </html>

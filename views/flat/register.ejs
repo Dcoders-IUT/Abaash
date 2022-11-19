@@ -1,37 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script
-      src="https://kit.fontawesome.com/53732d670c.js"
-      crossorigin="anonymous"
-    ></script>
-    <link rel="stylesheet" href="/css/edit.css" type="text/css" />
-    <title>New Flat</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
 
-      .container {
-        width: 100vw;
-        height: 100vh;
-        background-image: linear-gradient(
-            110deg,
-            rgba(255, 255, 255, 0.7) 50%,
-            transparent 50%
-          ),
-          url("/images/home5.jpg");
-        background-size: 100% 100%;
-      }
-    </style>
-  </head>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://kit.fontawesome.com/53732d670c.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/css/edit.css" type="text/css" />
+  <title>New Flat</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  <body>
-    <% if(currentUser === owner.username) { %>
+    .container {
+      width: 100vw;
+      height: 100vh;
+      background-image: linear-gradient(110deg,
+          rgba(255, 255, 255, 0.7) 50%,
+          transparent 50%),
+        url("/images/home5.jpg");
+      background-size: 100% 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <% if(currentUser===owner.username) { %>
     <div class="register-container">
       <form action="register" id="register" method="post">
         <h1>New Flat</h1>
@@ -50,8 +46,10 @@
           <label>Gender</label>
           <select name="gender">
             <% misc.globalConst.flatGenderList.forEach((gender)=> { %>
-            <option value="<%=gender.value%>"><%= gender.display %></option>
-            <% }) %>
+              <option value="<%=gender.value%>">
+                <%= gender.display %>
+              </option>
+              <% }) %>
           </select>
         </div>
         <span>
@@ -78,8 +76,10 @@
           <label>Level</label>
           <select name="level">
             <% for(let i=0; i<20; i++) { %>
-            <option value="<%=i+1%>"><%=i+1%></option>
-            <% } %>
+              <option value="<%=i+1%>">
+                <%=i+1%>
+              </option>
+              <% } %>
           </select>
         </div>
         <div class="edit">
@@ -97,9 +97,7 @@
           <input type="number" name="rent" placeholder="Rent" /> <br />
         </div>
 
-        <a href="../../owner/profile/<%=owner.username%>"
-          >Owner: <%=owner.name%></a
-        >
+        <a href="../../owner/profile/<%=owner.username%>">Owner: <%=owner.name%></a>
         <input type="hidden" name="owner" value="<%=owner.username%>" />
         <br />
 
@@ -114,21 +112,11 @@
       </div>
       <br />
       <div class="edit">
-        <input
-          type="number"
-          name="din"
-          placeholder="Dining Room"
-          form="register"
-        />
+        <input type="number" name="din" placeholder="Dining Room" form="register" />
       </div>
       <br />
       <div class="edit">
-        <input
-          type="number"
-          name="liv"
-          placeholder="Living Room"
-          form="register"
-        />
+        <input type="number" name="liv" placeholder="Living Room" form="register" />
       </div>
       <br />
       <div class="edit">
@@ -136,35 +124,21 @@
       </div>
       <br />
       <div class="edit">
-        <input
-          type="number"
-          name="bath"
-          placeholder="Bathroom"
-          form="register"
-        />
+        <input type="number" name="bath" placeholder="Bathroom" form="register" />
       </div>
       <br />
       <div class="edit">
-        <input
-          type="number"
-          name="balk"
-          placeholder="Balcony"
-          form="register"
-        />
+        <input type="number" name="balk" placeholder="Balcony" form="register" />
       </div>
       <br />
       <div class="edit">
-        <input
-          type="number"
-          name="xtra"
-          placeholder="Extra Room"
-          form="register"
-        />
+        <input type="number" name="xtra" placeholder="Extra Room" form="register" />
       </div>
       <br />
     </div>
     <% } else { %>
-    <p>USER NOT FOUND!</p>
-    <% } %>
-  </body>
+      <p>USER NOT FOUND!</p>
+      <% } %>
+</body>
+
 </html>

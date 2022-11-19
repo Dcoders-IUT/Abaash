@@ -79,13 +79,13 @@ button.ghost {
   text-decoration: none;
 }
 
-.go{
+.go {
   font-size: 8px;
-  font-weight:600;
+  font-weight: 600;
   padding: 12px 20px;
 }
 
-.mode-button > button > a {
+.mode-button>button>a {
   color: white;
 }
 
@@ -152,6 +152,7 @@ input {
 }
 
 @keyframes show {
+
   0%,
   49.99% {
     opacity: 0;

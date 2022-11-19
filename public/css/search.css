@@ -2,11 +2,11 @@
 .button-33 {
   background-color: #c2fbd7;
   border-radius: 10px;
-  box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+  box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset, rgba(44, 187, 99, .15) 0 1px 2px, rgba(44, 187, 99, .15) 0 2px 4px, rgba(44, 187, 99, .15) 0 4px 8px, rgba(44, 187, 99, .15) 0 8px 16px, rgba(44, 187, 99, .15) 0 16px 32px;
   color: green;
   cursor: pointer;
   display: inline-block;
-  font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+  font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif;
   padding: 7px 20px;
   text-align: center;
   text-decoration: none;
@@ -19,42 +19,43 @@
 }
 
 .button-33:hover {
-  box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
+  box-shadow: rgba(44, 187, 99, .35) 0 -25px 18px -14px inset, rgba(44, 187, 99, .25) 0 1px 2px, rgba(44, 187, 99, .25) 0 2px 4px, rgba(44, 187, 99, .25) 0 4px 8px, rgba(44, 187, 99, .25) 0 8px 16px, rgba(44, 187, 99, .25) 0 16px 32px;
   transform: scale(1.05) rotate(-1deg);
 }
 
-.map-buttons{
+.map-buttons {
   display: flex;
   /* justify-content: space-around; */
   margin-bottom: 10px;
-  
+
 }
 
-.map-buttons>button{
+.map-buttons>button {
   margin: 7px;
 }
+
 .checkdiv {
   color: whitesmoke;
 }
 
 
-select{
+select {
   position: relative;
-  width:35%;
+  width: 35%;
   min-width: 50px;
-    padding: 7px 40px 7px 12px;
-    border: 1px solid #E8EAED;
-    border-radius: 5px;
-    background: white;
-    box-shadow: 0 1px 3px -2px #9098A9;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 150ms ease;
-      color: #5A667F;
+  padding: 7px 40px 7px 12px;
+  border: 1px solid #E8EAED;
+  border-radius: 5px;
+  background: white;
+  box-shadow: 0 1px 3px -2px #9098A9;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 150ms ease;
+  color: #5A667F;
 }
 
 
-      
+
 
 /* ==========================================================================
    #GRID
@@ -152,8 +153,8 @@ legend {
 /**
  * Remove trailing margins from nested lists.
  */
-li > ol,
-li > ul {
+li>ol,
+li>ul {
   margin-bottom: 0;
 }
 
@@ -438,12 +439,14 @@ a:active {
     width: 235px;
     max-width: 270px;
   }
+
   .daterangepicker .calendar.right,
   .daterangepicker .calendar.left {
     float: none !important;
     clear: none !important;
     margin: 0 auto !important;
   }
+
   .daterangepicker .calendar.left {
     margin-bottom: 30px !important;
   }
@@ -699,7 +702,7 @@ button {
   border-radius: 3px;
 }
 
-.checkbox-container input:checked ~ .checkmark {
+.checkbox-container input:checked~.checkmark {
   background-color: #fff;
 }
 
@@ -709,7 +712,7 @@ button {
   display: none;
 }
 
-.checkbox-container input:checked ~ .checkmark:after {
+.checkbox-container input:checked~.checkmark:after {
   display: block;
 }
 
@@ -764,11 +767,11 @@ button {
   border-radius: 50%;
 }
 
-.radio-container:hover input ~ .radio-checkmark {
+.radio-container:hover input~.radio-checkmark {
   background-color: #fff;
 }
 
-.radio-container input:checked ~ .radio-checkmark {
+.radio-container input:checked~.radio-checkmark {
   background-color: #fff;
 }
 
@@ -778,7 +781,7 @@ button {
   display: none;
 }
 
-.radio-container input:checked ~ .radio-checkmark:after {
+.radio-container input:checked~.radio-checkmark:after {
   display: block;
 }
 
@@ -812,7 +815,7 @@ button {
   }
 }
 
-.quantity > input {
+.quantity>input {
   -webkit-appearance: none;
   width: 55px;
   text-align: center;
@@ -975,10 +978,7 @@ input[type="number"]::-webkit-outer-spin-button {
   height: 30px;
 }
 
-.rs-select2
-  .select2-container
-  .select2-selection--single
-  .select2-selection__rendered {
+.rs-select2 .select2-container .select2-selection--single .select2-selection__rendered {
   line-height: 30px;
   padding-left: 0;
   color: #808080;
@@ -986,10 +986,7 @@ input[type="number"]::-webkit-outer-spin-button {
   text-transform: uppercase;
 }
 
-.rs-select2
-  .select2-container
-  .select2-selection--single
-  .select2-selection__arrow {
+.rs-select2 .select2-container .select2-selection--single .select2-selection__arrow {
   height: 28px;
   right: 4px;
   display: -webkit-box;
@@ -1009,18 +1006,11 @@ input[type="number"]::-webkit-outer-spin-button {
   align-items: center;
 }
 
-.rs-select2
-  .select2-container
-  .select2-selection--single
-  .select2-selection__arrow
-  b {
+.rs-select2 .select2-container .select2-selection--single .select2-selection__arrow b {
   display: none;
 }
 
-.rs-select2
-  .select2-container
-  .select2-selection--single
-  .select2-selection__arrow:after {
+.rs-select2 .select2-container .select2-selection--single .select2-selection__arrow:after {
   font-family: "Material-Design-Iconic-Font";
   content: "\f2f9";
   font-size: 24px;
@@ -1031,10 +1021,7 @@ input[type="number"]::-webkit-outer-spin-button {
   transition: all 0.4s ease;
 }
 
-.rs-select2
-  .select2-container.select2-container--open
-  .select2-selection--single
-  .select2-selection__arrow::after {
+.rs-select2 .select2-container.select2-container--open .select2-selection--single .select2-selection__arrow::after {
   -webkit-transform: rotate(-180deg);
   -moz-transform: rotate(-180deg);
   -ms-transform: rotate(-180deg);
@@ -1060,8 +1047,7 @@ input[type="number"]::-webkit-outer-spin-button {
   color: #808080;
 }
 
-.select2-container--default
-  .select2-results__option--highlighted[aria-selected] {
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
   background: #00ad5f;
 }
 
@@ -1124,20 +1110,20 @@ input[type="number"]::-webkit-outer-spin-button {
   color: #fff;
 }
 
-.tab-content > .tab-pane {
+.tab-content>.tab-pane {
   display: none;
   padding: 29px 75px;
   padding-bottom: 50px;
 }
 
-.tab-content > .tab-pane.active {
+.tab-content>.tab-pane.active {
   display: block;
   /* background-color: #256d85; */
   background-color: rgba(0, 0, 0, 0.3);
 }
 
 @media (max-width: 767px) {
-  .tab-content > .tab-pane {
+  .tab-content>.tab-pane {
     padding: 30px;
     padding-bottom: 45px;
   }

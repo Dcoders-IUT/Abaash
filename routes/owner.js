@@ -81,9 +81,9 @@ app.route('/register')
         '${plc}',
         ${phone},
         '${email}',
-        ${nid})`,
+        ${nid},
+        null)`,
         );
-
         store.set('user', username);
         store.set('mode', req.body.mode);
 
@@ -113,6 +113,7 @@ app.get('/profile/:id', async (req, res) => {
         currentUser: store.get('user'),
         profileUser: id,
         name: profileUserData.name,
+        username: profileUserData.username,
         photo: profileUserData.photo,
         flatList,
     });

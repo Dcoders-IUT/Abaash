@@ -1,23 +1,97 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+.profile {
+  display: flex;
+  justify-content: space-around;
+  margin-left: 20%;
+  margin-right: 20%;
+  margin-top: 5%;
+  box-shadow: 0 5px 20px -6px #000;
+  border-radius: 8px;
+  height: 40vh;
+  text-align: center;
+}
+
+.lol {
+  display: flex;
+  justify-content: center;
+}
+*/
+
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap");
 
 * {
-    margin : 0;
-    padding : 0;
-    box-sizing: border-box;
-    font-family: "Montserrat", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
 
 }
 
-    
+.container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
 
-     
-      .button-3 > a {
-        color: whitesmoke;
-        text-decoration: none;
-      }
-     
 
+.image-container {
+  max-height: 100%;
+  max-width: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-right: 20%;
+  padding-left: 10%;
+}
+
+.owner-img {
+  height: 40vh;
+  width: 20vw;
+  border-radius: 50%;
+  /* border: 0.5px solid #4b4b4d; */
+}
+
+.info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  font-size: 28px;
+  margin-right: auto;
+}
+
+.info>h4 {
+  color: #4b4b4d;
+}
+
+
+.info>h2 {
+  margin-top: 15px;
+}
+
+.profile {
+  margin-left: 9%;
+  margin-right: 15%;
+  margin-top: 7%;
+  padding-top: 10%;
+  box-shadow: 0 5px 20px -6px #000;
+  border-radius: 8px;
+  height: 80vh;
+  text-align: center;
+}
+
+.lol {
+  padding-left: 5%;
+}
 
       .buttons{
         margin-top: 30px;
