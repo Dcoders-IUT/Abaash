@@ -42,7 +42,7 @@ app.post('/profile/request', async (req, res) => {
     const { flatID } = req.body
 
     await database.exec(
-        `INSERT INTO flatrequest VALUES (${studentID}, ${flatID}, '${hash.salt()}')`,
+        `INSERT INTO flatrequest(studentID, flatID, date) VALUES (${studentID}, ${flatID}, '${hash.salt()}')`,
     )
 
     res.redirect(`../profile/${flatID}`)
@@ -161,11 +161,11 @@ app.route('/register')
         const xtra = Number(temp.xtra)
 
         await database.exec(
-            `INSERT INTO flat VALUES (${flatID}, '${name}', '${address}', '${description}', '${owner}', ${gender}, ${x}, ${y}, ${level}, ${area}, ${lift}, ${generator}, ${rent})`,
+            `INSERT INTO flat(flatID, name, address, description, owner, gender, x, y, level, area, lift, generator, rent) VALUES (${flatID}, '${name}', '${address}', '${description}', '${owner}', ${gender}, ${x}, ${y}, ${level}, ${area}, ${lift}, ${generator}, ${rent})`,
         )
 
         await database.exec(
-            `INSERT INTO room VALUES (${flatID}, ${bed}, ${din}, ${liv}, ${kit}, ${bath}, ${balk}, ${xtra})`,
+            `INSERT INTO room(flatID, bed, din, liv, kit, bath, balk, xtra) VALUES (${flatID}, ${bed}, ${din}, ${liv}, ${kit}, ${bath}, ${balk}, ${xtra})`,
         )
 
         res.redirect(`profile/${flatID}`)

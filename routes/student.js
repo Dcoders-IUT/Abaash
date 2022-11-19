@@ -74,7 +74,7 @@ app.route('/register')
         const { blg } = temp
 
         await database.exec(
-            `INSERT INTO student VALUES ('${name}',
+            `INSERT INTO student(name, gender, id, pass, plc, phone, email, nid, blg) VALUES ('${name}',
         ${gender},
         ${id},
         '${pass}',
@@ -82,8 +82,7 @@ app.route('/register')
         ${phone},
         '${email}',
         ${nid},
-        '${blg}',
-        null)`,
+        '${blg}'`
         )
 
         store.set('user', id)

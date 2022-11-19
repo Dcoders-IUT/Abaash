@@ -75,14 +75,13 @@ app.route('/register')
         const nid = Number(temp.nid)
 
         await database.exec(
-            `INSERT INTO owner VALUES ('${name}',
+            `INSERT INTO owner(name, username, pass, plc, phone, email, nid) VALUES ('${name}',
         '${username}',
         '${pass}',
         '${plc}',
         ${phone},
         '${email}',
-        ${nid},
-        null)`,
+        ${nid}`
         )
         store.set('user', username)
         store.set('mode', req.body.mode)
