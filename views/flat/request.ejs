@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/css/edit.css" type="text/css" />
+  <title>Flat Reservation Request </title>
+</head>
+
+<body>
+  <% if(flat.rent>0) { %>
+    <div class="container">
+      <form method="post">
+        <input type="hidden" name="studentID" value="<%=currentUser%>" />
+        <h1>Flat Request for <a href="/flat/profile/<%=flat.id %>"><%=flat.name %></a> </h1>
+        <br />
+        <h1>Message From <a href="/owner/profile/<%=owner.username %>"><%=owner.name %></a></h1>
+        <br />
+        <h2>
+          <%=flat.message %>
+          <br />
+        </h2>
+        <div class="edit">
+          <input type="text" name="msg" placeholder="Request Message" />
+          <br />
+        </div>
+        <button>Send Request</button>
+      </form>
+      <button><a href="../profile/<%=flat.flatID%>">Cancel</a></button>
+
+      
+    </div>
+
+
+
+  <% } else { %>
+    <p>FLAT NOT FOUND!</p>
+  <% } %>
+</body>
+
+</html>

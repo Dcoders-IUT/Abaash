@@ -37,11 +37,13 @@
     <h1>Requests</h1>
     <table border="1">
       <tr>
-        <td>Student</td>
-        <td>Flat</td>
-        <td>Request Date</td>
-        <td>Phone Number</td>
-        <td>E-mail</td>
+        <td align="center">Student</td>
+        <td align="center">Flat</td>
+        <td align="center">Request Date</td>
+        <td align="center">Phone Number</td>
+        <td align="center">E-mail</td>
+        <td align="center">Message</td>
+        <td align="center" colspan="2">Action</td>
       </tr>
       <% flatRequestList.forEach(request=> { %>
         <tr>
@@ -52,13 +54,29 @@
               <%= request.flat.name %>
             </a></td>
           <td>
-            <%= request.date %></a>
+            <%= request.date %>
           </td>
           <td>
-            <%= request.student.phone %></a>
+            <%= request.student.phone %>
           </td>
           <td>
-            <%= request.student.email %></a>
+            <%= request.student.email %>
+          </td>
+          <td>
+            <%= request.message %>
+          </td>
+          <td>
+            <form method="post" action="/flat/request/approve">
+              <input type="hidden" name="flatID" value="<%=request.flat.flatID %>" />
+              <button>Approve</button>
+            </form>
+          </td>
+          <td>
+            <form method="post" action="/flat/request/delete">
+              <input type="hidden" name="flatID" value="<%=request.flat.flatID %>" />
+              <input type="hidden" name="studentID" value="<%=request.student.studentID %>" />
+              <button>Delete</button>
+            </form>
           </td>
         </tr>
         <% }) %>

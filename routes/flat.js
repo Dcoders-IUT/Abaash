@@ -37,17 +37,6 @@ async function newFlatID() {
     return base + offset
 }
 
-app.post('/profile/request', async (req, res) => {
-    const { studentID } = req.body
-    const { flatID } = req.body
-
-    await database.exec(
-        `INSERT INTO flatrequest(studentID, flatID, date) VALUES (${studentID}, ${flatID}, '${hash.salt()}')`,
-    )
-
-    res.redirect(`../profile/${flatID}`)
-})
-
 app.get('/profile/:id', async (req, res) => {
     const { id } = req.params
     const currentUser = store.get('user')
@@ -106,6 +95,90 @@ app.get('/profile/:id', async (req, res) => {
     })
 })
 
+app.post('/request/approve', async(req, res) => {
+    const { flatID } = req.body
+    const currentUser = store.get('user')
+
+    try {
+        const flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${flatID}'`)
+        if (currentUser !== flat.owner) throw new Error('OWNER MISMATCH!')
+        await database.exec(`DELETE FROM flatrequest WHERE flatID=${flatID}`)
+        
+        res.redirect('../../owner/requests')
+    } catch (err) {
+        console.log(err)
+        res.redirect('../../')
+        return
+    }
+})
+
+app.post('/request/delete', async(req, res) => {
+    const { studentID } = req.body
+    const { flatID } = req.body
+    const currentUser = store.get('user')
+
+    try {
+        const flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${flatID}'`)
+        if (currentUser !== flat.owner) throw new Error('OWNER MISMATCH!')
+        await database.exec(`DELETE FROM flatrequest WHERE studentID=${studentID} AND flatID=${flatID}`)
+        
+        res.redirect('../../owner/requests')
+    } catch (err) {
+        console.log(err)
+        res.redirect('../../')
+        return
+    }
+})
+
+app.route('/request/:id')
+    .get(async (req, res) => {
+        const { id } = req.params
+        const currentUser = store.get('user')
+        const mode = store.get('mode')
+
+        if (mode !== 'student') {
+            res.redirect('../../')
+            return
+        }
+
+        let flat
+        let rooms
+        let owner
+        try {
+            flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${id}'`)
+            rooms = await database.getUnique(`SELECT * FROM room WHERE flatID='${id}'`)
+            owner = await database.getUnique(`SELECT name FROM owner WHERE username='${flat.owner}'`)
+        } catch (err) {
+            console.log(err)
+            res.redirect('../../')
+            return
+        }
+
+        res.render('flat/request', { misc, currentUser, flat, rooms, owner })
+    })
+    .post(async (req, res) => {
+        const { id } = req.params
+        const { studentID } = req.body
+        const { msg } = req.body
+        const currentUser = store.get('user')
+
+        if (Number(currentUser) !== Number(studentID)) {
+            console.log(currentUser)
+            console.log(studentID)
+
+            res.redirect('../../')
+            return
+        }
+
+        await database.exec(`DELETE FROM flatrequest WHERE studentID=${studentID} AND flatID=${id}`)
+
+        await database.exec(
+            `INSERT INTO flatrequest(studentID, flatID, date, message) VALUES (${studentID}, ${id}, '${hash.salt()}', '${msg}')`
+        )
+
+        res.redirect(`../profile/${id}`)
+    })
+
 app.route('/register')
     .get(async (req, res) => {
         const currentUser = store.get('user')
@@ -151,7 +224,7 @@ app.route('/register')
         const lift = temp.lift === 'on'
         const generator = temp.generator === 'on'
         const { rent } = temp
-        const { message } = temp
+        const { msg } = temp
 
         const bed = Number(temp.bed)
         const din = Number(temp.din)
@@ -164,7 +237,7 @@ app.route('/register')
         await database.exec(
             `INSERT INTO flat(flatID, name, address, description, owner, gender, x, y, level, area, lift, generator, rent, message)
             VALUES (${flatID}, '${name}', '${address}', '${description}', '${owner}', ${gender}, ${x}, ${y}, ${level},
-            ${area}, ${lift}, ${generator}, ${rent}, ${message})`
+            ${area}, ${lift}, ${generator}, ${rent}, ${msg})`
         )
 
         await database.exec(
@@ -218,8 +291,9 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
     const lift = temp.lift === 'on'
     const generator = temp.generator === 'on'
     const { rent } = temp
-    const photo = req.file.filename
-    console.log(photo)
+    const { msg } = temp
+
+    const photo = req.file? `'${req.file.filename}'`: 'NULL'
 
     const bed = Number(temp.bed)
     const din = Number(temp.din)
@@ -229,19 +303,31 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
     const balk = Number(temp.balk)
     const xtra = Number(temp.xtra)
 
-    await database.exec(
-        `UPDATE flat
-        SET name='${name}', address='${address}', description='${description}', gender=${gender}, area=${area}, level=${level}, lift=${lift}, generator=${generator}, rent=${rent}, photo='${photo}'
-        WHERE flatID=${flatID}`,
-    )
-
-    await database.exec(
-        `UPDATE room
-        SET bed=${bed}, din=${din}, liv=${liv}, kit=${kit}, bath=${bath}, balk=${balk}, xtra=${xtra}
-        WHERE flatID=${flatID}`,
-    )
-
-    res.redirect(`../profile/${flatID}`)
+    try {
+        // await getUser(currentUser, pass)
+        
+        // let oldPhoto = await database.getUnique(`SELECT photo FROM owner WHERE username='${currentUser}'`)
+        // oldPhoto = oldPhoto.photo
+        // if(oldPhoto) fs.unlinkSync(`public/owner/img/${oldPhoto}`)
+        
+        await database.exec(
+            `UPDATE flat
+            SET name='${name}', address='${address}', description='${description}', gender=${gender}, area=${area}, level=${level},
+            lift=${lift}, generator=${generator}, rent=${rent}, message='${msg}', photo=${photo}
+            WHERE flatID=${flatID}`,
+        )
+    
+        await database.exec(
+            `UPDATE room
+            SET bed=${bed}, din=${din}, liv=${liv}, kit=${kit}, bath=${bath}, balk=${balk}, xtra=${xtra}
+            WHERE flatID=${flatID}`,
+        )
+    
+        res.redirect(`../profile/${flatID}`)
+    } catch (err) {
+        res.redirect('../../')
+        return
+    }
 })
 
 module.exports = app

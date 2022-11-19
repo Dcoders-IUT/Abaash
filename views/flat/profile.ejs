@@ -207,11 +207,7 @@
         </div>
       
       <% } else if (mode==='student') { %>
-      <form action="request" method="post">
-        <input type="hidden" name="studentID" value="<%= currentUser %>" />
-        <input type="hidden" name="flatID" value="<%= flat.flatID %>" />
-        <button>Request Reservation</button>
-      </form>
+        <a href="../request/<%=flat.flatID%>"><button class="bb">Request Reservation</button></a>
       <% } %> <% } else { %>
       <span>FLAT NOT FOUND!</span>
       <% } %>
@@ -228,45 +224,6 @@
  
        <!-- map js  -->
        <script>
-         // Geolocation api
-         // navigator.geolocation object provides current location of user
-         // if (navigator.geolocation) {
-         //   navigator.geolocation.getCurrentPosition(success, error);
-         // } else {
-         //   console.log("browser does not support geolocation api");
-         // }
- 
-         // function success(position) {
-         //   const lat = position.coords.latitude;
-         //   const long = position.coords.longitude;
- 
-         //   var map = L.map("mapid").setView([lat, long], 17);
- 
-         // const layer = L.tileLayer(
-         //   "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-         //   {
-         //     maxZoom: 19,
-         //     attribution:
-         //       '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-         //   }
-         // ).addTo(map);
- 
-         // let markerOptions = {
-         //   // title: 'My Location',
-         //   clickable: true,
-         //   draggable: true,
-         // };
-         // // creating marker
-         // let marker = L.marker([lat, long]);
- 
-         // // add marker to map
-         // marker.addTo(map);
-         // }
- 
-         // function error(error){
-         //   alert('we could not get current locaiton.');
-         // }
- 
          var map = L.map("mapid").setView([<%=flat.x%>, <%=flat.y%>], 17);
  
          const layer = L.tileLayer(

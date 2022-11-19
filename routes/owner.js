@@ -1,5 +1,6 @@
 const express = require('express')
 const store = require('store')
+const fs = require('fs')
 const multer = require('multer')
 const path = require('path')
 const database = require('../util/database')
@@ -171,18 +172,22 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
 
     try {
         await getUser(currentUser, pass)
+        
+        let oldPhoto = await database.getUnique(`SELECT photo FROM owner WHERE username='${currentUser}'`)
+        oldPhoto = oldPhoto.photo
+        if(oldPhoto) fs.unlinkSync(`public/owner/img/${oldPhoto}`)
+        
+        await database.exec(
+            `UPDATE owner
+            SET name='${name}', username='${username}', phone=${phone}, email='${email}', nid=${nid}, photo=${photo}
+            WHERE username='${currentUser}'`
+        )
+
+        res.redirect('../profile')
     } catch (err) {
         res.redirect('../../')
         return
     }
-
-    await database.exec(
-        `UPDATE owner
-        SET name='${name}', username='${username}', phone=${phone}, email='${email}', nid=${nid}, photo=${photo}
-        WHERE username='${currentUser}'`,
-    )
-
-    res.redirect('../profile')
 })
 
 app.get('/requests', async (req, res) => {
@@ -207,6 +212,7 @@ app.get('/requests', async (req, res) => {
                 student: studentDetails,
                 flat: flatDetails,
                 date: flatRequestList[i].date,
+                message: flatRequestList[i].message,
             })
         }
 

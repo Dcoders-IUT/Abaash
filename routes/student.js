@@ -186,19 +186,23 @@ app.route('/edit/:id')
 
         try {
             await getUser(currentUser, pass)
+            
+            let oldPhoto = await database.getUnique(`SELECT photo FROM owner WHERE username='${currentUser}'`)
+            oldPhoto = oldPhoto.photo
+            if(oldPhoto) fs.unlinkSync(`public/owner/img/${oldPhoto}`)
+            
+            await database.exec(
+                `UPDATE student
+                SET name='${name}', studentID=${studentID}, phone=${phone}, email='${email}', nid=${nid},
+                gender=${gender}, bloodgroup='${blg}', photo=${photo}
+                WHERE studentID=${currentUser}`
+            )
+            
+            res.redirect('../profile')
         } catch (err) {
             res.redirect('../../')
             return
         }
-
-        await database.exec(
-            `UPDATE student
-            SET name='${name}', studentID=${studentID}, phone=${phone}, email='${email}', nid=${nid},
-            gender=${gender}, bloodgroup='${blg}', photo=${photo}
-            WHERE studentID=${currentUser}`,
-        )
-
-        res.redirect('../profile')
     })
 
 module.exports = app

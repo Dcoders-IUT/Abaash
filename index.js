@@ -2,6 +2,7 @@ const express = require('express')
 const store = require('store')
 const database = require('./util/database')
 const misc = require('./util/misc')
+const hash = require('./util/hash')
 // const mlr = require('./util/mlr')
 
 const app = express()
@@ -13,10 +14,11 @@ app.set('views', './views')
 app.set('view engine', 'ejs')
 
 // console.log(mlr.test().predict([3, 4]))
+console.log(hash.salt())
 
 async function allFlats() {
     try {
-        return await database.get('SELECT * FROM flat')
+        return await database.get('SELECT * FROM flat WHERE rent >= 0')
     } catch (err) {
         return {}
     }
@@ -33,7 +35,9 @@ async function searchFlats(address, minLevel, maxLevel, gender, lift, generator,
     try {
         return await database.get(
             `SELECT * FROM flat
-            WHERE (${addressQuery}) AND (${levelQuery}) AND (${genderQuery}) AND (${liftQuery}) AND (${generatorQuery}) AND (${areaQuery}) AND (${rentQuery})`
+            WHERE (${addressQuery}) AND (${levelQuery}) AND
+            (${genderQuery}) AND (${liftQuery}) AND (${generatorQuery})
+            AND (${areaQuery}) AND (rent >= 0) AND (${rentQuery})`
         )
     } catch (err) {
         console.log(err);
@@ -65,7 +69,7 @@ async function openHomeEJS(res) {
 
     try {
         currentUserData = await database.getUnique(
-            `SELECT name FROM $,{mode} WHERE ${mode === 'student' ? 'studentID' : 'username'
+            `SELECT name FROM ${mode} WHERE ${mode === 'student' ? 'studentID' : 'username'
             }='${currentUser}'`
         )
     } catch (err) {
