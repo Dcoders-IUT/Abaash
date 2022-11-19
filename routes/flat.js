@@ -151,6 +151,7 @@ app.route('/register')
         const lift = temp.lift === 'on'
         const generator = temp.generator === 'on'
         const { rent } = temp
+        const { message } = temp
 
         const bed = Number(temp.bed)
         const din = Number(temp.din)
@@ -161,7 +162,9 @@ app.route('/register')
         const xtra = Number(temp.xtra)
 
         await database.exec(
-            `INSERT INTO flat(flatID, name, address, description, owner, gender, x, y, level, area, lift, generator, rent) VALUES (${flatID}, '${name}', '${address}', '${description}', '${owner}', ${gender}, ${x}, ${y}, ${level}, ${area}, ${lift}, ${generator}, ${rent})`,
+            `INSERT INTO flat(flatID, name, address, description, owner, gender, x, y, level, area, lift, generator, rent, message)
+            VALUES (${flatID}, '${name}', '${address}', '${description}', '${owner}', ${gender}, ${x}, ${y}, ${level},
+            ${area}, ${lift}, ${generator}, ${rent}, ${message})`
         )
 
         await database.exec(
