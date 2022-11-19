@@ -11,63 +11,64 @@
 
 <body>
   <a href="/">Home</a>
-  <div class="container">
-    <div class="blue-container">
-      <div class="profile">
-        <img class="owner-img" src="<%= photo? `../img/${photo}` : " http://bootdey.com/img/Content/avatar/avatar1.png"
-          %>"
-        alt="Admin"
-        class="rounded-circle"
-        width="150"
-        />
-        <% if(profileUser) { %>
-          <h2 style="color: white;">
-            <%=name%>
-          </h2>
-          <% if(user.id===profileUser) { %>
-            <div class="buttons">
-              <button class="button-3">
-                <a style="color: white;" href="../../flat/register">Add Flat</a>
-              </button>
-              <button class="button-3">
-                <a style="color: white;" href="../edit/<%= profileUser %> ">Edit Profile</a>
-              </button>
+  <%#- include("../partials/navbar.ejs") %>
+    <% if(profileUser) { %>
+      <div class="container">
+        <div class="blue-container">
+          <div class="profile">
+            <img class="owner-img" src="<%= photo? `../img/${photo}` : "http://bootdey.com/img/Content/avatar/avatar1.png" %>"
+            alt="pic"
+            class="rounded-circle"
+            width="150"
+            />
+            <h2>
+              <%=name%>
+            </h2>
+            <h4>@<%= username %>
+            </h4>
+            <% if(user.id===profileUser) { %>
+              <div class="buttons">
+                <a href="../../flat/register">
+                  <button class="button-3">
+                    <strong class="fas fa-plus"></strong>
+                    Add Flat
+                  </button></a>
+                <a href="../edit/<%= profileUser %> ">
+                  <button class="button-3">
+                    <i class="fas fa-edit"></i> Edit Profile
+                  </button></a>
+              </div>
+              <% } %>
+          </div>
+
+          <div class="details">
+            <ul>
+              <li><span><i class="fa fa-globe fa-xl"></i> Website</span><span class="social-media">https://
+                  <%=username%>.bariola.com
+                </span></li>
+              <li><span><i class="fa fa-twitter fa-xl"></i> Twitter</span><span class="social-media">@<%=username%>
+                </span>
+              </li>
+              <li><span><i class="fa fa-facebook fa-xl"></i> Facebook</span><span class="social-media">
+                  @<%=username%>
+                </span></li>
+              <li><span><i class="fa fa-instagram fa-xl"></i> Instagram</span><span class="social-media">
+                  @<%=username%>
+                </span></li>
+            </ul>
+          </div>
+
+          <div class="lol" style="margin-left:33vw">
+            <div class="upper-layer">
+              <div class="all-flats">
+                <%- include ("../partials/showOwnerAllFlats.ejs", {misc, flatList}) %>
+              </div>
             </div>
-            <% } %>
-      </div>
-
-      <div class="details">
-        <ul>
-          <li><span><i class="fa fa-globe fa-xl"></i> Website</span><span class="social-media">https://
-              <%=username%>.bariola.com
-            </span></li>
-          <li><span><i class="fa fa-twitter fa-xl"></i> Twitter</span><span class="social-media">@<%=username%></span>
-          </li>
-          <li><span><i class="fa fa-facebook fa-xl"></i> Facebook</span><span class="social-media">
-              @<%=username%>
-            </span></li>
-          <li><span><i class="fa fa-instagram fa-xl"></i> Instagram</span><span class="social-media">
-              @<%=username%>
-            </span></li>
-        </ul>
-      </div>
-
-      <div class="lol" style="margin-left:33vw">
-        <div class="upper-layer">
-        </div>
-        <div class="all-flats">
-          <%- include ("../partials/showOwnerAllFlats.ejs", {misc, flatList}) %>
+          </div>
         </div>
         <%} else { %>
           <p>USER NOT FOUND!</p>
           <% } %>
-      </div>
-    </div>
-  </div>
-  </div>
-  <%} else { %>
-    <p>USER NOT FOUND!</p>
-    <% } %>
 </body>
 
 </html>
