@@ -144,7 +144,7 @@ figcaption {
   text-transform: capitalize;
   color: var(--h2-text-color);
   font-size: 1.2rem;
-  background: #F9F5EB;
+  background: white;
 }
 
 .overlay {
@@ -229,7 +229,7 @@ figcaption {
   justify-content: space-between;
   height: 200px;
   font-size: 14px;
-  background: #F9F5EB;
+  background: white;
 }
 
 .card-content p {
