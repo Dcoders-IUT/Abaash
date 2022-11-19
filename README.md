@@ -24,3 +24,4 @@
 
 ## Bugs:
 * Lift/Generator Button
+* Shows Wrong Month in hash.salt()
