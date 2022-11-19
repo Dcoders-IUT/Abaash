@@ -23,7 +23,7 @@
           </h2>
           <h4>@<%=username%>
           </h4>
-          <% if(currentUser===profileUser) { %>
+          <% if(user.id===profileUser) { %>
             <div class="buttons">
               <a href="../../flat/register">
                 <button class="button-3">
@@ -40,7 +40,7 @@
     </div>
 
     <div class="lol">
-      <%- include ("../partials/showOwnerAllFlats.ejs", {misc, flatList}) %>
+      <%- include ("../partials/showOwnerAllFlats.ejs") %>
     </div>
     <%} else { %>
       <p>USER NOT FOUND!</p>

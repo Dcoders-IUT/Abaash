@@ -199,7 +199,7 @@
           <% } %>
             <!-- </div> -->
 
-            <% if(currentUser===flat.owner) { %>
+            <% if(user.id===flat.owner) { %>
 
               <div class="buttons">
                 <button class="bb">
@@ -209,7 +209,7 @@
 
               <% } else if (mode==='student' ) { %>
                 <form action="request" method="post">
-                  <input type="hidden" name="studentID" value="<%= currentUser %>" />
+                  <input type="hidden" name="studentID" value="<%= user.id %>" />
                   <input type="hidden" name="flatID" value="<%= flat.flatID %>" />
                   <button>Request Reservation</button>
                 </form>

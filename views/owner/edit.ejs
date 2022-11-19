@@ -13,7 +13,7 @@
   <h1>Edit Owner Profile</h1>
 
   <div class="container">
-    <% if(currentUser===profileUserData.username) { %>
+    <% if(user.id===profileUserData.username) { %>
       <form method="post" enctype="multipart/form-data">
         <div class="icon">
           <i class="fa-regular fa-user"></i>

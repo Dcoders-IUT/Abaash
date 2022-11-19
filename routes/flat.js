@@ -3,6 +3,7 @@ const store = require('store')
 const crypto = require('crypto')
 const multer = require('multer')
 const path = require('path')
+const userData = require('../util/userData')
 const database = require('../util/database')
 const misc = require('../util/misc')
 const hash = require('../util/hash')
@@ -39,7 +40,7 @@ async function newFlatID() {
 
 app.get('/profile/:id', async (req, res) => {
     const { id } = req.params
-    const currentUser = store.get('user')
+    const userID = store.get('user')
     const mode = store.get('mode')
     let flat
     let owner
@@ -52,56 +53,31 @@ app.get('/profile/:id', async (req, res) => {
     } catch (err) {
         console.log(err)
         res.render('flat/profile', {
-            currentUser: store.get('user'),
+            misc,
+            user: await userData.allInfo(),
             flat: null,
             rooms: null,
         })
         return
     }
 
-    if (mode === 'student') {
-        try {
-            const student = await database.getUnique(
-                `SELECT * FROM student WHERE studentID=${currentUser}`,
-            )
-
-            res.render('flat/profile', {
-                currentUser,
-                mode,
-                flat,
-                rooms,
-                owner,
-                student,
-            })
-        } catch (err) {
-            res.render('flat/profile', {
-                currentUser,
-                mode,
-                flat,
-                rooms,
-                owner,
-            })
-        }
-
-        return
-    }
-
     res.render('flat/profile', {
-        currentUser,
+        misc,
+        user: await userData.allInfo(),
         mode,
         flat,
         rooms,
-        owner,
+        owner
     })
 })
 
 app.post('/request/approve', async(req, res) => {
     const { flatID } = req.body
-    const currentUser = store.get('user')
+    const userID = store.get('user')
 
     try {
         const flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${flatID}'`)
-        if (currentUser !== flat.owner) throw new Error('OWNER MISMATCH!')
+        if (userID !== flat.owner) throw new Error('OWNER MISMATCH!')
         await database.exec(`DELETE FROM flatrequest WHERE flatID=${flatID}`)
         
         res.redirect('../../owner/requests')
@@ -115,11 +91,11 @@ app.post('/request/approve', async(req, res) => {
 app.post('/request/delete', async(req, res) => {
     const { studentID } = req.body
     const { flatID } = req.body
-    const currentUser = store.get('user')
+    const userID = store.get('user')
 
     try {
         const flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${flatID}'`)
-        if (currentUser !== flat.owner) throw new Error('OWNER MISMATCH!')
+        if (userID !== flat.owner) throw new Error('OWNER MISMATCH!')
         await database.exec(`DELETE FROM flatrequest WHERE studentID=${studentID} AND flatID=${flatID}`)
         
         res.redirect('../../owner/requests')
@@ -133,7 +109,6 @@ app.post('/request/delete', async(req, res) => {
 app.route('/request/:id')
     .get(async (req, res) => {
         const { id } = req.params
-        const currentUser = store.get('user')
         const mode = store.get('mode')
 
         if (mode !== 'student') {
@@ -154,16 +129,16 @@ app.route('/request/:id')
             return
         }
 
-        res.render('flat/request', { misc, currentUser, flat, rooms, owner })
+        res.render('flat/request', { misc, user: await userData.allInfo(), flat, rooms, owner })
     })
     .post(async (req, res) => {
         const { id } = req.params
         const { studentID } = req.body
         const { msg } = req.body
-        const currentUser = store.get('user')
+        const userID = store.get('user')
 
-        if (Number(currentUser) !== Number(studentID)) {
-            console.log(currentUser)
+        if (Number(userID) !== Number(studentID)) {
+            console.log(userID)
             console.log(studentID)
 
             res.redirect('../../')
@@ -181,7 +156,7 @@ app.route('/request/:id')
 
 app.route('/register')
     .get(async (req, res) => {
-        const currentUser = store.get('user')
+        const userID = store.get('user')
         const mode = store.get('mode')
         let owner
 
@@ -192,14 +167,14 @@ app.route('/register')
 
         try {
             owner = await database.getUnique(
-                `SELECT username, name FROM owner WHERE username='${currentUser}'`,
+                `SELECT username, name FROM owner WHERE username='${userID}'`,
             )
         } catch (err) {
             res.redirect('../')
             return
         }
 
-        res.render('flat/register', { misc, currentUser, owner })
+        res.render('flat/register', { misc, user: await userData.allInfo(), owner })
     })
     .post(async (req, res) => {
         const temp = req.body
@@ -249,7 +224,6 @@ app.route('/register')
 
 app.get('/edit/:id', async (req, res) => {
     const { id } = req.params
-    const currentUser = store.get('user')
     const mode = store.get('mode')
     let flat
     let rooms
@@ -271,7 +245,7 @@ app.get('/edit/:id', async (req, res) => {
 
     res.render('flat/edit', {
         misc,
-        currentUser,
+        user: await userData.allInfo(),
         flat,
         rooms,
         owner,
@@ -304,9 +278,9 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
     const xtra = Number(temp.xtra)
 
     try {
-        // await getUser(currentUser, pass)
+        // await getUser(userID, pass)
         
-        // let oldPhoto = await database.getUnique(`SELECT photo FROM owner WHERE username='${currentUser}'`)
+        // let oldPhoto = await database.getUnique(`SELECT photo FROM flat WHERE username='${userID}'`)
         // oldPhoto = oldPhoto.photo
         // if(oldPhoto) fs.unlinkSync(`public/owner/img/${oldPhoto}`)
         

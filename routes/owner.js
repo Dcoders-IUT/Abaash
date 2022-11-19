@@ -3,6 +3,7 @@ const store = require('store')
 const fs = require('fs')
 const multer = require('multer')
 const path = require('path')
+const userData = require('../util/userData')
 const database = require('../util/database')
 const hash = require('../util/hash')
 const misc = require('../util/misc')
@@ -39,6 +40,30 @@ async function getUser(id, pass) {
         if (err.message === wrongpass) throw err
         throw new Error('USER NOT FOUND!')
     }
+}
+
+async function flatRequestList(records)
+{
+    const reqList = []
+
+    for (let i = 0; i < records.length; i++) {
+        const studentRecord = await database.getUnique(
+            `SELECT * FROM student WHERE studentID='${records[i].studentID}'`,
+        )
+
+        const flatRecord = await database.getUnique(
+            `SELECT * FROM flat WHERE flatID='${records[i].flatID}'`,
+        )
+
+        reqList.push({
+            student: studentRecord,
+            flat: flatRecord,
+            date: records[i].date,
+            message: records[i].message,
+        })
+    }
+
+    return reqList;
 }
 
 app.get('/', (req, res) => {
@@ -92,8 +117,8 @@ app.route('/register')
     .get((req, res) => res.redirect('./login'))
 
 app.get('/profile', (req, res) => {
-    const currentUser = store.get('user')
-    res.redirect(`profile/${currentUser}`)
+    const userID = store.get('user')
+    res.redirect(`profile/${userID}`)
 })
 
 app.get('/profile/:id', async (req, res) => {
@@ -103,14 +128,14 @@ app.get('/profile/:id', async (req, res) => {
     try {
         profileUserData = await database.getUnique(`SELECT * FROM owner WHERE username='${id}'`)
     } catch (err) {
-        res.render('owner/profile', { currentUser: store.get('user'), profileUser: null })
+        res.render('owner/profile', { misc, user: await userData.allInfo(), profileUser: null })
         return
     }
     const flatList = await database.get(`SELECT * FROM flat WHERE owner='${id}'`)
 
     res.render('owner/profile', {
         misc,
-        currentUser: store.get('user'),
+        user: await userData.allInfo(),
         profileUser: id,
         name: profileUserData.name,
         username: profileUserData.username,
@@ -121,7 +146,7 @@ app.get('/profile/:id', async (req, res) => {
 
 app.get('/edit/:id', async (req, res) => {
     const { id } = req.params
-    const currentUser = store.get('user')
+    const userID = store.get('user')
     const mode = store.get('mode')
     let profileUserData
 
@@ -137,17 +162,17 @@ app.get('/edit/:id', async (req, res) => {
         return
     }
 
-    if (currentUser !== profileUserData.username) {
+    if (userID !== profileUserData.username) {
         res.redirect('../../')
         return
     }
 
-    res.render('owner/edit', { currentUser, profileUserData })
+    res.render('owner/edit', { misc, user: await userData.allInfo(), profileUserData })
 })
 
 app.post('/edit/:id', upload.single('photo'), async (req, res) => {
     const temp = req.body
-    const currentUser = store.get('user')
+    const userID = store.get('user')
     const mode = store.get('mode')
 
     if (mode !== 'owner') {
@@ -165,22 +190,22 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
     
     const photo = req.file? `'${req.file.filename}'`: 'NULL'
 
-    if (currentUser !== profileID) {
+    if (userID !== profileID) {
         res.redirect('../../')
         return
     }
 
     try {
-        await getUser(currentUser, pass)
+        await getUser(userID, pass)
         
-        let oldPhoto = await database.getUnique(`SELECT photo FROM owner WHERE username='${currentUser}'`)
+        let oldPhoto = await database.getUnique(`SELECT photo FROM owner WHERE username='${userID}'`)
         oldPhoto = oldPhoto.photo
         if(oldPhoto) fs.unlinkSync(`public/owner/img/${oldPhoto}`)
         
         await database.exec(
             `UPDATE owner
             SET name='${name}', username='${username}', phone=${phone}, email='${email}', nid=${nid}, photo=${photo}
-            WHERE username='${currentUser}'`
+            WHERE username='${userID}'`
         )
 
         res.redirect('../profile')
@@ -191,33 +216,18 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
 })
 
 app.get('/requests', async (req, res) => {
-    const currentUser = store.get('user')
-    const detailedRequestList = []
+    const userID = store.get('user')
 
     try {
-        const flatRequestList = await database.get(
-            `SELECT * FROM flatrequest WHERE (SELECT owner FROM flat WHERE flatrequest.flatid=flat.flatid)='${currentUser}'`,
+        const requestRecords = await database.get(
+            `SELECT * FROM flatrequest WHERE (SELECT owner FROM flat WHERE flatrequest.flatid=flat.flatid)='${userID}'`,
         )
 
-        for (let i = 0; i < flatRequestList.length; i++) {
-            const studentDetails = await database.getUnique(
-                `SELECT * FROM student WHERE studentID='${flatRequestList[i].studentID}'`,
-            )
-
-            const flatDetails = await database.getUnique(
-                `SELECT * FROM flat WHERE flatID='${flatRequestList[i].flatID}'`,
-            )
-
-            detailedRequestList.push({
-                student: studentDetails,
-                flat: flatDetails,
-                date: flatRequestList[i].date,
-                message: flatRequestList[i].message,
-            })
-        }
-
-        res.render('owner/requests', { currentUser, flatRequestList: detailedRequestList })
-    } catch (err) {
+        res.render('owner/requests', {
+            misc,
+            user: await userData.allInfo(),
+            flatRequestList: await flatRequestList(requestRecords)
+        })    } catch (err) {
         res.redirect('../../')
     }
 })
