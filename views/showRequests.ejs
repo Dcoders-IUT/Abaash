@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.svg">
   <title>Requests</title>
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
@@ -33,60 +34,60 @@
 
 <body>
   <%- include("./partials/navbar.ejs") %>
-  <a href="../..">Home</a>
-  <div class="container">
-    <h1>Requests</h1>
-    <table border="1">
-      <tr>
-        <td align="center">Student</td>
-        <td align="center">Flat</td>
-        <td align="center">Request Date</td>
-        <td align="center">Phone Number</td>
-        <td align="center">E-mail</td>
-        <td align="center">Message</td>
-        <% if(user.mode === 'owner') { %>
-          <td align="center" colspan="2">Action</td>
-        <% } %>
-      </tr>
-      <% flatRequestList.forEach(request=> { %>
+    <a href="../..">Home</a>
+    <div class="container">
+      <h1>Requests</h1>
+      <table border="1">
         <tr>
-          <td><a href="../../student/profile/<%= request.student.studentID %>">
-              <%= request.student.name %>
-            </a></td>
-          <td><a href="../../flat/profile/<%= request.flat.flatID %>">
-              <%= request.flat.name %>
-            </a></td>
-          <td>
-            <%= request.date %>
-          </td>
-          <td>
-            <%= request.student.phone %>
-          </td>
-          <td>
-            <%= request.student.email %>
-          </td>
-          <td>
-            <%= request.message %>
-          </td>
-          <% if(user.mode === 'owner') { %>
-            <td>
-              <form method="post" action="/flat/request/approve">
-                <input type="hidden" name="flatID" value="<%=request.flat.flatID %>" />
-                <button>Approve</button>
-              </form>
-            </td>
-            <td>
-              <form method="post" action="/flat/request/delete">
-                <input type="hidden" name="flatID" value="<%=request.flat.flatID %>" />
-                <input type="hidden" name="studentID" value="<%=request.student.studentID %>" />
-                <button>Delete</button>
-              </form>
-            </td>
-          <% } %>
+          <td align="center">Student</td>
+          <td align="center">Flat</td>
+          <td align="center">Request Date</td>
+          <td align="center">Phone Number</td>
+          <td align="center">E-mail</td>
+          <td align="center">Message</td>
+          <% if(user.mode==='owner' ) { %>
+            <td align="center" colspan="2">Action</td>
+            <% } %>
         </tr>
-        <% }) %>
-    </table>
-  </div>
+        <% flatRequestList.forEach(request=> { %>
+          <tr>
+            <td><a href="../../student/profile/<%= request.student.studentID %>">
+                <%= request.student.name %>
+              </a></td>
+            <td><a href="../../flat/profile/<%= request.flat.flatID %>">
+                <%= request.flat.name %>
+              </a></td>
+            <td>
+              <%= request.date %>
+            </td>
+            <td>
+              <%= request.student.phone %>
+            </td>
+            <td>
+              <%= request.student.email %>
+            </td>
+            <td>
+              <%= request.message %>
+            </td>
+            <% if(user.mode==='owner' ) { %>
+              <td>
+                <form method="post" action="/flat/request/approve">
+                  <input type="hidden" name="flatID" value="<%=request.flat.flatID %>" />
+                  <button>Approve</button>
+                </form>
+              </td>
+              <td>
+                <form method="post" action="/flat/request/delete">
+                  <input type="hidden" name="flatID" value="<%=request.flat.flatID %>" />
+                  <input type="hidden" name="studentID" value="<%=request.student.studentID %>" />
+                  <button>Delete</button>
+                </form>
+              </td>
+              <% } %>
+          </tr>
+          <% }) %>
+      </table>
+    </div>
 </body>
 
 </html>
