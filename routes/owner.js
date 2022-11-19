@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
         cb(null, 'public/owner/img')
     },
     filename(req, file, cb) {
-        cb(null, store.get('user') + Date.now() + path.extname(file.originalname))
+        cb(null, userData.id() + Date.now() + path.extname(file.originalname))
     },
 })
 const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } })
@@ -48,7 +48,7 @@ async function flatRequestList(records)
 
     for (let i = 0; i < records.length; i++) {
         const studentRecord = await database.getUnique(
-            `SELECT * FROM student WHERE studentID='${records[i].studentID}'`,
+            `SELECT * FROM student WHERE studentID=${records[i].studentID}`,
         )
 
         const flatRecord = await database.getUnique(
@@ -117,7 +117,7 @@ app.route('/register')
     .get((req, res) => res.redirect('./login'))
 
 app.get('/profile', (req, res) => {
-    const userID = store.get('user')
+    const userID = userData.id()
     res.redirect(`profile/${userID}`)
 })
 
@@ -146,8 +146,8 @@ app.get('/profile/:id', async (req, res) => {
 
 app.get('/edit/:id', async (req, res) => {
     const { id } = req.params
-    const userID = store.get('user')
-    const mode = store.get('mode')
+    const userID = userData.id()
+    const mode = userData.mode()
     let profileUserData
 
     if (mode !== 'owner') {
@@ -172,8 +172,8 @@ app.get('/edit/:id', async (req, res) => {
 
 app.post('/edit/:id', upload.single('photo'), async (req, res) => {
     const temp = req.body
-    const userID = store.get('user')
-    const mode = store.get('mode')
+    const userID = userData.id()
+    const mode = userData.mode()
 
     if (mode !== 'owner') {
         res.redirect('../../')
@@ -216,7 +216,7 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
 })
 
 app.get('/requests', async (req, res) => {
-    const userID = store.get('user')
+    const userID = userData.id()
 
     try {
         const requestRecords = await database.get(

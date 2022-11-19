@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
         cb(null, 'public/student/img')
     },
     filename(req, file, cb) {
-        cb(null, store.get('user') + Date.now() + path.extname(file.originalname))
+        cb(null, userData.id() + Date.now() + path.extname(file.originalname))
     },
 })
 const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } })
@@ -23,7 +23,7 @@ async function getUser(id, pass) {
 
     try {
         const record = await database.getUnique(
-            `SELECT studentID, password, passwordLastChanged FROM student WHERE studentID='${id}' OR email='${id}' OR phone='${id}'`,
+            `SELECT studentID, password, passwordLastChanged FROM student WHERE studentID=${id} OR email='${id}' OR phone=${id}`,
         )
         const { studentID } = record
 
@@ -44,7 +44,7 @@ async function flatRequestList(records)
 
     for (let i = 0; i < records.length; i++) {
         const studentRecord = await database.getUnique(
-            `SELECT * FROM student WHERE studentID='${records[i].studentID}'`,
+            `SELECT * FROM student WHERE studentID=${records[i].studentID}`,
         )
 
         const flatRecord = await database.getUnique(
@@ -118,7 +118,7 @@ app.route('/register')
     .get((req, res) => res.redirect('./login'))
 
 app.get('/profile', (req, res) => {
-    const userID = store.get('user')
+    const userID = userData.id()
     res.redirect(`profile/${userID}`)
 })
 
@@ -135,14 +135,6 @@ app.get('/profile/:id', async (req, res) => {
         return
     }
 
-    try {
-        flat = await database.getUnique(
-            `SELECT flatID, name FROM flat WHERE flatID=${profileUserData.flatID}`,
-        )
-    } catch (err) {
-        flat = null
-    }
-
     res.render('student/profile', {
         misc,
         user: await userData.allInfo(),
@@ -151,15 +143,14 @@ app.get('/profile/:id', async (req, res) => {
         gender: profileUserData.gender,
         bloodgroup: profileUserData.bloodgroup,
         photo: profileUserData.photo,
-        flat,
     })
 })
 
 app.route('/edit/:id')
     .get(async (req, res) => {
         const { id } = req.params
-        const userID = store.get('user')
-        const mode = store.get('mode')
+        const userID = userData.id()
+        const mode = userData.mode()
         let profileUserData
 
         if (mode !== 'student') {
@@ -169,7 +160,7 @@ app.route('/edit/:id')
 
         try {
             profileUserData = await database.getUnique(
-                `SELECT * FROM student WHERE studentID='${id}'`,
+                `SELECT * FROM student WHERE studentID=${id}`,
             )
         } catch (err) {
             res.redirect('../../')
@@ -185,8 +176,8 @@ app.route('/edit/:id')
     })
     .post(upload.single('photo'), async (req, res) => {
         const temp = req.body
-        const userID = store.get('user')
-        const mode = store.get('mode')
+        const userID = userData.id()
+        const mode = userData.mode()
 
         if (mode !== 'student') {
             res.redirect('../../')
@@ -205,7 +196,10 @@ app.route('/edit/:id')
     
         const photo = req.file? `'${req.file.filename}'`: 'NULL'
 
-        if (userID !== profileID) {
+        console.log(temp);
+        console.log(userID);
+
+        if (Number(userID) !== Number(profileID)) {
             res.redirect('../../')
             return
         }
@@ -232,7 +226,7 @@ app.route('/edit/:id')
     })
 
 app.get('/requests', async (req, res) => {
-    const userID = store.get('user')
+    const userID = userData.id()
 
     try {
         const requestRecords = await database.get(

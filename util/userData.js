@@ -3,8 +3,8 @@ const database = require('./database')
 
 const obj = {}
 
-obj.id = () => store.get('user')? store.get('user'): null
-obj.mode = () => store.get('mode')? store.get('mode'): null
+obj.id = () => store.get('user')? store.get('user') : null
+obj.mode = () => store.get('mode')? store.get('mode') : null
 obj.missing = () => !obj.mode() || !obj.id()
 
 obj.nameOfUser = async() => {

@@ -1,3 +1,8 @@
+<% 
+console.log(user)
+console.log(profileUserData)
+%> 
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -73,10 +78,6 @@
         <div class="form-item">
           <span class="val"><img src="../img/<%=photo%>" /></span>
         </div>
-        <% } %> <% if(flat) { %>
-        <h1>
-          Flat: <a href="../../flat/profile/<%=flat.flatID%>"><%=flat.name%></a>
-        </h1>
         <% } %>
         <% if(Number(user.id)===Number(profileUser)) { %>
           

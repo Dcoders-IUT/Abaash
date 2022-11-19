@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
         cb(null, 'public/img/flat')
     },
     filename(req, file, cb) {
-        cb(null, store.get('user') + Date.now() + path.extname(file.originalname))
+        cb(null, userData.id() + Date.now() + path.extname(file.originalname))
     },
 })
 const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } })
@@ -40,8 +40,8 @@ async function newFlatID() {
 
 app.get('/profile/:id', async (req, res) => {
     const { id } = req.params
-    const userID = store.get('user')
-    const mode = store.get('mode')
+    const userID = userData.id()
+    const mode = userData.mode()
     let flat
     let owner
     let rooms
@@ -73,7 +73,7 @@ app.get('/profile/:id', async (req, res) => {
 
 app.post('/request/approve', async(req, res) => {
     const { flatID } = req.body
-    const userID = store.get('user')
+    const userID = userData.id()
 
     try {
         const flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${flatID}'`)
@@ -91,7 +91,7 @@ app.post('/request/approve', async(req, res) => {
 app.post('/request/delete', async(req, res) => {
     const { studentID } = req.body
     const { flatID } = req.body
-    const userID = store.get('user')
+    const userID = userData.id()
 
     try {
         const flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${flatID}'`)
@@ -109,7 +109,7 @@ app.post('/request/delete', async(req, res) => {
 app.route('/request/:id')
     .get(async (req, res) => {
         const { id } = req.params
-        const mode = store.get('mode')
+        const mode = userData.mode()
 
         if (mode !== 'student') {
             res.redirect('../../')
@@ -135,7 +135,7 @@ app.route('/request/:id')
         const { id } = req.params
         const { studentID } = req.body
         const { msg } = req.body
-        const userID = store.get('user')
+        const userID = userData.id()
 
         if (Number(userID) !== Number(studentID)) {
             console.log(userID)
@@ -156,8 +156,8 @@ app.route('/request/:id')
 
 app.route('/register')
     .get(async (req, res) => {
-        const userID = store.get('user')
-        const mode = store.get('mode')
+        const userID = userData.id()
+        const mode = userData.mode()
         let owner
 
         if (mode !== 'owner') {
@@ -224,7 +224,7 @@ app.route('/register')
 
 app.get('/edit/:id', async (req, res) => {
     const { id } = req.params
-    const mode = store.get('mode')
+    const mode = userData.mode()
     let flat
     let rooms
     let owner
