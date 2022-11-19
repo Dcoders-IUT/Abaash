@@ -44,23 +44,23 @@
 }
 
 
-.image-container {
+/* .image-container {
   max-height: 100%;
   max-width: 100%;
   margin-top: auto;
   margin-bottom: auto;
   padding-right: 20%;
   padding-left: 10%;
-}
+} */
 
-.owner-img {
+/* .owner-img {
   height: 40vh;
   width: 20vw;
   border-radius: 50%;
-  /* border: 0.5px solid #4b4b4d; */
-}
+  border: 0.5px solid #4b4b4d;
+} */
 
-.info {
+/* .info {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,7 +76,7 @@
 
 .info>h2 {
   margin-top: 15px;
-}
+} */
 
 .profile {
   margin-left: 9%;
@@ -89,9 +89,9 @@
   text-align: center;
 }
 
-.lol {
+/* .lol {
   padding-left: 5%;
-}
+} */
 
       .buttons{
         margin-top: 30px;

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/css/owner-profile.css" type="text/css" />
     <!-- <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script> -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script> --> -->
     <title>Owner Profile</title>
     <style>
       .container {
@@ -81,6 +81,12 @@
     .social-media{
       margin-left: 35%;
     }
+
+
+    a{
+      text-decoration: none;
+      
+    }
     </style>
   </head>
 
@@ -101,10 +107,10 @@
           <% if(currentUser===profileUser) { %>
           <div class="buttons">
             <button class="button-3">
-              <a href="../../flat/register">Add Flat</a>
+              <a style="color: white;" href="../../flat/register">Add Flat</a>
             </button>
             <button class="button-3">
-              <a href="../edit/<%= profileUser %> ">Edit Profile</a>
+              <a style="color: white;" href="../edit/<%= profileUser %> ">Edit Profile</a>
             </button>
           </div>
           <% } %>
