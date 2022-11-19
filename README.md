@@ -28,7 +28,7 @@
 * Flat Edit
 
 ## Bugs:
-~~Lift/Generator Button~~
+~~Lift/Generator Button~~ <br />
 ~~Login signup div size~~
 * Navbar style problem
 * Footer style problem
