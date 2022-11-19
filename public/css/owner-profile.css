@@ -35,12 +35,118 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
+  font-weight: 600;
 
+}
+
+body {
+  /* background-color: #432C7A; */
+  /* background: initial #432C7A; */
+  background: url("../images/seamless2.png");
+  /* background-color: #2B4865; */
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  margin-bottom: 4%;
+  border-bottom: 1px;
+  border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
+
+.profile {
+  margin-left: 2%;
+  /* margin-right: 10%; */
+  margin-top: 1%;
+  padding-top: 3%;
+  background-color: whitesmoke;
+  position: fixed;
+  top: 5vh;
+  width: 30vw;
+  box-shadow: 0 5px 20px -6px #000;
+  border-radius: 18px;
+  height: 50vh;
+  text-align: center;
+}
+
+
+.info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  font-size: 28px;
+  margin-right: auto;
+}
+
+.info>h4 {
+  color: #4b4b4d;
+}
+
+
+.info>h2 {
+  margin-top: 15px;
+}
+
+/* h2 {
+  margin-top: 15px;
+} */
+
+.details {
+  position: fixed;
+  top: 62%;
+  margin-left: 2%;
+  /* margin-right: 10%; */
+  /* margin-top:1%; */
+  padding: 1%;
+  background-color: whitesmoke;
+  width: 30vw;
+  box-shadow: 0 5px 20px -6px #000;
+  border-radius: 18px;
+}
+
+
+.upper-layer {
+  box-shadow: 0 3px 15px -6px #000;
+  min-width: 70%;
+  min-height: 85vh;
+  border-radius: 18px;
+  background-color: #EFF5F5;
+  margin-bottom: 50px;
+  margin-top: 10px;
+  display: grid;
+  place-items: center;
+}
+
+.blue-container {
+  margin-right: -10%;
+  /* background-color: #2B4865; */
+  height: 50vh;
+}
+
+/* .all-flats {
+  padding-top: 12vh;
+} */
+
+/* .social-media {
+  margin-left: 35%;
+} */
+
+
+a {
+  text-decoration: none;
+
+}
+
+.owner-img {
+  border-radius: 50%;
 }
 
 .container {
   display: grid;
   grid-template-columns: 1fr 2fr;
+  /* background-color: #DEF5E5; */
 }
 
 
@@ -78,7 +184,7 @@
   margin-top: 15px;
 } */
 
-.profile {
+/* .profile {
   margin-left: 9%;
   margin-right: 15%;
   margin-top: 7%;
@@ -87,69 +193,64 @@
   border-radius: 8px;
   height: 80vh;
   text-align: center;
-}
+} */
 
 /* .lol {
   padding-left: 5%;
 } */
 
-      .buttons{
-        margin-top: 30px;
-        margin-left: 20px;
-      }
+.buttons {
+  margin-top: 30px;
+  margin-left: 20px;
+}
 
-       
-       
-       .button-3 {
-        margin-right: 10px;
-         appearance: none;
-         background-color: #2ea44f;
-         border: 1px solid rgba(27, 31, 35, .15);
-         border-radius: 6px;
-         box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
-         box-sizing: border-box;
-         color: #fff;
-         cursor: pointer;
-         display: inline-block;
-         font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
-         font-size: 14px;
-         font-weight: 600;
-         line-height: 20px;
-         padding: 6px 16px;
-         position: relative;
-         text-align: center;
-         text-decoration: none;
-         user-select: none;
-         -webkit-user-select: none;
-         touch-action: manipulation;
-         vertical-align: middle;
-         white-space: nowrap;
-       }
-       
-       .button-3:focus:not(:focus-visible):not(.focus-visible) {
-         box-shadow: none;
-         outline: none;
-       }
-       
-       .button-3:hover {
-         background-color: #2c974b;
-       }
-       
-       .button-3:focus {
-         box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
-         outline: none;
-       }
-       
-       .button-3:disabled {
-         background-color: #94d3a2;
-         border-color: rgba(27, 31, 35, .1);
-         color: rgba(255, 255, 255, .8);
-         cursor: default;
-       }
-       
-       .button-3:active {
-         background-color: #298e46;
-         box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
-       }
+.button-3 {
+  margin-right: 10px;
+  appearance: none;
+  background-color: #2ea44f;
+  border: 1px solid rgba(27, 31, 35, .15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 20px;
+  padding: 16px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+}
 
-       
+.button-3:focus:not(:focus-visible):not(.focus-visible) {
+  box-shadow: none;
+  outline: none;
+}
+
+.button-3:hover {
+  background-color: #2c974b;
+}
+
+.button-3:focus {
+  box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+  outline: none;
+}
+
+.button-3:disabled {
+  background-color: #94d3a2;
+  border-color: rgba(27, 31, 35, .1);
+  color: rgba(255, 255, 255, .8);
+  cursor: default;
+}
+
+.button-3:active {
+  background-color: #298e46;
+  box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+}

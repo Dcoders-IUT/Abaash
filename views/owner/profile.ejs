@@ -5,99 +5,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="/css/owner-profile.css" type="text/css" />
-  <!-- <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script> --> -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <title>Owner Profile</title>
-  <style>
-    .container {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      background-color: #DEF5E5;
-    }
-
-    body {
-      background-color: #DCD7C9;
-    }
-
-    li {
-      list-style-type: none;
-      margin-bottom: 4%;
-      border-bottom: 1px;
-      border-bottom: 1px solid rgba(0, 0, 0, .125);
-    }
-
-    .profile {
-      margin-left: 2%;
-      /* margin-right: 10%; */
-      margin-top: 1%;
-      padding-top: 3%;
-      background-color: #2B4865;
-      position: fixed;
-      top: 5vh;
-      width: 30vw;
-      box-shadow: 0 5px 20px -6px #000;
-      border-radius: 4px;
-      height: 50vh;
-      text-align: center;
-    }
-
-    h2 {
-      margin-top: 15px;
-    }
-
-    .details {
-      position: fixed;
-      top: 62%;
-      margin-left: 2%;
-      /* margin-right: 10%; */
-      /* margin-top:1%; */
-      padding: 1%;
-      background-color: white;
-      width: 30vw;
-      box-shadow: 0 5px 20px -6px #000;
-    }
-
-
-    .upper-layer {
-      box-shadow: 0 3px 15px -6px #000;
-      width: 65%;
-      height: 100vh;
-
-      border-radius: 4px;
-      position: fixed;
-      background-color: #EFF5F5;
-      margin-top: 15vh;
-    }
-
-    .blue-container {
-      margin-right: -10%;
-      background-color: #2B4865;
-      height: 50vh;
-    }
-
-    .all-flats {
-      padding-top: 12vh;
-    }
-
-    .social-media {
-      margin-left: 35%;
-    }
-
-
-    a {
-      text-decoration: none;
-
-    }
-
-    .owner-img {
-      border-radius: 50%;
-    }
-  </style>
 </head>
 
 <body>
-  <a href="../..">Home</a>
+  <a href="/">Home</a>
   <div class="container">
     <div class="blue-container">
       <div class="profile">
@@ -107,50 +20,58 @@
         class="rounded-circle"
         width="150"
         />
-        <% if(profileUser) { %>
-          <h2 style="color: white;">
-            <%=name%>
-          </h2>
-          <% if(currentUser===profileUser) { %>
-            <div class="buttons">
-              <button class="button-3">
-                <a style="color: white;" href="../../flat/register">Add Flat</a>
-              </button>
-              <button class="button-3">
-                <a style="color: white;" href="../edit/<%= profileUser %> ">Edit Profile</a>
-              </button>
-            </div>
-            <% } %>
+        <div class="info">
+          <% if(profileUser) { %>
+            <h2>
+              <%=name%>
+            </h2>
+            <h4>@<%=username %>
+            </h4>
+            <% if(currentUser===profileUser) { %>
+              <div class="buttons">
+                <a href="../../flat/register">
+                  <button class="button-3">
+                    <strong class="fas fa-plus"></strong>
+                    Add Flat
+                  </button></a>
+                <a href="../edit/<%= profileUser %> ">
+                  <button class="button-3">
+                    <i class="fas fa-edit"></i> Edit Profile
+                  </button></a>
+              </div>
+              <% } %>
+        </div>
       </div>
 
       <div class="details">
         <ul>
-          <li><i class="fa-solid fa-globe fa-xl"></i><span>Website</span><span class="social-media">https://<%=name%>
-                .com</span></li>
-          <li><i class="fab fa-twitter fa-xl"></i><span style="margin-left: 2%;">Twitter</span><span
-              class="social-media">@<%=name%></span> </li>
-          <li><i class="fab fa-facebook fa-xl"></i><span style="margin-left: 1%;">Facebook</span><span
-              class="social-media">
-              <%=name%>
+          <li><span><i class="fa fa-globe fa-xl"></i> Website</span><span class="social-media">https://
+              <%=username%>.bariola.com
             </span></li>
-          <li><i class="fab fa-instagram fa-xl"></i><span style="margin-left: 1%;">Instagram</span><span
-              class="social-media">
-              <%=name%>
+          <li><span><i class="fa fa-twitter fa-xl"></i> Twitter</span><span class="social-media">@<%=username%></span>
+          </li>
+          <li><span><i class="fa fa-facebook fa-xl"></i> Facebook</span><span class="social-media">
+              @<%=username%>
+            </span></li>
+          <li><span><i class="fa fa-instagram fa-xl"></i> Instagram</span><span class="social-media">
+              @<%=username%>
             </span></li>
         </ul>
       </div>
 
       <div class="lol" style="margin-left:33vw">
         <div class="upper-layer">
-        </div>
-        <div class="all-flats">
-          <%- include ("../partials/showOwnerAllFlats.ejs", {misc, flatList}) %>
-            </div1 </div>
-            <%} else { %>
-              <p>USER NOT FOUND!</p>
-              <% } %>
+
+          <div class="all-flats">
+            <%- include ("../partials/showOwnerAllFlats.ejs", {misc, flatList}) %>
+          </div>
         </div>
       </div>
+    </div>
+  </div>
+  <%} else { %>
+    <p>USER NOT FOUND!</p>
+    <% } %>
 </body>
 
 </html>
