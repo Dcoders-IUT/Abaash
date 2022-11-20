@@ -126,7 +126,6 @@ app.get('/profile', (req, res) => {
 app.get('/profile/:id', async (req, res) => {
     const { id } = req.params
     let profileUserData
-    let flat
 
     try {
         profileUserData = await database.getUnique(`SELECT * FROM student WHERE studentID=${id}`)

@@ -19,7 +19,7 @@ console.log(hash.salt())
 
 async function allFlats() {
     try {
-        return await database.get('SELECT * FROM flat WHERE rent >= 0')
+        return await database.get('SELECT * FROM flat WHERE rent > 0')
     } catch (err) {
         return {}
     }
@@ -38,7 +38,7 @@ async function searchFlats(address, minLevel, maxLevel, gender, lift, generator,
             `SELECT * FROM flat
             WHERE (${addressQuery}) AND (${levelQuery}) AND
             (${genderQuery}) AND (${liftQuery}) AND (${generatorQuery})
-            AND (${areaQuery}) AND (rent >= 0) AND (${rentQuery})`
+            AND (${areaQuery}) AND (rent > 0) AND (${rentQuery})`
         )
     } catch (err) {
         console.log(err);
