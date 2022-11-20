@@ -1,13 +1,107 @@
 <style>
+  .nav a {
+    display: inline-block;
+    text-decoration: none;
+    transition: all 0.4s ease;
+  }
 
+  ​.nav a:link {
+    text-decoration: none;
+  }
+
+  ​.nav a:visited {
+    text-decoration: none;
+  }
+
+  ​.nav a:hover {
+    text-decoration: none;
+  }
+
+  ​.nav a:active {
+    text-decoration: none;
+  }
+
+  ​
+
+  /**
+   * HEADER
+   */
+  ​ .header-bottom {
+    padding-block: 30px;
+  }
+
+  ​ .header-bottom-actions-btn:last-child,
+  .navbar-top,
+  .overlay {
+    display: none;
+  }
+
+  ​ .navbar,
+  .navbar.active {
+    all: unset;
+  }
+
+  ​ .navbar-list {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+
+  ​ .navbar-link {
+    color: var(--myc1);
+    --fs-5: 1.125rem;
+    text-transform: capitalize;
+  }
+
+  /* DROPDOWN MENU */
+  .dropbtn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+  }
+
+  ​ .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  ​ .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  ​ .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  ​ .dropdown-content a:hover {
+    background-color: #ddd;
+  }
+
+  ​ .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  ​ .dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+  }
 </style>
-
-
+​
 <div class="nav">
   <ul class="navbar-list">
     <li>
       <a class="fa fa-home fa-2x" href="/#" style="margin-right: -10px; margin-left: 10px"></a>
     </li>
+    ​
     <% if(user.id) { %>
       <li>
         <a href="/<%=user.mode%>/profile/<%=user.id%>">
@@ -25,7 +119,7 @@
         </div>
       </li>
       <li><a href="/logout">Log Out</a></li>
-
+      ​
       <% } else { %>
         <li><a href="/student/login">Log In</a></li>
         <% } %>

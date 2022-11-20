@@ -5,7 +5,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Abaash</title>
-  <link rel="stylesheet" href="../css/styles.css" />
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Galada&family=Montserrat:ital,wght@0,600;1,500&family=Righteous&display=swap" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -14,9 +13,11 @@
 
 <body>
   <%- include("./partials/navbar.ejs") %>
-  <%- include('./partials/search.ejs') %>
-  <%- include ("./partials/showHomeAllFlats.ejs") %>
-  <%- include("./partials/footer.ejs") %>
+    <%- include('./partials/search.ejs') %>
+      <div style="display:grid; place-content:center;">
+        <%- include ("./partials/showOwnerAllFlats.ejs") %>
+      </div>
+      <%- include("./partials/footer.ejs") %>
 </body>
 
 </html>

@@ -6,145 +6,204 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/x-icon" href="/images/favicon.svg">
   <script src="https://kit.fontawesome.com/53732d670c.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="/css/edit.css" type="text/css" />
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
+  <link rel="stylesheet" href="/css/flat-register.css" type="text/css" />
   <title>New Flat</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    .container {
-      width: 100vw;
-      height: 100vh;
-      background-image: linear-gradient(110deg,
-          rgba(255, 255, 255, 0.7) 50%,
-          transparent 50%),
-        url("/images/home5.jpg");
-      background-size: 100% 100%;
-    }
+    
   </style>
 </head>
 
 <body>
   <%#- include("../partials/navbar.ejs") %>
-  <% if(user.id===owner.username) { %>
-    <div class="register-container">
-      <form action="register" id="register" method="post">
-        <h1>New Flat</h1>
-        <div class="edit">
-          <input type="text" name="name" placeholder="Name" /> <br />
-        </div>
-        <div class="edit">
-          <input type="text" name="address" placeholder="Address" />
-          <br />
-        </div>
-        <div class="edit">
-          <input type="text" name="description" placeholder="Description about the Flat" />
-          <br />
-        </div>
-        <div class="edit">
-          <label>Gender</label>
-          <select name="gender">
-            <% misc.globalConst.flatGenderList.forEach((gender)=> { %>
-              <option value="<%=gender.value%>">
-                <%= gender.display %>
-              </option>
-              <% }) %>
-          </select>
-        </div>
-        <span>
-          <input type="text" name="x" id="x" placeholder="Latitude" />
-          <input type="text" name="y" id="y" placeholder="Longitude" />
-          <button onclick="getlocation()" type="button">
-            Set Current Location
-          </button>
-          <button type="button">Set From Map</button>
-          <script>
-            var x = document.getElementById("location");
-            function getlocation() {
-              xy = navigator.geolocation.getCurrentPosition(setXY);
-              console.log(xy);
-            }
 
-            function setXY(location) {
-              document.getElementById("x").value = location.coords.latitude;
-              document.getElementById("y").value = location.coords.longitude;
-            }
-          </script>
-        </span>
-        <div class="edit">
-          <label>Level</label>
-          <select name="level">
-            <% for(let i=0; i<20; i++) { %>
-              <option value="<%=i+1%>">
-                <%=i+1%>
-              </option>
-              <% } %>
-          </select>
-        </div>
-        <div class="edit">
-          <input type="number" name="area" placeholder="Area in square feet" />
-        </div>
-        <div class="edit">
-          <label>Lift</label>
-          <input type="checkbox" name="lift" />
-        </div>
-        <div class="edit">
-          <label>Generator</label>
-          <input type="checkbox" name="generator" /> <br />
-        </div>
-        <div class="edit">
-          <input type="number" name="rent" placeholder="Rent" /> <br />
-        </div>
-        <div class="edit">
-          <input type="text" name="msg" placeholder="Message for the Customer" />
-          <br />
-        </div>
+  <!-- bootstrap start -->
+  <div class="container">
+    <% if(user.id===owner.username) { %>
 
-        <a href="../../owner/profile/<%=owner.username%>">Owner: <%=owner.name%></a>
-        <input type="hidden" name="owner" value="<%=owner.username%>" />
-        <br />
+        <div class="container-xl px-4 mt-4">
+          <!-- Account page navigation-->
+          <hr class="mt-0 mb-4">
+          <div class="row">
+            <div class="col-xl-8">
+                <!-- Account details card-->
+                <div class="card mb-4">
+                    <div class="card-header">New Flat</div>
+                    <div class="card-body">
+                        <form action="register" id="register" method="post">
+                            <!-- Form Group (username)-->
+                            <div class="mb-3">
+                                <label class="small mb-1" >Flat Name</label>
+                                <input class="form-control" id="inputUsername"  input type="text" name="name" placeholder="Name" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="small mb-1" >Address</label>
+                                <input class="form-control" id="inputUsername"  input type="text" name="address" placeholder="Address" />
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="small mb-1" >Description</label>
+                                <input class="form-control" type="text" name="description" placeholder="Description about the Flat" />
+                            </div>
 
-        <button class="save">Save</button>
-        <button><a href="../owner/profile">Cancel</a></button>
-      </form>
-    </div>
+                            
+                            <div class="row gx-3 mb-3">
+                              <!-- Form Group (phone number)-->
+                              <div class="col-md-6">
+                                <label class="small mb-1" >Rent</label>
+                                <input class="form-control" type="number" name="rent" placeholder="Rent" />
+                              </div>
+                              <!-- Form Group (birthday)-->
+                              <div class="col-md-6">
+                                  <label class="small mb-1" >Message For The Customer</label>
+                                  <input class="form-control"  type="text" name="msg" placeholder="Message" />
+                              </div>
+                          </div>
+                            <!-- Form Row-->
 
-    <div>
-      <div class="edit">
-        <input type="number" name="bed" placeholder="Bedroom" form="register" />
-      </div>
-      <br />
-      <div class="edit">
-        <input type="number" name="din" placeholder="Dining Room" form="register" />
-      </div>
-      <br />
-      <div class="edit">
-        <input type="number" name="liv" placeholder="Living Room" form="register" />
-      </div>
-      <br />
-      <div class="edit">
-        <input type="number" name="kit" placeholder="Kitchen" form="register" />
-      </div>
-      <br />
-      <div class="edit">
-        <input type="number" name="bath" placeholder="Bathroom" form="register" />
-      </div>
-      <br />
-      <div class="edit">
-        <input type="number" name="balk" placeholder="Balcony" form="register" />
-      </div>
-      <br />
-      <div class="edit">
-        <input type="number" name="xtra" placeholder="Extra Room" form="register" />
-      </div>
-      <br />
-    </div>
-    <% } else { %>
-      <p>USER NOT FOUND!</p>
-      <% } %>
+                            <div class="row gx-3 mb-3">
+                              <!-- Form Group (phone number)-->
+                              <div class="col-md-6">
+                                <label class="small mb-1" >Gender</label>
+                                <select name="gender">
+                                  <% misc.globalConst.flatGenderList.forEach((gender)=> { %>
+                                    <option value="<%=gender.value%>">
+                                      <%= gender.display %>
+                                    </option>
+                                    <% }) %>
+                                </select>
+                              </div>
+                              <!-- Form Group (birthday)-->
+                              <div class="col-md-6">
+                                  <label class="small mb-1" >Level</label>
+                                  <select name="level">
+                                    <% for(let i=0; i<20; i++) { %>
+                                      <option value="<%=i+1%>">
+                                        <%=i+1%>
+                                      </option>
+                                      <% } %>
+                                  </select>
+                              </div>
+                            
+                          </div>
+
+                          <div class="row gx-3 mb-3">
+                            <!-- Form Group (phone number)-->
+                            <div class="col-md-6">
+                              <label class="small mb-1" >Lift</label>
+                              <input  type="checkbox" name="generator" />
+                            </div>
+                            <!-- Form Group (birthday)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" >Generator</label>
+                                <input  type="checkbox" name="generator" />
+                            </div>
+                        </div>
+
+                            <div class="row gx-3 mb-3">
+                              <!-- Form Group (phone number)-->
+                              <div class="col-md-6">
+                                <label class="small mb-1" >Latitude</label>
+                                <input class="form-control" type="text" name="x" id="x" placeholder="x" />
+                              </div>
+                              <!-- Form Group (birthday)-->
+                              <div class="col-md-6">
+                                  <label class="small mb-1" >Longitude</label>
+                                  <input class="form-control"  type="text" name="y" id="y" placeholder="y" />
+                              </div>
+                          </div>
+                          <button class="btn btn-info" onclick="getlocation()" type="button" style="background-color:#2dc653; border: none; ">
+                            Set Current Location
+                          </button>
+                          <button class="btn btn-info" type="button" style="background-color:#2dc653; border: none; ">Set From Map</button>
+                          <script>
+                            var x = document.getElementById("location");
+                            function getlocation() {
+                              xy = navigator.geolocation.getCurrentPosition(setXY);
+                              console.log(xy);
+                            }
+                
+                            function setXY(location) {
+                              document.getElementById("x").value = location.coords.latitude;
+                              document.getElementById("y").value = location.coords.longitude;
+                            }
+                          </script>
+
+                            <div class="row gx-3 mb-3">
+                              <!-- Form Group (phone number)-->
+                              <div class="col-md-6">
+                                <label class="small mb-1" >Bedroom</label>
+                                <input class="form-control" input type="number" name="bed" placeholder="Bedroom" form="register" />
+                              </div>
+                              <!-- Form Group (birthday)-->
+                              <div class="col-md-6">
+                                  <label class="small mb-1" >Dining Room</label>
+                                  <input class="form-control"  type="number" name="din" placeholder="Dining Room" form="register" />
+                              </div>
+                          </div>
+
+                            <div class="row gx-3 mb-3">
+                              <!-- Form Group (phone number)-->
+                              <div class="col-md-6">
+                                <label class="small mb-1" >Living Room</label>
+                                <input class="form-control" type="number" name="liv" placeholder="Living Room" form="register" />
+                              </div>
+                              <!-- Form Group (birthday)-->
+                              <div class="col-md-6">
+                                  <label class="small mb-1" >Kitchen</label>
+                                  <input class="form-control"  type="number" name="kit" placeholder="Kitchen" form="register" />
+                              </div>
+                          </div>
+
+                            <div class="row gx-3 mb-3">
+                              <!-- Form Group (phone number)-->
+                              <div class="col-md-6">
+                                <label class="small mb-1" for="inputPhone">Bathroom</label>
+                                <input class="form-control" type="number" name="bath" placeholder="Bathroom" form="register" />
+                              </div>
+                              <!-- Form Group (birthday)-->
+                              <div class="col-md-6">
+                                  <label class="small mb-1" for="nid">Balcony</label>
+                                  <input class="form-control"  type="number" name="balk" placeholder="Balcony" form="register" />
+                              </div>
+                          </div>
+
+                          <div class="row gx-3 mb-3">
+                            <!-- Form Group (phone number)-->
+                            <div class="col-md-6">
+                              <label class="small mb-1" >Area</label>
+                              <input class="form-control" type="number" name="area" placeholder="Area in square feet" />
+                            </div>
+                            <!-- Form Group (birthday)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="nid">Extra Room</label>
+                                <input class="form-control"  type="number" name="xtra" placeholder="Extra Room" form="register" />
+                            </div>
+                        </div>
+                        <div class="owner">
+                          <a href="../../owner/profile/<%=owner.username%>">Owner: <%=owner.name%></a>
+                          <input type="hidden" name="owner" value="<%=owner.username%>" />
+                        </div>
+                        
+                            <!-- Save changes button-->
+                            <div class="row">
+                                <button class="btn btn-info ">Save</button>
+                                <a class="btn btn-info " href="../owner/profile">Cancel</a>
+                          </div>
+                            <!-- <button class="btn btn-primary" type="button">Save changes</button> -->
+                        </form>
+                    </div>
+                    <!-- <button class="btn btn-primary" type="button">Save changes</button> -->
+                </div>
+                <% } else { %>
+                  <p>USER NOT FOUND!</p>
+                  <% } %>
+  <!-- bootstrap end -->
+
+  
   <%#- include("../partials/footer.ejs") %>
 </body>
 
