@@ -14,8 +14,10 @@
 <body>
   <%- include("./partials/navbar.ejs") %>
     <%- include('./partials/search.ejs') %>
-      <%- include ("./partials/showHomeAllFlats.ejs") %>
-        <%- include("./partials/footer.ejs") %>
+      <div style="display:grid; place-content:center;">
+        <%- include ("./partials/showOwnerAllFlats.ejs") %>
+      </div>
+      <%- include("./partials/footer.ejs") %>
 </body>
 
 </html>

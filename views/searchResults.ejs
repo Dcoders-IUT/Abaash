@@ -12,6 +12,13 @@
     .body {
       background: url("../images/seamless2.png");
     }
+
+    .fix {
+      /* background: url(" ../images/seamless2.png"); */
+      display: grid;
+      place-content: center;
+      font-family: Montserrat, sans-serif;
+    }
   </style>
 </head>
 
@@ -19,8 +26,10 @@
   <%- include("./partials/navbar.ejs") %>
     <!-- <a href="../">Home</a> -->
     <h2>Search Results</h2>
-    <%- include ("./partials/showHomeAllFlats.ejs") %>
-      <%- include("./partials/footer.ejs") %>
+    <div class="fix">
+      <%- include ("./partials/showOwnerAllFlats.ejs") %>
+    </div>
+    <%- include("./partials/footer.ejs") %>
 </body>
 
 </html>
