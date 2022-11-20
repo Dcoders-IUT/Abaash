@@ -13,6 +13,7 @@
 * Error Alert
 * Live Sorting Requests and Flats
 * Extract Info from Student ID
+* Show Only Vacant Flats
 
 ## Extensions:
 * Prompt/Label for each form field
@@ -30,8 +31,8 @@
 * Flat Edit
 
 ## Bugs:
-* ~~Lift/Generator Button~~
-* ~~Login signup div size~~
+* Lift/Generator Button
+* Login signup div size
 * Navbar style problem
 * Footer style problem
 * Using numbers for checking Student ID
@@ -40,3 +41,4 @@
 * Deleted Photo Problem
 * Fix Edit Pages
 * Profile Info Passing
+* Owner Description during register/edit
