@@ -54,6 +54,7 @@
     padding: 16px;
     font-size: 16px;
     border: none;
+    border-radius: 8px;
   }
 
   .dropdown {
@@ -97,6 +98,7 @@
     min-height: 58px;
     display: flex;
     justify-content: space-between;
+    border-radius: 2px;
   }
 
   .last {
@@ -116,6 +118,10 @@
         </a>
       </li>
       <li><a href="/<%=user.mode%>/requests">Requests</a></li>
+      <% } %>
+  </ul>
+  <ul class="navbar-list last">
+    <% if(user.id) { %>
       <li>
         <div class="dropdown">
           <button class="dropbtn">Settings</button>
@@ -125,10 +131,6 @@
           </div>
         </div>
       </li>
-      <% } %>
-  </ul>
-  <ul class="navbar-list last">
-    <% if(user.id) { %>
       <li><a href="/logout">Log Out</a></li>
 
       <% } else { %>
