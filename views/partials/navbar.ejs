@@ -1,56 +1,105 @@
 <style>
-  .nav a {
+  a {
     display: inline-block;
     text-decoration: none;
+    -webkit-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
     transition: all 0.4s ease;
   }
 
-  ​.nav a:link {
+  a:link {
     text-decoration: none;
   }
 
-  ​.nav a:visited {
+  a:visited {
     text-decoration: none;
   }
 
-  ​.nav a:hover {
+  a:hover {
     text-decoration: none;
   }
 
-  ​.nav a:active {
+  a:active {
     text-decoration: none;
   }
-
-  ​
 
   /**
    * HEADER
    */
-  ​ .header-bottom {
+
+  .header-bottom {
     padding-block: 30px;
   }
 
-  ​ .header-bottom-actions-btn:last-child,
+  .header-bottom-actions-btn:last-child,
   .navbar-top,
   .overlay {
     display: none;
   }
 
-  ​ .navbar,
+  .navbar,
   .navbar.active {
     all: unset;
   }
 
-  ​ .navbar-list {
+  .navbar-list {
     display: flex;
     align-items: center;
     gap: 30px;
   }
 
-  ​ .navbar-link {
+  .navbar-link {
     color: var(--myc1);
     --fs-5: 1.125rem;
     text-transform: capitalize;
+  }
+
+  .header {
+    padding-bottom: 114px;
+  }
+
+  .header-bottom {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .header.active .header-bottom {
+    position: fixed;
+    bottom: auto;
+    top: -94px;
+    padding-block: 20px;
+    box-shadow: 0 10px 50px hsla(237, 71%, 52%, 0.2);
+    animation: slideDown 0.25s ease-out forwards;
+  }
+
+  @keyframes slideDown {
+    0% {
+      transform: translateY(0);
+    }
+
+    100% {
+      transform: translateY(100%);
+    }
+  }
+
+
+
+  /**
+   * HERO
+   */
+
+  .hero-text {
+    padding-left: 30px;
+    max-width: 450px;
+    margin-bottom: 40px;
+  }
+
+  .fa-home {
+    margin-right: -10px;
+    margin-left: 10px
   }
 
   /* DROPDOWN MENU */
@@ -62,12 +111,12 @@
     border: none;
   }
 
-  ​ .dropdown {
+  .dropdown {
     position: relative;
     display: inline-block;
   }
 
-  ​ .dropdown-content {
+  .dropdown-content {
     display: none;
     position: absolute;
     background-color: #f1f1f1;
@@ -76,32 +125,32 @@
     z-index: 1;
   }
 
-  ​ .dropdown-content a {
+  .dropdown-content a {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
   }
 
-  ​ .dropdown-content a:hover {
+  .dropdown-content a:hover {
     background-color: #ddd;
   }
 
-  ​ .dropdown:hover .dropdown-content {
+  .dropdown:hover .dropdown-content {
     display: block;
   }
 
-  ​ .dropdown:hover .dropbtn {
+  .dropdown:hover .dropbtn {
     background-color: #3e8e41;
   }
 </style>
-​
+
 <div class="nav">
   <ul class="navbar-list">
     <li>
       <a class="fa fa-home fa-2x" href="/#" style="margin-right: -10px; margin-left: 10px"></a>
     </li>
-    ​
+
     <% if(user.id) { %>
       <li>
         <a href="/<%=user.mode%>/profile/<%=user.id%>">
@@ -119,7 +168,7 @@
         </div>
       </li>
       <li><a href="/logout">Log Out</a></li>
-      ​
+
       <% } else { %>
         <li><a href="/student/login">Log In</a></li>
         <% } %>
