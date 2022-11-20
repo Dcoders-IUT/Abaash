@@ -71,7 +71,7 @@ app.get('/profile/:id', async (req, res) => {
     })
 })
 
-app.post('/request/approve', async(req, res) => {
+app.post('/request/approve', async (req, res) => {
     const { flatID } = req.body
     const userID = userData.id()
 
@@ -79,8 +79,8 @@ app.post('/request/approve', async(req, res) => {
         const flat = await database.getUnique(`SELECT * FROM flat WHERE flatID=${flatID}`)
         if (userID !== flat.owner) throw new Error('OWNER MISMATCH!')
         await database.exec(`DELETE FROM flatrequest WHERE flatID=${flatID}`)
-        await database.exec(`UPDATE FLAT SET rent=0 WHERE flatID=${flatID}`)
-        
+        await database.exec(`UPDATE flat SET rent=0 WHERE flatID=${flatID}`)
+
         res.redirect('../../owner/requests')
     } catch (err) {
         console.log(err)
@@ -89,7 +89,7 @@ app.post('/request/approve', async(req, res) => {
     }
 })
 
-app.post('/request/delete', async(req, res) => {
+app.post('/request/delete', async (req, res) => {
     const { studentID } = req.body
     const { flatID } = req.body
     const userID = userData.id()
@@ -98,7 +98,7 @@ app.post('/request/delete', async(req, res) => {
         const flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${flatID}'`)
         if (userID !== flat.owner) throw new Error('OWNER MISMATCH!')
         await database.exec(`DELETE FROM flatrequest WHERE studentID=${studentID} AND flatID=${flatID}`)
-        
+
         res.redirect('../../owner/requests')
     } catch (err) {
         console.log(err)
@@ -268,7 +268,7 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
     const { rent } = temp
     const { msg } = temp
 
-    const photo = req.file? `'${req.file.filename}'`: 'NULL'
+    const photo = req.file ? `'${req.file.filename}'` : 'NULL'
 
     const bed = Number(temp.bed)
     const din = Number(temp.din)
@@ -280,24 +280,24 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
 
     try {
         // await getUser(userID, pass)
-        
+
         // let oldPhoto = await database.getUnique(`SELECT photo FROM flat WHERE username='${userID}'`)
         // oldPhoto = oldPhoto.photo
         // if(oldPhoto) fs.unlinkSync(`public/flat/img/${oldPhoto}`)
-        
+
         await database.exec(
             `UPDATE flat
             SET name='${name}', address='${address}', description='${description}', gender=${gender}, area=${area}, level=${level},
             lift=${lift}, generator=${generator}, rent=${rent}, message='${msg}', photo=${photo}
             WHERE flatID=${flatID}`,
         )
-    
+
         await database.exec(
             `UPDATE room
             SET bed=${bed}, din=${din}, liv=${liv}, kit=${kit}, bath=${bath}, balk=${balk}, xtra=${xtra}
             WHERE flatID=${flatID}`,
         )
-    
+
         res.redirect(`../profile/${flatID}`)
     } catch (err) {
         res.redirect('../../')
