@@ -1,186 +1,118 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href=
+"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/x-icon" href="/images/favicon.svg">
-  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
-
-  </link>
-  <title>Edit Profile</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+</link>
+    <title>Edit Profile</title>
+    <style>
+      * {
+    margin : 0;
+    padding : 0;
+    box-sizing: border-box;}
     /* font-family: "Montserrat", sans-serif; */
 
-    .btn {
-      margin-left: 1vw;
-    }
+  .btn{
+    margin-left:1vw;
+  }
 
-    input:focus {
-      outline: none;
-    }
+  input:focus {
+  outline: none;
+  }
 
 
-    /* new css */
-    body {
-      margin-top: 20px;
-      background-color: #f2f6fc;
-      color: #69707a;
-    }
+  /* new css */
+  body{margin-top:20px;
+background-color:#f2f6fc;
+color:#69707a;
+}
+.img-account-profile {
+    height: 10rem;
+}
+.rounded-circle {
+    border-radius: 50% !important;
+}
+.card {
+    box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+}
+.card .card-header {
+    font-weight: 500;
+}
+.card-header:first-child {
+    border-radius: 0.35rem 0.35rem 0 0;
+}
+.card-header {
+    padding: 1rem 1.35rem;
+    margin-bottom: 0;
+    background-color: rgba(33, 40, 50, 0.03);
+    border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+}
+.form-control, .dataTable-input {
+    display: block;
+    width: 100%;
+    padding: 0.875rem 1.125rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1;
+    color: #69707a;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #c5ccd6;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.35rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
 
-    .img-account-profile {
-      height: 10rem;
-    }
+.nav-borders .nav-link.active {
+    color: #0061f2;
+    border-bottom-color: #0061f2;
+}
+.nav-borders .nav-link {
+    color: #69707a;
+    border-bottom-width: 0.125rem;
+    border-bottom-style: solid;
+    border-bottom-color: transparent;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 1rem;
+    margin-right: 1rem;
 
-    .rounded-circle {
-      border-radius: 50% !important;
-    }
-
-    .card {
-      box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
-    }
-
-    .card .card-header {
-      font-weight: 500;
-    }
-
-    .card-header:first-child {
-      border-radius: 0.35rem 0.35rem 0 0;
-    }
-
-    .card-header {
-      padding: 1rem 1.35rem;
-      margin-bottom: 0;
-      background-color: rgba(33, 40, 50, 0.03);
-      border-bottom: 1px solid rgba(33, 40, 50, 0.125);
-    }
-
-    .form-control,
-    .dataTable-input {
-      display: block;
-      width: 100%;
-      padding: 0.875rem 1.125rem;
-      font-size: 0.875rem;
-      font-weight: 400;
-      line-height: 1;
-      color: #69707a;
-      background-color: #fff;
-      background-clip: padding-box;
-      border: 1px solid #c5ccd6;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      border-radius: 0.35rem;
-      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    }
-
-    .nav-borders .nav-link.active {
-      color: #0061f2;
-      border-bottom-color: #0061f2;
-    }
-
-    .nav-borders .nav-link {
-      color: #69707a;
-      border-bottom-width: 0.125rem;
-      border-bottom-style: solid;
-      border-bottom-color: transparent;
-      padding-top: 0.5rem;
-      padding-bottom: 0.5rem;
-      padding-left: 0;
-      padding-right: 0;
-      margin-left: 1rem;
-      margin-right: 1rem;
-
-    }
-  </style>
-</head>
-
-<body>
-  <% if(user.id===profileUserData.studentID) { %>
-
-    <form method="post" enctype="multipart/form-data">
-
-      <div class="container-xl px-4 mt-4">
-        <!-- Account page navigation-->
-        <hr class="mt-0 mb-4">
-        <div class="row">
-          <div class="col-xl-4">
-            <!-- Profile picture card-->
-            <div class="card mb-4 mb-xl-0">
-              <div class="card-header">Profile Picture</div>
-              <div class="card-body text-center">
-                <!-- Profile picture image-->
-                <img class="img-account-profile rounded-circle mb-2"
-                  src="http://bootdey.com/img/Content/avatar/avatar7.png" alt="">
-
-                <!-- Profile picture help block-->
-                <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 10 MB</div>
-                <!-- Profile picture upload button-->
-                <input name="photo" type="file" accept="image/png, image/jpg" style="margin-left:15% ;" />
-                <!-- <button class="btn btn-primary" type="button">Upload new image</button> -->
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-8">
-            <!-- Account details card-->
-            <div class="card mb-4">
-              <div class="card-header">Profile Details</div>
-              <div class="card-body">
-                <form method="post" enctype="multipart/form-data">
-                  <!-- Form Group (username)-->
-                  <div class="mb-3">
-                    <label class="small mb-1" for="inputUsername">Full Name</label>
-                    <input class="form-control" id="inputUsername" type="text" name="name" placeholder="Name"
-                      value="<%=profileUserData.name%>">
-                  </div>
-                  <!-- Form Group (email address)-->
-                  <div class="mb-3">
-                    <label class="small mb-1" for="inputEmailAddress">Student ID</label>
-                    <input class="form-control" id="inputEmailAddress" type="text" name="studentID"
-                      placeholder="Student ID" value="<%=profileUserData.studentID%>">
-                  </div>
-                  <!-- Form Group (password)-->
-                  <div class="mb-3">
-                    <label class="small mb-1" for="inputUsername">password</label>
-                    <input class="form-control" id="inputUsername" type="password" name="pass" placeholder="Password">
-                  </div>
-                  <!-- Form Group (email address)-->
-                  <div class="mb-3">
-                    <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                    <input class="form-control" id="inputEmailAddress" type="email" name="email"
-                      placeholder="Email Address" value="<%=profileUserData.email%>">
-                  </div>
-                  <!-- Form Row        -->
-                  <div class="mb-3">
-                    <label class="small mb-1" for="inputPhone">Phone number</label>
-                    <input class="form-control" id="inputPhone" type="number" name="phone" placeholder="Phone Number"
-                      value="<%=profileUserData.phone%>">
-                  </div>
-                  <!-- Form Row-->
-                  <div class="row gx-3 mb-3">
-                    <!-- Form Group (phone number)-->
-                    <div class="col-md-6">
-                      <label class="small mb-1" for="inputPhone">Gender</label>
-                      <div class="col-sm-9 text-secondary">
-                        <select name="gender">
-                          <% misc.globalConst.genderList.forEach((gender)=> { %>
-                            <option value="<%=gender.value%>" <%=profileUserData.gender===gender.value? 'selected' : ''
-                              %>>
-                              <%= gender.display %>
-                            </option>
-                            <% }) %>
-                        </select>
-                      </div>
-                      <!-- <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="555-123-4567"> -->
+}
+    </style>
+  </head>
+  <body>
+    <% if(user.id === profileUserData.studentID) { %>
+      
+        <form method="post" enctype="multipart/form-data">
+        
+          <div class="container-xl px-4 mt-4">
+            <!-- Account page navigation-->
+            <hr class="mt-0 mb-4">
+            <div class="row">
+                <div class="col-xl-4">
+                    <!-- Profile picture card-->
+                    <div class="card mb-4 mb-xl-0">
+                        <div class="card-header">Profile Picture</div>
+                        <div class="card-body text-center">
+                            <!-- Profile picture image-->
+                            <img class="img-account-profile rounded-circle mb-2" src="http://bootdey.com/img/Content/avatar/avatar7.png" alt="">
+                            
+                            <!-- Profile picture help block-->
+                            <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 10 MB</div>
+                            <!-- Profile picture upload button-->
+                            <input name="photo" type="file" accept="image/png, image/jpg" style="margin-left:15% ;" />
+                            <!-- <button class="btn btn-primary" type="button">Upload new image</button> -->
+                        </div>
                     </div>
                 </div>
                 <div class="col-xl-8">
@@ -265,21 +197,11 @@
                             </form>
                         </div>
                     </div>
-                  </div>
-                  <!-- Save changes button-->
-                  <div class="row">
-                    <button class="btn btn-info ">Save Changes</button>
-                    <a class="btn btn-info " href="../profile/<%=profileUserData.studentID%>">Cancel</a>
-                  </div>
-                  <!-- <button class="btn btn-primary" type="button">Save changes</button> -->
-                </form>
-              </div>
+                </div>
             </div>
           </div>
-        </div>
-      </div>
-    </form>
-
+        </form>
+    
     <% } else { %>
       <p>USER NOT FOUND!</p>
       <% } %>
