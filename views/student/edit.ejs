@@ -90,6 +90,7 @@ color:#69707a;
     </style>
   </head>
   <body>
+    <%- include("../partials/navbar.ejs") %>
     <% if(user.id === profile.studentID) { %>
       
         <form method="post" enctype="multipart/form-data">

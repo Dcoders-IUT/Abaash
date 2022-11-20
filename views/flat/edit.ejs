@@ -28,7 +28,7 @@
 </head>
 
 <body>
-  <%#- include("../partials/navbar.ejs") %>
+  <%- include("../partials/navbar.ejs") %>
   <% if(user.id===flat.owner) { %>
     <div class="container">
       <form id="register" method="post" enctype="multipart/form-data">

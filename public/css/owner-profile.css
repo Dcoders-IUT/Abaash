@@ -114,11 +114,11 @@ li {
 .upper-layer {
   box-shadow: 0 3px 15px -6px #000;
   min-width: 70%;
-  min-height: 85vh;
+  min-height: 75vh;
   border-radius: 18px;
   background-color: #EFF5F5;
   margin-bottom: 50px;
-  margin-top: 10px;
+  margin-top: 30px;
   display: grid;
   place-items: center;
 }
