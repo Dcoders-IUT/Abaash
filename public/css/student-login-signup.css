@@ -16,6 +16,13 @@ body {
   margin: -20px 0 50px;
 }
 
+select {
+  outline: none;
+  border-color: rgba(128, 128, 128, 0.347);
+  border-radius: 18px;
+  text-align: center;
+}
+
 h1 {
   font-weight: bold;
   margin: 0;
@@ -235,7 +242,7 @@ input {
 }
 
 .social-container {
-  margin: 20px 0;
+  margin: 10px 0;
 }
 
 .social-container a {

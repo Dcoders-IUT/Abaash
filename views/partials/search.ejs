@@ -74,7 +74,6 @@
                 <!-- level -->
                 <div class="input-group" style="padding-bottom:13px; padding-top: 13px;">
                   <label for="level" class="label">Level </label>
-                  <br />
                   <label class="label">Min</label>
                   <select class="dropdown" name="minLevel">
                     <% for(let i=1; i<=20; i++) { %>
@@ -83,7 +82,6 @@
                       </option>
                       <% } %>
                   </select>
-                  <br />
                   <label class="label">Max</label>
                   <select name="maxLevel">
                     <% for(let i=1; i<=20; i++) { %>
@@ -92,11 +90,6 @@
                       <% } %>
                   </select>
                 </div>
-
-
-
-
-
                 <div class="row row-space" style="margin:15px 0px ">
                   <!-- area -->
                   <div class="col-2">
@@ -140,9 +133,9 @@
                 <div class="checkdiv"
                   style="display:flex; flex-direction: row; justify-content: center;  align-items: center;">
                   <label for="lift">Lift</label>
-                  <input style="width: 100%;" type="radio" name="lift" />
+                  <input style="width: 100%;" type="checkbox" name="lift" />
                   <label>Generator</label>
-                  <input type="radio" name="generator" />
+                  <input type="checkbox" name="generator" />
                 </div>
 
 

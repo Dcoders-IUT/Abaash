@@ -30,7 +30,10 @@
 * Flat Edit
 
 ## Bugs:
-* Lift/Generator Button
+* ~~Lift/Generator Button~~
+* ~~Login signup div size~~
+* Navbar style problem
+* Footer style problem
 * Using numbers for checking Student ID
 * Can't view OLD HOME
 * Shows Wrong Month in hash.salt()

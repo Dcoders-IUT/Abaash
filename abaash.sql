@@ -97,7 +97,7 @@ DELETE FROM `owner`;
 /*!40000 ALTER TABLE `owner` DISABLE KEYS */;
 INSERT INTO `owner` (`name`, `username`, `password`, `passwordLastChanged`, `phone`, `email`, `nid`, `photo`) VALUES
 	('Sherajul Arifin', 'arifin', '65ca3d04be0cc68c1a7003f8aab5e7c9f93d83fa94351f91925e4dcabb5065fe', '2022-9-25T14:13:17.638', 1731568888, 'gmail@arifin.com', 65274196, NULL),
-	('Ork the Bariola', 'ork', 'f6c3a82f8d5ed8b78bfd15d639410719ce24d8393fb020a722c298831d8a6555', '2022-9-15T3:29:21.858', 1731969827, 'ork@bariola.com', 2000785, 'ork1668854173872.png'),
+	('Ork the Bariola', 'ork', 'f6c3a82f8d5ed8b78bfd15d639410719ce24d8393fb020a722c298831d8a6555', '2022-9-15T3:29:21.858', 1731969827, 'ork@bariola.com', 2000785, "ork1.png"),
 	('Tanvir Hasan Saikat', 'saikat', 'c3f604b8a8b797a0d402738c7f588511555702ef8e73bd78dfd37a9ef3c50877', '2022-10-12T13:6:8.284', 1745986461, 'saikat@gmail.com', 46541646, NULL),
 	('Sumit Alam Khan', 'sumit', 'cb19b4edd90562692900e12c8c19f7e1b3240b88831e46e8fffee6cc88fc0664', '2022-10-18T20:57:36.383', 1731569827, 'sumit@iut.edu', 85274196, NULL);
 /*!40000 ALTER TABLE `owner` ENABLE KEYS */;

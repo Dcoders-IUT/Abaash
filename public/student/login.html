@@ -29,19 +29,19 @@
   <div class="container" id="container">
     <div class="form-container sign-up-container">
       <form name="SReg" action="register" method="post" onsubmit="return validateRegisterStudent()">
-        <h1>Create Account</h1>
-        <div class="social-container">
+        <h1 style="line-height: 0.9;margin-top: 20px;">Create Account</h1>
+        <div class="social-container" style="margin:10px 0px">
           <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
           <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
           <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
         </div>
-        <span>or use your email for registration</span>
-        <input type="text" name="name" placeholder="Name" /><span class="hide">Provide a valid fullname</span>
-        <label>Gender</label>
-        <select name="gender">
-          <option value="1">Male</option>
-          <option value="0">Female</option>
-        </select>
+        <!-- <span style="color:grey">Or use your email for registration</span> -->
+        <input type="text" name="name" placeholder="Name" /><span class="hide">Provide a valid fullname</span><span>
+          <label style="color:rgb(157, 157, 157); font-weight:700;">Gender:&emsp;&emsp;&emsp;&emsp;</label>
+          <select name="gender">
+            <option value="1">Male</option>
+            <option value="0">Female</option>
+          </select></span>
         <input type="number" name="studentID" placeholder="Student ID" /><span class="hide">Provide a valid student
           id</span>
         <input type="password" name="pass" placeholder="Password" /><span class="hide">Provide a valid password</span>
@@ -51,21 +51,21 @@
         <input type="email" name="email" placeholder="Email Address" /><span class="hide">Provide a valid email
           address</span>
         <input type="number" name="nid" placeholder="NID Number" /><span class="hide">Provide a valid nid</span>
-        <label>Blood Group</label>
-        <select name="blg">
-          <option value=" ">I don't know</option>
-          <option value="A+">A+</option>
-          <option value="A-">A-</option>
-          <option value="B+">B+</option>
-          <option value="B-">B-</option>
-          <option value="AB+">AB+</option>
-          <option value="AB-">AB-</option>
-          <option value="O+">O+</option>
-          <option value="O-">O-</option>
-        </select>
+        <span><label style="color:rgb(157, 157, 157); font-weight:700;">Blood Group:&emsp;&emsp;</label>
+          <select name="blg">
+            <option value=" ">I don't know</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </select></span>
         <input type="hidden" name="mode" value="student" />
         <br />
-        <button type="submit">Sign Up</button>
+        <button type="submit" style="margin:25px 0px">Sign Up</button>
       </form>
     </div>
     <div class="form-container sign-in-container">
