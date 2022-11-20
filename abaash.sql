@@ -155,7 +155,7 @@ DELETE FROM `student`;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
 INSERT INTO `student` (`name`, `gender`, `studentID`, `password`, `passwordLastChanged`, `phone`, `email`, `nid`, `bloodgroup`, `photo`) VALUES
 	('Fardin', 1, 112, '519211b1c823753d0db208af050b9fe855b7379aeacf1f7e4b834c5e7378390e', '2022-9-28T7:15:16.53', 543156464, 'fardinnur12@gmail.com', 56466, 'AB+', NULL),
-	('Jubayer', 1, 129, 'bc8e7191c2fae4af85e6b728bcec435a48fe18faf0ee58d710800d0da33be456', '2022-9-14T16:12:16.155', 1825, 'jubayer@gmail.com', 0, 'A+', '1668919786586.png'),
+	('Jubayer', 1, 129, 'bc8e7191c2fae4af85e6b728bcec435a48fe18faf0ee58d710800d0da33be456', '2022-9-14T16:12:16.155', 1825, 'jubayer@gmail.com', 0, 'A+', NULL),
 	('Nafi', 1, 190041120, 'ff20e2239111482880e23eb82ddce6e3ad3ea4ec9914fa231181a76ff220a3da', '2022-9-28T6:50:41.680', 49871497, 'nafi@gmail.com', 123164867, 'B+', NULL);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 
