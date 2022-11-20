@@ -36,13 +36,14 @@
 * View Requests (Owner/Requests)
 
 ## Bugs:
-* Navbar style problem
-* Footer style problem
 * ~~Can't view OLD HOME~~
 * ~~Shows Wrong Month in hash.salt()~~
 * ~~Deleted Photo Problem~~
 * Fix Edit Pages
 * ~~Owner Description during register/edit~~
+* Flat profile style
+* Student profile navbar doesnt work
+* Pages under settings needs slight touchup
 
 ## Suggestion
 * Adding Background behind flats in homepage
