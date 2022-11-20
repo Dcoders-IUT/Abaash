@@ -187,11 +187,17 @@
             </span>
           </div>
 
-          <div class="form-item">
-            <label class="attribute">Rent</label><span class="val">
-              <%=flat.rent%>
-            </span>
-          </div>
+          <% if (flat.rent>0) { %>
+            <div class="form-item">
+              <label class="attribute">Rent</label><span class="val">
+                <%=flat.rent%>
+              </span>
+            </div>
+          <% } else { %>
+            <div class="form-item">
+              <label class="attribute">Not Vacant</label>
+            </div>
+          <% }
 
           <% if (flat.photo) { %>
             <div class="form-item">
@@ -208,13 +214,13 @@
           </button>
         </div>
 
-        <% } else if (mode==='student' ) { %>
+        <% } else if (mode === 'student' && flat.rent>0) { %>
           <a href="../request/<%=flat.flatID%>"><button class="bb">Request Reservation</button></a>
-          <% } %>
-            <% } else { %>
-              <span>FLAT NOT FOUND!</span>
-              <% } %>
+        <% } %>
 
+        <% } else { %>
+          <span>FLAT NOT FOUND!</span>
+        <% } %>
 
                 <!-- map -->
                 <div class="map" id="mapid"></div>
@@ -224,8 +230,8 @@
 
                 <!-- map js  -->
                 <script>
-                  let x= <%=flat.x %>;
-                  let y= <%=flat.y %>;
+                  let x= <%= flat.x %>;
+                  let y= <%= flat.y %>;
                   var map = L.map("mapid").setView([x,y], 17);
 
                   const layer = L.tileLayer(

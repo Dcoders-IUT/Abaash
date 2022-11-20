@@ -21,6 +21,8 @@
 * Titles and Headings
 * Set Character Limit and Max Width in form and table fields
 * Display Room Information in the Flat Profile Page
+* Catching Exception in all DB Operations
+* Using numbers for checking Student ID and Flat ID
 
 ## Page Redesigns:
 * Student Profile
@@ -35,7 +37,6 @@
 * Login signup div size
 * Navbar style problem
 * Footer style problem
-* Using numbers for checking Student ID
 * Can't view OLD HOME
 * Shows Wrong Month in hash.salt()
 * Deleted Photo Problem
