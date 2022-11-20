@@ -148,7 +148,7 @@
 </head>
 
 <body>
-  <%- include("../partials/navbar.ejs") %>
+  <%#- include("../partials/navbar.ejs") %>
     <a href="../..">Home</a>
     <div class="container">
       <div class="details">
@@ -186,11 +186,66 @@
               <%=flat.generator? 'YES' : 'NO' %>
             </span>
           </div>
+          <div class="form-item">
+            <label class="attribute">Area</label><span class="val">
+              <%=flat.area%>
+            </span>
+          </div>
+
+          <% if (rooms.bed>0) { %>
+            <div class="form-item">
+              <label class="attribute">Bedroom</label><span class="val">
+                <%=rooms.bed%>
+              </span>
+            </div>
+          <% } %>
+          <% if (rooms.din>0) { %>
+            <div class="form-item">
+              <label class="attribute">Dining Room</label><span class="val">
+                <%=rooms.din%>
+              </span>
+            </div>
+          <% } %>
+          <% if (rooms.liv>0) { %>
+            <div class="form-item">
+              <label class="attribute">Living Room</label><span class="val">
+                <%=rooms.liv%>
+              </span>
+            </div>
+          <% } %>
+          <% if (rooms.kit>0) { %>
+            <div class="form-item">
+              <label class="attribute">Kitchen</label><span class="val">
+                <%=rooms.kit%>
+              </span>
+            </div>
+          <% } %>
+          <% if (rooms.bath>0) { %>
+            <div class="form-item">
+              <label class="attribute">Bathroom</label><span class="val">
+                <%=rooms.bath%>
+              </span>
+            </div>
+          <% } %>
+          <% if (rooms.balk>0) { %>
+            <div class="form-item">
+              <label class="attribute">Balcony</label><span class="val">
+                <%=rooms.balk%>
+              </span>
+            </div>
+          <% } %>
+          <% if (rooms.xtra>0) { %>
+            <div class="form-item">
+              <label class="attribute">Extra Room</label><span class="val">
+                <%=rooms.xtra%>
+              </span>
+            </div>
+          <% } %>
 
           <% if (flat.rent>0) { %>
             <div class="form-item">
               <label class="attribute">Rent</label><span class="val">
-                <%=flat.rent%>
+                ৳<%=flat.rent %>/month
               </span>
             </div>
           <% } else { %>
@@ -203,58 +258,61 @@
             <div class="form-item">
               <span class="val"><img src="../img/<%=flat.photo%>"></span>
             </div>
-            <% } %>
+          <% } %>
       </div>
 
       <% if(user.id===flat.owner) { %>
 
         <div class="buttons">
           <button class="bb">
-            <a href="../edit/<%=flat.flatID%>">Edit Info</a>
+            <a href="../edit/<%=flat.flatID%>">Edit</a>
+          </button>
+          <button class="bb">
+            <a href="../delete/<%=flat.flatID%>">Delete</a>
           </button>
         </div>
 
-        <% } else if (mode === 'student' && flat.rent>0) { %>
-          <a href="../request/<%=flat.flatID%>"><button class="bb">Request Reservation</button></a>
-        <% } %>
+      <% } else if (user.mode === 'student' && flat.rent>0) { %>
+        <a href="../request/<%=flat.flatID%>"><button class="bb">Request Reservation</button></a>
+      <% } %>
 
-        <% } else { %>
-          <span>FLAT NOT FOUND!</span>
-        <% } %>
+      <% } else { %>
+        <span>FLAT NOT FOUND!</span>
+      <% } %>
 
-                <!-- map -->
-                <div class="map" id="mapid"></div>
+      <!-- map -->
+      <div class="map" id="mapid"></div>
 
-                <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
-                  integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
+      <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
+        integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
 
-                <!-- map js  -->
-                <script>
-                  let x= <%= flat.x %>;
-                  let y= <%= flat.y %>;
-                  var map = L.map("mapid").setView([x,y], 17);
+      <!-- map js  -->
+      <script>
+        let x= <%= flat.x %>;
+        let y= <%= flat.y %>;
+        var map = L.map("mapid").setView([x,y], 17);
 
-                  const layer = L.tileLayer(
-                    "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                    {
-                      maxZoom: 19,
-                      attribution:
-                        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-                    }
-                  ).addTo(map);
+        const layer = L.tileLayer(
+          "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+          {
+            maxZoom: 19,
+            attribution:
+              '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+          }
+        ).addTo(map);
 
-                  let markerOptions = {
-                    //  title: <%#= flat.name%>,
-                    clickable: true,
-                    draggable: true,
-                  };
+        let markerOptions = {
+          //  title: <%#= flat.name%>,
+          clickable: true,
+          draggable: true,
+        };
 
-                  // creating marker
-                  let marker = L.marker([x,y]);
+        // creating marker
+        let marker = L.marker([x,y]);
 
-                  // add marker to map
-                  marker.addTo(map);
-                </script>
+        // add marker to map
+        marker.addTo(map);
+      </script>
     </div>
     <%#- include("../partials/footer.ejs") %>
 </body>

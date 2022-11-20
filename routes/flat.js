@@ -40,15 +40,14 @@ async function newFlatID() {
 
 app.get('/profile/:id', async (req, res) => {
     const { id } = req.params
-    const userID = userData.id()
     const mode = userData.mode()
     let flat
     let owner
     let rooms
 
     try {
-        flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${id}'`)
-        rooms = await database.getUnique(`SELECT * FROM room WHERE flatID='${id}'`)
+        flat = await database.getUnique(`SELECT * FROM flat WHERE flatID=${id}`)
+        rooms = await database.getUnique(`SELECT * FROM room WHERE flatID=${id}`)
         owner = await database.getUnique(`SELECT name FROM owner WHERE username='${flat.owner}'`)
     } catch (err) {
         console.log(err)
@@ -57,6 +56,7 @@ app.get('/profile/:id', async (req, res) => {
             user: await userData.allInfo(),
             flat: null,
             rooms: null,
+            owner: null
         })
         return
     }
@@ -64,7 +64,6 @@ app.get('/profile/:id', async (req, res) => {
     res.render('flat/profile', {
         misc,
         user: await userData.allInfo(),
-        mode,
         flat,
         rooms,
         owner
@@ -95,8 +94,8 @@ app.post('/request/delete', async (req, res) => {
     const userID = userData.id()
 
     try {
-        const flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${flatID}'`)
-        if (userID !== flat.owner) throw new Error('OWNER MISMATCH!')
+        const flat = await database.getUnique(`SELECT * FROM flat WHERE flatID=${flatID}`)
+        if (userID !== flat.owner && Number(userID) !== Number(studentID)) throw new Error('USER NOT FOUND!')
         await database.exec(`DELETE FROM flatrequest WHERE studentID=${studentID} AND flatID=${flatID}`)
 
         res.redirect('../../owner/requests')
@@ -117,20 +116,26 @@ app.route('/request/:id')
             return
         }
 
-        let flat
-        let rooms
-        let owner
         try {
-            flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${id}'`)
-            rooms = await database.getUnique(`SELECT * FROM room WHERE flatID='${id}'`)
-            owner = await database.getUnique(`SELECT name FROM owner WHERE username='${flat.owner}'`)
+            const flat = await database.getUnique(`SELECT * FROM flat WHERE flatID=${id}`)
+            const rooms = await database.getUnique(`SELECT * FROM room WHERE flatID=${id}`)
+            const owner = await database.getUnique(`SELECT name FROM owner WHERE username='${flat.owner}'`)
+            const contactInfo = await database.getUnique(`SELECT phone, email FROM student WHERE studentID=${userData.id()}`)
+
+            res.render('flat/request', {
+                misc,
+                user: await userData.allInfo(),
+                flat,
+                rooms,
+                owner,
+                phone: contactInfo.phone,
+                email: contactInfo.email
+            })
         } catch (err) {
             console.log(err)
             res.redirect('../../')
             return
         }
-
-        res.render('flat/request', { misc, user: await userData.allInfo(), flat, rooms, owner })
     })
     .post(async (req, res) => {
         const { id } = req.params
@@ -237,7 +242,7 @@ app.get('/edit/:id', async (req, res) => {
 
     try {
         flat = await database.getUnique(`SELECT * FROM flat WHERE flatID=${id}`)
-        rooms = await database.getUnique(`SELECT * FROM room WHERE flatID='${id}'`)
+        rooms = await database.getUnique(`SELECT * FROM room WHERE flatID=${id}`)
         owner = await database.getUnique(`SELECT name FROM owner WHERE username='${flat.owner}'`)
     } catch (err) {
         res.redirect('../../')
@@ -304,5 +309,13 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
         return
     }
 })
+
+app.route('/delete/:id')
+    .get(async (req, res) => {
+        
+    })
+    .post(async (req, res) => {
+        res.redirect('/')
+    })
 
 module.exports = app

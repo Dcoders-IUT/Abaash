@@ -11,56 +11,49 @@
 </head>
 
 <body>
-  <%- include("../partials/navbar.ejs") %>
-    <a href="../..">Home</a>
-    <div class="container">
-      <div class="blue-container">
-        <div class="profile">
-          <img class="owner-img" src="<%= photo? `../img/${photo}` : "http://bootdey.com/img/Content/avatar/avatar1.png" %>"
-          class="rounded-circle"
-          width="200"
-          />
-          <% if(profileUser) { %>
+  <%#- include("../partials/navbar.ejs") %>
+    <!-- <a href="../..">Home</a> -->
+    <% if(misc.userExists()) { %>
+      <div class="container">
+        <div class="blue-container">
+          <div class="profile">
+            <img class="owner-img" src="<%= profile.photo? `../img/${profile.photo}` : "http://bootdey.com/img/Content/avatar/avatar1.png" %>"
+            class="rounded-circle"
+            width="200"
+            />
             <h2>
-              <%=name%>
+              <%=profile.name%>
             </h2>
-            <h4>@<%=username%>
+            <h4>@<%=profile.username%>
             </h4>
-            <% if(user.id===profileUser) { %>
+            <% if(user.id===profile.username) { %>
               <div class="buttons">
                 <a href="../../flat/register">
                   <button class="button-3">
                     <strong class="fas fa-plus"></strong>
                     Add Flat
                   </button></a>
-                <a href="../edit/<%= profileUser %> ">
+                <a href="../edit/<%= profile.username %> ">
                   <button class="button-3">
                     <i class="fas fa-edit"></i> Edit Profile
                   </button></a>
               </div>
               <% } %>
-        </div>
-
-        <% if (profile.description) { %>
-          <div class="details">
-            <p>
-              <%=profile.description %>
-            </p>
           </div>
-          <% } %>
-
-            <div class="lol" style="margin-left:33vw">
-              <div class="upper-layer">
-                <div class="all-flats">
-                  <%- include ("../partials/showOwnerAllFlats.ejs", {misc, flatList}) %>
-                </div>
-                <%} else { %>
-                  <p>USER NOT FOUND!</p>
-                  <% } %>
+          <div class="lol" style="margin-left:33vw">
+            <div class="upper-layer">
+              <div class="all-flats">
+                <%- include ("../partials/showOwnerAllFlats.ejs", {misc, flatList}) %>
               </div>
             </div>
+          </div>
+        </div>
       </div>
-      <%#- include("../partials/footer.ejs") %>
+      <%} else { %>
+        <p>USER NOT FOUND!</p>
+        <% } %>
+
+      <%# include("../partials/footer.ejs") %>
 </body>
 
 </html>

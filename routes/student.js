@@ -49,7 +49,7 @@ async function flatRequestList(records)
         )
 
         const flatRecord = await database.getUnique(
-            `SELECT * FROM flat WHERE flatID='${records[i].flatID}'`,
+            `SELECT * FROM flat WHERE flatID=${records[i].flatID}`,
         )
 
         reqList.push({
@@ -125,25 +125,15 @@ app.get('/profile', (req, res) => {
 
 app.get('/profile/:id', async (req, res) => {
     const { id } = req.params
-    let profileUserData
 
     try {
-        profileUserData = await database.getUnique(`SELECT * FROM student WHERE studentID=${id}`)
+        const profile = await database.getUnique(`SELECT * FROM student WHERE studentID=${id}`)
+        res.render('student/profile', { misc, user: await userData.allInfo(), profile })
     } catch (err) {
         console.log(err)
-        res.render('student/profile', { misc, user: await userData.allInfo(), profileUser: null })
+        res.redirect('/')
         return
     }
-
-    res.render('student/profile', {
-        misc,
-        user: await userData.allInfo(),
-        profileUser: id,
-        name: profileUserData.name,
-        gender: profileUserData.gender,
-        bloodgroup: profileUserData.bloodgroup,
-        photo: profileUserData.photo,
-    })
 })
 
 app.route('/edit/:id')
@@ -151,7 +141,7 @@ app.route('/edit/:id')
         const { id } = req.params
         const userID = userData.id()
         const mode = userData.mode()
-        let profileUserData
+        let profile
 
         if (mode !== 'student') {
             res.redirect('../../')
@@ -159,20 +149,18 @@ app.route('/edit/:id')
         }
 
         try {
-            profileUserData = await database.getUnique(
-                `SELECT * FROM student WHERE studentID=${id}`,
-            )
+            profile = await database.getUnique(`SELECT * FROM student WHERE studentID=${id}`)
         } catch (err) {
             res.redirect('../../')
             return
         }
 
-        if (userID !== profileUserData.studentID) {
+        if (userID !== profile.studentID) {
             res.redirect('../../')
             return
         }
 
-        res.render('student/edit', { misc, user: await userData.allInfo(), profileUserData })
+        res.render('student/edit', { misc, user: await userData.allInfo(), profile })
     })
     .post(upload.single('photo'), async (req, res) => {
         const temp = req.body
