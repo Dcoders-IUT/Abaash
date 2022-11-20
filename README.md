@@ -43,3 +43,4 @@
 * Fix Edit Pages
 * Profile Info Passing
 * Owner Description during register/edit
+* Males can see female flats
