@@ -28,6 +28,7 @@
 </head>
 
 <body>
+  <%- include("../partials/navbar.ejs") %>
   <% if(user.id===owner.username) { %>
     <div class="register-container">
       <form action="register" id="register" method="post">
@@ -144,6 +145,7 @@
     <% } else { %>
       <p>USER NOT FOUND!</p>
       <% } %>
+  <%- include("../partials/footer.ejs") %>
 </body>
 
 </html>
