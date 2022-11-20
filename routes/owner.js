@@ -123,23 +123,25 @@ app.get('/profile', (req, res) => {
 
 app.get('/profile/:id', async (req, res) => {
     const { id } = req.params
-    let profileUserData
 
+    let profileRecord
+    let flatList
     try {
-        profileUserData = await database.getUnique(`SELECT * FROM owner WHERE username='${id}'`)
+        profileRecord = await database.getUnique(`SELECT * FROM owner WHERE username='${id}'`)
+        flatList = await database.get(`SELECT * FROM flat WHERE owner='${id}'`)
     } catch (err) {
-        res.render('owner/profile', { misc, user: await userData.allInfo(), profileUser: null })
+        res.render('owner/profile', { misc, user: await userData.allInfo(), profile: null, profileUser: null, flatList: null })
         return
     }
-    const flatList = await database.get(`SELECT * FROM flat WHERE owner='${id}'`)
 
     res.render('owner/profile', {
         misc,
         user: await userData.allInfo(),
+        profile: profileRecord,
         profileUser: id,
-        name: profileUserData.name,
-        username: profileUserData.username,
-        photo: profileUserData.photo,
+        name: profileRecord.name,
+        username: profileRecord.username,
+        photo: profileRecord.photo,
         flatList,
     })
 })

@@ -103,7 +103,6 @@
       <div class="profile">
         <img class="owner-img" src="<%= photo? `../img/${photo}` : " http://bootdey.com/img/Content/avatar/avatar1.png"
           %>"
-        alt="Admin"
         class="rounded-circle"
         width="150"
         />
@@ -125,22 +124,11 @@
             <% } %>
       </div>
 
-      <div class="details">
-        <ul>
-          <li><i class="fa-solid fa-globe fa-xl"></i><span>Website</span><span class="social-media">https://<%=name%>
-                .com</span></li>
-          <li><i class="fab fa-twitter fa-xl"></i><span style="margin-left: 2%;">Twitter</span><span
-              class="social-media">@<%=name%></span> </li>
-          <li><i class="fab fa-facebook fa-xl"></i><span style="margin-left: 1%;">Facebook</span><span
-              class="social-media">
-              <%=name%>
-            </span></li>
-          <li><i class="fab fa-instagram fa-xl"></i><span style="margin-left: 1%;">Instagram</span><span
-              class="social-media">
-              <%=name%>
-            </span></li>
-        </ul>
-      </div>
+      <% if (profile.description) { %>
+        <div class="details">
+          <p><%=profile.description %></p>
+        </div>
+      <% } %>
 
       <div class="lol" style="margin-left:33vw">
         <div class="upper-layer">

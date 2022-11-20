@@ -1,5 +1,6 @@
 const express = require('express')
 const store = require('store')
+const fs = require('fs')
 const multer = require('multer')
 const path = require('path')
 const userData = require('../util/userData')
@@ -189,15 +190,12 @@ app.route('/edit/:id')
         const { studentID } = temp
         const phone = Number(temp.phone)
         const { email } = temp
-        const nid = Number(temp.nid)
+        const nid = Number(0)
         const gender = Number(temp.gender)
         const { blg } = temp
         const { pass } = temp
     
         const photo = req.file? `'${req.file.filename}'`: 'NULL'
-
-        console.log(temp);
-        console.log(userID);
 
         if (Number(userID) !== Number(profileID)) {
             res.redirect('../../')
@@ -209,7 +207,7 @@ app.route('/edit/:id')
             
             let oldPhoto = await database.getUnique(`SELECT photo FROM student WHERE studentID=${userID}`)
             oldPhoto = oldPhoto.photo
-            if(oldPhoto) fs.unlinkSync(`public/owner/img/${oldPhoto}`)
+            if(oldPhoto) fs.unlinkSync(`public/student/img/${oldPhoto}`)
             
             await database.exec(
                 `UPDATE student
@@ -220,6 +218,7 @@ app.route('/edit/:id')
 
             res.redirect('../profile')
         } catch (err) {
+            console.log(err)
             res.redirect('../../')
             return
         }

@@ -1,8 +1,3 @@
-<% 
-console.log(user)
-console.log(profileUserData)
-%> 
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -69,16 +64,10 @@ console.log(profileUserData)
           <img
           class="owner-img"
           src="<%= photo? `../img/${photo}` : 'https://bootdey.com/img/Content/avatar/avatar7.png' %>"
-          alt="Admin"
           class="rounded-circle"
           width="150"
         />
-    
-        <% if (photo) { %>
-        <div class="form-item">
-          <span class="val"><img src="../img/<%=photo%>" /></span>
-        </div>
-        <% } %>
+
         <% if(Number(user.id)===Number(profileUser)) { %>
           
         <div class="col-md-10" style="margin-left: 3vw ;">

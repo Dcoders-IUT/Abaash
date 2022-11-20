@@ -282,7 +282,7 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
         
         // let oldPhoto = await database.getUnique(`SELECT photo FROM flat WHERE username='${userID}'`)
         // oldPhoto = oldPhoto.photo
-        // if(oldPhoto) fs.unlinkSync(`public/owner/img/${oldPhoto}`)
+        // if(oldPhoto) fs.unlinkSync(`public/flat/img/${oldPhoto}`)
         
         await database.exec(
             `UPDATE flat

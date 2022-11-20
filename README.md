@@ -12,6 +12,7 @@
 * Buffering Flats and Requests
 * Error Alert
 * Live Sorting Requests and Flats
+* Extract Info from Student ID
 
 ## Extensions:
 * Prompt/Label for each form field
@@ -21,6 +22,7 @@
 * Display Room Information in the Flat Profile Page
 
 ## Page Redesigns:
+* Student Profile
 * New Flat
 * Flat Cards (Description)
 * Send Flat Request (Flat/Request)
