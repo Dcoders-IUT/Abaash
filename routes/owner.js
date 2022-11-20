@@ -101,14 +101,14 @@ app.route('/register')
         const nid = Number(temp.nid)
 
         await database.exec(
-            `INSERT INTO owner(name, username, pass, plc, phone, email, nid) VALUES ('${name}',
-        '${username}',
-        '${pass}',
-        '${plc}',
-        ${phone},
-        '${email}',
-        ${nid}`
-        )
+            `INSERT INTO owner(name, username, password, passwordLastChanged, phone, email, nid) VALUES ('${name}',
+            '${username}',
+            '${pass}',
+            '${plc}',
+            ${phone},
+            '${email}',
+            ${nid})`
+            )
         store.set('user', username)
         store.set('mode', req.body.mode)
 
@@ -238,7 +238,40 @@ app.route('/password/:id')
         res.render('owner/password', { misc, user: await userData.allInfo(), profile })
     })
     .post(async (req, res) => {
-        res.redirect('/')
+        const temp = req.body
+        const userID = userData.id()
+        const mode = userData.mode()
+
+        if (mode !== 'owner') {
+            res.redirect('../../')
+            return
+        }
+
+        const { pass } = temp
+        const { profileID } = temp
+        const plc = hash.salt()
+        const pass2 = hash.create(`${temp.pass2 + plc}Home Is Where The Start Is!`)
+        const pass3 = hash.create(`${temp.pass3 + plc}Home Is Where The Start Is!`)
+        
+        if (userID !== profileID || pass2 !== pass3) {
+            res.redirect('../../')
+            return
+        }
+
+        try {
+            await getUser(userID, pass)
+            
+            await database.exec(
+                `UPDATE owner
+                SET password='${pass2}', passwordLastChanged='${plc}'
+                WHERE username='${userID}'`
+            )
+
+            res.redirect('../profile')
+        } catch (err) {
+            res.redirect('/')
+            return
+        }
     })
 
 app.route('/delete/:id')
@@ -279,11 +312,8 @@ app.route('/delete/:id')
 
         const { pass } = temp
         const { profileID } = temp
-        const plc = hash.salt()
-        const pass2 = hash.create(`${temp.pass2 + plc}Home Is Where The Start Is!`)
-        const pass3 = hash.create(`${temp.pass3 + plc}Home Is Where The Start Is!`)
         
-        if (userID !== profileID || pass2 !== pass3) {
+        if (userID !== profileID) {
             res.redirect('../../')
             return
         }
@@ -292,18 +322,16 @@ app.route('/delete/:id')
             await getUser(userID, pass)
             
             await database.exec(
-                `UPDATE owner
-                SET password='${pass2}', passwordLastChanged='${plc}'
+                `DELETE FROM owner
                 WHERE username='${userID}'`
             )
 
-            res.redirect('../profile')
+            res.redirect('/logout/')
         } catch (err) {
+            console.log(err)
             res.redirect('/')
             return
         }
-        
-        res.redirect('/logout/')
     })
 
 app.get('/requests', async (req, res) => {

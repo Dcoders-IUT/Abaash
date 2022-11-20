@@ -61,7 +61,7 @@ app.route('/')
 app.get('/logout', (req, res) => {
     store.remove('user')
     store.remove('mode')
-    res.redirect('./')
+    res.redirect('/')
 })
 
 app.get('/test', (req, res) => {

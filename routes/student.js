@@ -209,7 +209,130 @@ app.route('/edit/:id')
             res.redirect('../../')
             return
         }
-    })
+    }) 
+
+app.route('/password/:id')
+.get(async (req, res) => {
+    const { id } = req.params
+    const userID = userData.id()
+    const mode = userData.mode()
+
+    if (mode !== 'student') {
+        res.redirect('../../')
+        return
+    }
+
+    let profile
+    try {
+        profile = await database.getUnique(`SELECT * FROM student WHERE studentID=${id}`)
+    } catch (err) {
+        res.redirect('../../')
+        return
+    }
+
+    if (userID !== profile.studentID) {
+        res.redirect('../../')
+        return
+    }
+
+    res.render('student/password', { misc, user: await userData.allInfo(), profile })
+})
+.post(async (req, res) => {
+    const temp = req.body
+    const userID = userData.id()
+    const mode = userData.mode()
+
+    if (mode !== 'student') {
+        res.redirect('../../')
+        return
+    }
+
+    const { pass } = temp
+    const { profileID } = temp
+    const plc = hash.salt()
+    const pass2 = hash.create(`${temp.pass2 + plc}Home Is Where The Start Is!`)
+    const pass3 = hash.create(`${temp.pass3 + plc}Home Is Where The Start Is!`)
+    
+    if (userID !== profileID || pass2 !== pass3) {
+        res.redirect('../../')
+        return
+    }
+
+    try {
+        await getUser(userID, pass)
+        
+        await database.exec(
+            `UPDATE student
+            SET password='${pass2}', passwordLastChanged='${plc}'
+            WHERE studentID=${userID}`
+        )
+
+        res.redirect('../profile')
+    } catch (err) {
+        res.redirect('/')
+        return
+    }
+})
+
+app.route('/delete/:id')
+.get(async (req, res) => {
+    const { id } = req.params
+    const userID = userData.id()
+    const mode = userData.mode()
+
+    if (mode !== 'student') {
+        res.redirect('../../')
+        return
+    }
+
+    let profile
+    try {
+        profile = await database.getUnique(`SELECT * FROM student WHERE studentID=${id}`)
+    } catch (err) {
+        res.redirect('../../')
+        return
+    }
+
+    if (userID !== profile.studentID) {
+        res.redirect('../../')
+        return
+    }
+
+    res.render('student/delete', { misc, user: await userData.allInfo(), profile })
+})
+.post(async (req, res) => {
+    const temp = req.body
+    const userID = userData.id()
+    const mode = userData.mode()
+
+    if (mode !== 'student') {
+        res.redirect('../../')
+        return
+    }
+
+    const { pass } = temp
+    const { profileID } = temp
+    
+    if (userID !== profileID) {
+        res.redirect('../../')
+        return
+    }
+
+    try {
+        await getUser(userID, pass)
+        
+        await database.exec(
+            `DELETE FROM student
+            WHERE studentID=${userID}`
+        )
+
+        res.redirect('/logout/')
+    } catch (err) {
+        console.log(err)
+        res.redirect('/')
+        return
+    }
+})
 
 app.get('/requests', async (req, res) => {
     const userID = userData.id()
