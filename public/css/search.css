@@ -348,17 +348,13 @@ a:active {
   line-height: 50px;
   font-family: inherit;
   background: #00ad5f;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
   border-radius: 10px;
   text-transform: capitalize;
   color: #fff;
   font-size: 16px;
   font-weight: 700;
-  -webkit-transition: all 0.4s ease;
-  -o-transition: all 0.4s ease;
-  -moz-transition: all 0.4s ease;
   transition: all 0.4s ease;
+  text-align: left;
 }
 
 .btn-submit:hover {
