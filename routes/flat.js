@@ -22,6 +22,26 @@ const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } })
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+async function getUser(id, pass) {
+    const wrongpass = 'WRONG PASSWORD!'
+
+    try {
+        const record = await database.getUnique(
+            `SELECT username, password, passwordLastChanged FROM owner WHERE username='${id}' OR email='${id}' OR phone='${id}'`
+        )
+        const { username } = record
+
+        const plc = record.passwordLastChanged
+        const password = hash.create(`${pass + plc}Home Is Where The Start Is!`)
+        if (password !== record.password) throw new Error(wrongpass)
+
+        return username
+    } catch (err) {
+        if (err.message === wrongpass) throw err
+        throw new Error('USER NOT FOUND!')
+    }
+}
+
 async function newFlatID() {
     const base = 1000000
     const divisor = 1000000
