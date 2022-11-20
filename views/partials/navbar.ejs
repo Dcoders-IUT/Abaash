@@ -162,11 +162,8 @@
         <div class="dropdown">
           <button class="dropbtn">Settings</button>
           <div class="dropdown-content">
-            <a href="/<%=user.mode%>/password">Change Password</a>
-            <a href="/<%=user.mode%>/delete">Delete Account</a>
-            <% if(user.mode==='owner' ) { %>
-              <a href="/<%=user.mode%>/requests">Delete Flat</a>
-              <% } %>
+            <a href="/<%=user.mode%>/password/<%=user.id%>">Change Password</a>
+            <a href="/<%=user.mode%>/delete/<%=user.id%>">Delete Account</a>
           </div>
         </div>
       </li>

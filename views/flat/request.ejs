@@ -20,21 +20,20 @@
         <br />
         <h1>Message From <a href="/owner/profile/<%=owner.username %>">
             <%=owner.name %>
-          </a></h1>
-        <br />
-        <h2>
-          <%=flat.message %>
-            <br />
-        </h2>
+          </a>
+        </h1>
+          <h2>
+            <%=flat.message %>
+          </h2>
         <div class="edit">
           <input type="text" name="msg" placeholder="Request Message" />
           <br />
         </div>
         <h1>Contact Info</h1>
-        <h2>Phone Number: <%=user.phone%>
-        </h2>
-        <h2>Email Address: <%=user.email%>
-        </h2>
+          <h2>Phone Number: <%=phone%>
+          </h2>
+          <h2>Email Address: <%=email%>
+          </h2>
         <button>Send Request</button>
       </form>
       <button><a href="../profile/<%=flat.flatID%>">Cancel</a></button>

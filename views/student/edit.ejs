@@ -6,8 +6,7 @@
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href=
-"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
 
 </link>
     <title>Edit Profile</title>
@@ -91,7 +90,7 @@ color:#69707a;
     </style>
   </head>
   <body>
-    <% if(user.id === profileUserData.studentID) { %>
+    <% if(user.id === profile.studentID) { %>
       
         <form method="post" enctype="multipart/form-data">
         
@@ -121,7 +120,7 @@ color:#69707a;
                         <div class="card-header">Profile Details</div>
                         <div class="card-body">
                             <form method="post" enctype="multipart/form-data">
-                              <input type="hidden" name="profileID" value="<%=profileUserData.studentID %>" />
+                              <input type="hidden" name="profileID" value="<%=profile.studentID %>" />
 
                                 <!-- Form Group (username)-->
                                 <div class="mb-3">
@@ -129,7 +128,7 @@ color:#69707a;
                                     <input class="form-control" id="inputUsername"  type="text"
                                     name="name"
                                     placeholder="Name"
-                                    value="<%=profileUserData.name%>">
+                                    value="<%=profile.name%>">
                                 </div>
                                 <!-- Form Group (email address)-->
                                 <div class="mb-3">
@@ -137,7 +136,7 @@ color:#69707a;
                                     <input class="form-control" id="inputEmailAddress" type="text"
                                     name="studentID"
                                     placeholder="Student ID"
-                                    value="<%=profileUserData.studentID%>">
+                                    value="<%=profile.studentID%>">
                                 </div>
                                 <!-- Form Group (password)-->
                                 <div class="mb-3">
@@ -150,7 +149,7 @@ color:#69707a;
                                     <input class="form-control" id="inputEmailAddress" type="email"
                                     name="email"
                                     placeholder="Email Address"
-                                    value="<%=profileUserData.email%>">
+                                    value="<%=profile.email%>">
                                 </div>
                                 <!-- Form Row        -->
                                 <div class="mb-3">
@@ -158,7 +157,7 @@ color:#69707a;
                                     <input class="form-control" id="inputPhone" type="number"
                                     name="phone"
                                     placeholder="Phone Number"
-                                    value="<%=profileUserData.phone%>">
+                                    value="<%=profile.phone%>">
                                 </div>
                                 <!-- Form Row-->
                                 <div class="row gx-3 mb-3">
@@ -168,7 +167,7 @@ color:#69707a;
                                         <div class="col-sm-9 text-secondary">
                                           <select name="gender">
                                             <% misc.globalConst.genderList.forEach((gender)=> { %>
-                                              <option value="<%=gender.value%>" <%= profileUserData.gender===gender.value? 'selected': '' %>>
+                                              <option value="<%=gender.value%>" <%= profile.gender===gender.value? 'selected': '' %>>
                                                 <%= gender.display %>
                                               </option>
                                             <% }) %>
@@ -182,7 +181,7 @@ color:#69707a;
                                         <div class="col-sm-9 text-secondary">
                                           <select name="blg">
                                             <% misc.globalConst.bloodgroupList.forEach((blg)=> { %>
-                                              <option value="<%=blg.value%>" <%= profileUserData.bloodgroup===blg.value? 'selected': '' %>> <%= blg.display %> </option>
+                                              <option value="<%=blg.value%>" <%= profile.bloodgroup===blg.value? 'selected': '' %>> <%= blg.display %> </option>
                                             <% }) %>
                                           </select>
                                         </div>
@@ -191,7 +190,7 @@ color:#69707a;
                                 <!-- Save changes button-->
                                 <div class="row">
                                   <button class="btn btn-info ">Save Changes</button>
-                                  <a class="btn btn-info " href="../profile/<%=profileUserData.studentID%>">Cancel</a>
+                                  <a class="btn btn-info " href="../profile/<%=profile.studentID%>">Cancel</a>
                               </div>
                                 <!-- <button class="btn btn-primary" type="button">Save changes</button> -->
                             </form>

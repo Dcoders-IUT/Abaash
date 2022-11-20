@@ -1,5 +1,6 @@
 const obj = {}
 
+userData = require('./userData')
 obj.globalConst = require('./globalConst')
 
 obj.shuffle = (ara) => {
@@ -32,5 +33,7 @@ obj.flatGenderText = (num) => {
 
     return ans
 }
+
+obj.userExists = () => !userData.missing();
 
 module.exports = obj

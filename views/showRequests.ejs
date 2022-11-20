@@ -34,7 +34,7 @@
 
 <body>
   <%- include("./partials/navbar.ejs") %>
-    <a href="../..">Home</a>
+  <% if (misc.userExists()) { %>
     <div class="container">
       <h1>Requests</h1>
       <table border="1">
@@ -45,9 +45,7 @@
           <td align="center">Phone Number</td>
           <td align="center">E-mail</td>
           <td align="center">Message</td>
-          <% if(user.mode==='owner' ) { %>
-            <td align="center" colspan="2">Action</td>
-            <% } %>
+          <td align="center" colspan="2">Action</td>
         </tr>
         <% flatRequestList.forEach(request=> { %>
           <tr>
@@ -76,18 +74,25 @@
                   <button>Approve</button>
                 </form>
               </td>
+            <% } else { %>
               <td>
-                <form method="post" action="/flat/request/delete">
-                  <input type="hidden" name="flatID" value="<%=request.flat.flatID %>" />
-                  <input type="hidden" name="studentID" value="<%=request.student.studentID %>" />
-                  <button>Delete</button>
-                </form>
+                <a href="/flat/request/<%=request.flat.flatID %>">
+                  <button>Change Message</button>
+                </a>
               </td>
-              <% } %>
+            <% } %>
+            <td>
+              <form method="post" action="/flat/request/delete">
+                <input type="hidden" name="flatID" value="<%=request.flat.flatID %>" />
+                <input type="hidden" name="studentID" value="<%=request.student.studentID %>" />
+                <button>Delete</button>
+              </form>
+            </td>
           </tr>
           <% }) %>
       </table>
     </div>
+  <% } %>
 </body>
 
 </html>

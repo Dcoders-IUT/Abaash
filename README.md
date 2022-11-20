@@ -13,7 +13,8 @@
 * Error Alert
 * Live Sorting Requests and Flats
 * Extract Info from Student ID      ->100
-* Show Only Vacant Flats            ->100
+* Password Checking for Editing and Deleting Flats
+* Validations in Edit Pages
 
 ## Extensions:
 * Prompt/Label for each form field
@@ -23,6 +24,7 @@
 * Display Room Information in the Flat Profile Page
 * Catching Exception in all DB Operations
 * Using numbers for checking Student ID and Flat ID
+* Tick and Cross Mark instead of YES and NO
 
 ## Page Redesigns:
 * Student Profile
@@ -33,8 +35,8 @@
 * Flat Edit
 
 ## Bugs:
-* ~~Lift/Generator Button~~
-* ~~Login signup div size~~
+* Lift/Generator Button
+* Login signup div size
 * Navbar style problem
 * Footer style problem
 * Can't view OLD HOME
@@ -44,3 +46,7 @@
 * Profile Info Passing
 * Owner Description during register/edit
 * Males can see female flats
+
+## Decisions:
+* Owner Profile Button Location
+* Description vs Message

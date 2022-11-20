@@ -52,7 +52,7 @@ async function flatRequestList(records)
         )
 
         const flatRecord = await database.getUnique(
-            `SELECT * FROM flat WHERE flatID='${records[i].flatID}'`,
+            `SELECT * FROM flat WHERE flatID=${records[i].flatID}`,
         )
 
         reqList.push({
@@ -124,52 +124,46 @@ app.get('/profile', (req, res) => {
 app.get('/profile/:id', async (req, res) => {
     const { id } = req.params
 
-    let profileRecord
-    let flatList
     try {
-        profileRecord = await database.getUnique(`SELECT * FROM owner WHERE username='${id}'`)
-        flatList = await database.get(`SELECT * FROM flat WHERE owner='${id}'`)
+        const profile = await database.getUnique(`SELECT * FROM owner WHERE username='${id}'`)
+        const flatList = await database.get(`SELECT * FROM flat WHERE owner='${id}'`)
+
+        res.render('owner/profile', {
+            misc,
+            user: await userData.allInfo(),
+            profile,
+            flatList
+        })
     } catch (err) {
-        res.render('owner/profile', { misc, user: await userData.allInfo(), profile: null, profileUser: null, flatList: null })
+        res.redirect('/')
         return
     }
-
-    res.render('owner/profile', {
-        misc,
-        user: await userData.allInfo(),
-        profile: profileRecord,
-        profileUser: id,
-        name: profileRecord.name,
-        username: profileRecord.username,
-        photo: profileRecord.photo,
-        flatList,
-    })
 })
 
 app.get('/edit/:id', async (req, res) => {
     const { id } = req.params
     const userID = userData.id()
     const mode = userData.mode()
-    let profileUserData
 
     if (mode !== 'owner') {
         res.redirect('../../')
         return
     }
 
+    let profile
     try {
-        profileUserData = await database.getUnique(`SELECT * FROM owner WHERE username='${id}'`)
+        profile = await database.getUnique(`SELECT * FROM owner WHERE username='${id}'`)
     } catch (err) {
         res.redirect('../../')
         return
     }
 
-    if (userID !== profileUserData.username) {
+    if (userID !== profile.username) {
         res.redirect('../../')
         return
     }
 
-    res.render('owner/edit', { misc, user: await userData.allInfo(), profileUserData })
+    res.render('owner/edit', { misc, user: await userData.allInfo(), profile })
 })
 
 app.post('/edit/:id', upload.single('photo'), async (req, res) => {
@@ -217,6 +211,101 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
     }
 })
 
+app.route('/password/:id')
+    .get(async (req, res) => {
+        const { id } = req.params
+        const userID = userData.id()
+        const mode = userData.mode()
+
+        if (mode !== 'owner') {
+            res.redirect('../../')
+            return
+        }
+
+        let profile
+        try {
+            profile = await database.getUnique(`SELECT * FROM owner WHERE username='${id}'`)
+        } catch (err) {
+            res.redirect('../../')
+            return
+        }
+
+        if (userID !== profile.username) {
+            res.redirect('../../')
+            return
+        }
+
+        res.render('owner/password', { misc, user: await userData.allInfo(), profile })
+    })
+    .post(async (req, res) => {
+        res.redirect('/')
+    })
+
+app.route('/delete/:id')
+    .get(async (req, res) => {
+        const { id } = req.params
+        const userID = userData.id()
+        const mode = userData.mode()
+
+        if (mode !== 'owner') {
+            res.redirect('../../')
+            return
+        }
+
+        let profile
+        try {
+            profile = await database.getUnique(`SELECT * FROM owner WHERE username='${id}'`)
+        } catch (err) {
+            res.redirect('../../')
+            return
+        }
+
+        if (userID !== profile.username) {
+            res.redirect('../../')
+            return
+        }
+
+        res.render('owner/delete', { misc, user: await userData.allInfo(), profile })
+    })
+    .post(async (req, res) => {
+        const temp = req.body
+        const userID = userData.id()
+        const mode = userData.mode()
+
+        if (mode !== 'owner') {
+            res.redirect('../../')
+            return
+        }
+
+        const { pass } = temp
+        const { profileID } = temp
+        const plc = hash.salt()
+        const pass2 = hash.create(`${temp.pass2 + plc}Home Is Where The Start Is!`)
+        const pass3 = hash.create(`${temp.pass3 + plc}Home Is Where The Start Is!`)
+        
+        if (userID !== profileID || pass2 !== pass3) {
+            res.redirect('../../')
+            return
+        }
+
+        try {
+            await getUser(userID, pass)
+            
+            await database.exec(
+                `UPDATE owner
+                SET password='${pass2}', passwordLastChanged='${plc}'
+                WHERE username='${userID}'`
+            )
+
+            res.redirect('../profile')
+        } catch (err) {
+            res.redirect('/')
+            return
+        }
+        
+        res.redirect('/logout/')
+    })
+
 app.get('/requests', async (req, res) => {
     const userID = userData.id()
 
@@ -229,7 +318,8 @@ app.get('/requests', async (req, res) => {
             misc,
             user: await userData.allInfo(),
             flatRequestList: await flatRequestList(requestRecords)
-        })    } catch (err) {
+        })
+    } catch (err) {
         res.redirect('../../')
     }
 })
