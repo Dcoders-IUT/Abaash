@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <%- include("../partials/navbar.ejs") %>
+  <%#- include("../partials/navbar.ejs") %>
   <a href="../..">Home</a>
   <% if(misc.userExists()) { %>
   <div class="container">
@@ -62,8 +62,8 @@
   <%} else { %>
     <p>USER NOT FOUND!</p>
   <% } %>
-  
-  <%- include("./partials/footer.ejs") %>
+
+  <%#- include("../partials/footer.ejs") %>
 </body>
 
 </html>
