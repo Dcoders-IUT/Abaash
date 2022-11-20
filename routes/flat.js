@@ -76,7 +76,7 @@ app.post('/request/approve', async (req, res) => {
 
     try {
         const flat = await database.getUnique(`SELECT * FROM flat WHERE flatID=${flatID}`)
-        if (userID !== flat.owner) throw new Error('OWNER MISMATCH!')
+        if (userID !== flat.owner) throw new Error('OWNER NOT FOUND!')
         await database.exec(`DELETE FROM flatrequest WHERE flatID=${flatID}`)
         await database.exec(`UPDATE flat SET rent=0 WHERE flatID=${flatID}`)
 
@@ -312,10 +312,54 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
 
 app.route('/delete/:id')
     .get(async (req, res) => {
-        
+        const { id } = req.params
+        const mode = userData.mode()
+
+        if (mode !== 'owner') {
+            res.redirect('/')
+            return
+        }
+
+        try {
+            const flat = await database.getUnique(`SELECT * FROM flat WHERE flatID=${id}`)
+
+            res.render('flat/delete', {
+                misc,
+                user: await userData.allInfo(),
+                flat
+            })
+        } catch (err) {
+            res.redirect('/')
+        }
     })
     .post(async (req, res) => {
-        res.redirect('/')
+        const flatID = req.params.id
+        const temp = req.body
+
+        const userID = userData.id()
+        const mode = userData.mode()
+        const { pass } = temp
+
+        if (mode !== 'owner') {
+            res.redirect('../../')
+            return
+        }
+
+        try {
+            const flat = await database.getUnique(`SELECT * FROM flat WHERE flatID=${flatID}`)
+            if (userID !== flat.owner) throw new Error('OWNER MISMATCH!')
+            await getUser(userID, pass)
+
+            await database.exec(
+                `DELETE FROM flat
+                WHERE flatID=${flatID}`
+            )
+
+            res.redirect('/../../owner/profile')
+        } catch (err) {
+            console.log(err)
+            res.redirect('/')
+        }
     })
 
 module.exports = app
