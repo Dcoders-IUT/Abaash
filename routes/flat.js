@@ -76,9 +76,10 @@ app.post('/request/approve', async(req, res) => {
     const userID = userData.id()
 
     try {
-        const flat = await database.getUnique(`SELECT * FROM flat WHERE flatID='${flatID}'`)
+        const flat = await database.getUnique(`SELECT * FROM flat WHERE flatID=${flatID}`)
         if (userID !== flat.owner) throw new Error('OWNER MISMATCH!')
         await database.exec(`DELETE FROM flatrequest WHERE flatID=${flatID}`)
+        await database.exec(`UPDATE FLAT SET rent=0 WHERE flatID=${flatID}`)
         
         res.redirect('../../owner/requests')
     } catch (err) {
