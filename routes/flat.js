@@ -218,7 +218,7 @@ app.route('/register')
         await database.exec(
             `INSERT INTO flat(flatID, name, address, description, owner, gender, x, y, level, area, lift, generator, rent, message)
             VALUES (${flatID}, '${name}', '${address}', '${description}', '${owner}', ${gender}, ${x}, ${y}, ${level},
-            ${area}, ${lift}, ${generator}, ${rent}, ${msg})`
+            ${area}, ${lift}, ${generator}, ${rent}, '${msg}')`
         )
 
         await database.exec(
