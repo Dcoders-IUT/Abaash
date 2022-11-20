@@ -105,7 +105,7 @@
 </head>
 
 <body>
-
+  <%- include("../partials/navbar.ejs") %>
   <div class="container">
     <% if(user.id===profileUserData.username) { %>
       <form method="post" enctype="multipart/form-data">
@@ -193,6 +193,7 @@
       <% } else { %>
         <p>USER NOT FOUND!</p>
         <% } %>
+  <%- include("../partials/footer.ejs") %>
 </body>
 
 </html>
