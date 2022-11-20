@@ -21,39 +21,45 @@
         width="150"
         />
         <% if(profileUser) { %>
-          <h2 style="color: white;">
+          <h2>
             <%=name%>
           </h2>
           <h4>@<%=username%>
           </h4>
           <% if(user.id===profileUser) { %>
             <div class="buttons">
-              <button class="button-3">
-                <a style="color: white;" href="../../flat/register">Add Flat</a>
-              </button>
-              <button class="button-3">
-                <a style="color: white;" href="../edit/<%= profileUser %> ">Edit Profile</a>
-              </button>
+              <a href="../../flat/register">
+                <button class="button-3">
+                  <strong class="fas fa-plus"></strong>
+                  Add Flat
+                </button></a>
+              <a href="../edit/<%= profileUser %> ">
+                <button class="button-3">
+                  <i class="fas fa-edit"></i> Edit Profile
+                </button></a>
             </div>
             <% } %>
       </div>
 
       <% if (profile.description) { %>
         <div class="details">
-          <p><%=profile.description %></p>
+          <p>
+            <%=profile.description %>
+          </p>
         </div>
-      <% } %>
+        <% } %>
 
-      <div class="lol" style="margin-left:33vw">
-        <div class="upper-layer">
-        </div>
-        <div class="all-flats">
-          <%- include ("../partials/showOwnerAllFlats.ejs", {misc, flatList}) %>
-        </div>
-      <%} else { %>
-        <p>USER NOT FOUND!</p>
-      <% } %>
-        </div>
+          <div class="lol" style="margin-left:33vw">
+            <div class="upper-layer">
+              <div class="all-flats">
+                <%- include ("../partials/showOwnerAllFlats.ejs", {misc, flatList}) %>
+              </div>
+              <%} else { %>
+                <p>USER NOT FOUND!</p>
+                <% } %>
+            </div>
+          </div>
+    </div>
 </body>
 
 </html>

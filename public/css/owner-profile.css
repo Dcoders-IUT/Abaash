@@ -58,7 +58,7 @@ li {
 .profile {
   margin-left: 2%;
   /* margin-right: 10%; */
-  margin-top: 1%;
+  margin-top: 2%;
   padding-top: 3%;
   background-color: whitesmoke;
   position: fixed;
@@ -97,6 +97,7 @@ li {
   position: fixed;
   top: 62%;
   margin-left: 2%;
+  min-height: 30%;
   /* margin-right: 10%; */
   /* margin-top:1%; */
   padding: 1%;
@@ -104,6 +105,9 @@ li {
   width: 30vw;
   box-shadow: 0 5px 20px -6px #000;
   border-radius: 18px;
+  text-align: center;
+  display: grid;
+  place-content: center;
 }
 
 
