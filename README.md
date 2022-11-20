@@ -36,17 +36,13 @@
 * View Requests (Owner/Requests)
 
 ## Bugs:
-* Lift/Generator Button
-* Login signup div size
 * Navbar style problem
 * Footer style problem
 * Can't view OLD HOME
 * Shows Wrong Month in hash.salt()
 * Deleted Photo Problem
 * Fix Edit Pages
-* Profile Info Passing
 * Owner Description during register/edit
-* Males can see female flats
 
 ## Suggestion
 * Adding Background behind flats in homepage
