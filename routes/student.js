@@ -100,16 +100,16 @@ app.route('/register')
         const { blg } = temp
 
         await database.exec(
-            `INSERT INTO student(name, gender, id, pass, plc, phone, email, nid, blg) VALUES ('${name}',
-        ${gender},
-        ${id},
-        '${pass}',
-        '${plc}',
-        ${phone},
-        '${email}',
-        ${nid},
-        '${blg}'`
-        )
+            `INSERT INTO student(name, gender, studentID, password, passwordLastChanged, phone, email, nid, bloodgroup) VALUES ('${name}',
+            ${gender},
+            ${id},
+            '${pass}',
+            '${plc}',
+            ${phone},
+            '${email}',
+            ${nid},
+            '${blg}')`
+            )
 
         store.set('user', id)
         store.set('mode', req.body.mode)
@@ -313,7 +313,7 @@ app.route('/delete/:id')
     const { pass } = temp
     const { profileID } = temp
     
-    if (userID !== profileID) {
+    if (Number(userID) !== Number(profileID)) {
         res.redirect('../../')
         return
     }
