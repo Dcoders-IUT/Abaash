@@ -42,8 +42,7 @@ async function getUser(id, pass) {
     }
 }
 
-async function flatRequestList(records)
-{
+async function flatRequestList(records) {
     const reqList = []
 
     for (let i = 0; i < records.length; i++) {
@@ -183,8 +182,7 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
     const { email } = temp
     const nid = Number(temp.nid)
     const { pass } = temp
-    
-    const photo = req.file? `'${req.file.filename}'`: 'NULL'
+    const photo = req.file ? `'${req.file.filename}'` : 'NULL'
 
     if (userID !== profileID) {
         res.redirect('../../')
@@ -193,11 +191,11 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
 
     try {
         await getUser(userID, pass)
-        
+
         let oldPhoto = await database.getUnique(`SELECT photo FROM owner WHERE username='${userID}'`)
         oldPhoto = oldPhoto.photo
-        if(oldPhoto) fs.unlinkSync(`public/owner/img/${oldPhoto}`)
-        
+        if (oldPhoto) fs.unlinkSync(`public/owner/img/${oldPhoto}`)
+
         await database.exec(
             `UPDATE owner
             SET name='${name}', username='${username}', phone=${phone}, email='${email}', nid=${nid}, photo=${photo}
@@ -282,7 +280,7 @@ app.route('/delete/:id')
         const plc = hash.salt()
         const pass2 = hash.create(`${temp.pass2 + plc}Home Is Where The Start Is!`)
         const pass3 = hash.create(`${temp.pass3 + plc}Home Is Where The Start Is!`)
-        
+
         if (userID !== profileID || pass2 !== pass3) {
             res.redirect('../../')
             return
@@ -290,7 +288,7 @@ app.route('/delete/:id')
 
         try {
             await getUser(userID, pass)
-            
+
             await database.exec(
                 `UPDATE owner
                 SET password='${pass2}', passwordLastChanged='${plc}'
@@ -302,7 +300,7 @@ app.route('/delete/:id')
             res.redirect('/')
             return
         }
-        
+
         res.redirect('/logout/')
     })
 
@@ -314,7 +312,7 @@ app.get('/requests', async (req, res) => {
             `SELECT * FROM flatrequest WHERE (SELECT owner FROM flat WHERE flatrequest.flatid=flat.flatid)='${userID}'`,
         )
 
-        res.render('owner/requests', {
+        res.render('showRequests', {
             misc,
             user: await userData.allInfo(),
             flatRequestList: await flatRequestList(requestRecords)
