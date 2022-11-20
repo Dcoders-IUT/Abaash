@@ -34,6 +34,22 @@ obj.flatGenderText = (num) => {
     return ans
 }
 
-obj.userExists = () => !userData.missing();
+obj.userExists = () => !userData.missing()
+
+obj.academicInfo = (studentID) => {
+    let temp = Math.floor(studentID/10000000)
+    const batch = 2000+temp
+
+    temp = Math.floor((studentID%100000)/1000)
+    let dept;
+    if(temp === 11) dept = "Mechanical Engineering"
+    if(temp === 41) dept = "Computer Science and Engineering"
+    if(temp === 42) dept = "Software Engineering"
+
+    temp = Math.floor((studentID%1000)/100)
+    const section = temp
+
+    return { batch, dept, section }
+}
 
 module.exports = obj

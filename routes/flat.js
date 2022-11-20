@@ -1,6 +1,6 @@
 const express = require('express')
-const store = require('store')
 const crypto = require('crypto')
+const fs = require('fs')
 const multer = require('multer')
 const path = require('path')
 const userData = require('../util/userData')
@@ -11,7 +11,7 @@ const hash = require('../util/hash')
 const app = express.Router()
 const storage = multer.diskStorage({
     destination(req, file, cb) {
-        cb(null, 'public/img/flat')
+        cb(null, 'public/flat/img')
     },
     filename(req, file, cb) {
         cb(null, userData.id() + Date.now() + path.extname(file.originalname))
@@ -306,9 +306,9 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
     try {
         // await getUser(userID, pass)
 
-        // let oldPhoto = await database.getUnique(`SELECT photo FROM flat WHERE username='${userID}'`)
-        // oldPhoto = oldPhoto.photo
-        // if(oldPhoto) fs.unlinkSync(`public/flat/img/${oldPhoto}`)
+        let oldPhoto = await database.getUnique(`SELECT photo FROM flat WHERE flatID=${flatID}`)
+        oldPhoto = oldPhoto.photo
+        if(oldPhoto) fs.unlinkSync(`public/flat/img/${oldPhoto}`)
 
         await database.exec(
             `UPDATE flat
@@ -325,6 +325,7 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
 
         res.redirect(`../profile/${flatID}`)
     } catch (err) {
+        console.log(err)
         res.redirect('../../')
         return
     }
