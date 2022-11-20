@@ -1,0 +1,107 @@
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<style>
+  .nav a {
+    display: inline-block;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    color: #3F3B6C;
+  }
+
+  a:link {
+    text-decoration: none;
+  }
+
+  a:visited {
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
+
+  a:active {
+    text-decoration: none;
+  }
+
+  ​.navbar-list {
+    list-style: none;
+    font-size: 111px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    flex-direction: column;
+
+  }
+
+  /* DROPDOWN MENU */
+  .dropbtn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+  }
+
+  ​ .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  ​ .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  ​ .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  ​ .dropdown-content a:hover {
+    background-color: #ddd;
+  }
+
+  ​ .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  ​ .dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+  }
+</style>
+​
+<div class="nav">
+  <ul class="navbar-list">
+    <li>
+      <a class="fa fa-home fa-2x" href="/#" style="margin-right: -10px; margin-left: 10px"></a>
+    </li>
+    ​
+    <% if(user.id) { %>
+      <li>
+        <a href="/<%=user.mode%>/profile/<%=user.id%>">
+          <%=user.name? user.name: user.id%>
+        </a>
+      </li>
+      <li><a href="/<%=user.mode%>/requests">Requests</a></li>
+      <li>
+        <div class="dropdown">
+          <button class="dropbtn">Settings</button>
+          <div class="dropdown-content">
+            <a href="/<%=user.mode%>/password/<%=user.id%>">Change Password</a>
+            <a href="/<%=user.mode%>/delete/<%=user.id%>">Delete Account</a>
+          </div>
+        </div>
+      </li>
+      <li><a href="/logout">Log Out</a></li>
+      ​
+      <% } else { %>
+        <li><a href="/student/login">Log In</a></li>
+        <% } %>
+  </ul>
+</div>
