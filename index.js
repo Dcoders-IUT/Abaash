@@ -15,7 +15,6 @@ app.set('views', './views')
 app.set('view engine', 'ejs')
 
 // console.log(mlr.test().predict([3, 4]))
-console.log(hash.salt())
 
 async function allFlats() {
     try {

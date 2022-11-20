@@ -108,7 +108,7 @@
   <%- include("../partials/navbar.ejs") %>
 
   <div class="container">
-    <% if(user.id===flat.flatID) { %>
+    <% if(user.id===flat.owner) { %>
       <form method="post">
         <div class="container-xl px-4 mt-4">
           <div class="row">

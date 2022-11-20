@@ -2,7 +2,7 @@ const crypto = require('crypto')
 
 const salt = () => {
     const temp = new Date()
-    const str = `${temp.getUTCFullYear()}-${temp.getUTCMonth()}-${temp.getUTCDate()}T${temp.getUTCHours()}:${temp.getUTCMinutes()}:${temp.getUTCSeconds()}.${temp.getUTCMilliseconds()}`
+    const str = `${temp.getUTCFullYear()}-${temp.getUTCMonth()+1}-${temp.getUTCDate()}T${temp.getUTCHours()}:${temp.getUTCMinutes()}:${temp.getUTCSeconds()}.${temp.getUTCMilliseconds()}`
 
     return str
 }
