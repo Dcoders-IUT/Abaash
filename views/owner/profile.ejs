@@ -12,56 +12,55 @@
 
 <body>
   <%- include("../partials/navbar.ejs") %>
-  <a href="../..">Home</a>
-  <div class="container">
-    <div class="blue-container">
-      <div class="profile">
-        <img class="owner-img" src="<%= photo? `../img/${photo}` : " http://bootdey.com/img/Content/avatar/avatar1.png"
-          %>"
-        class="rounded-circle"
-        width="150"
-        />
-        <% if(profileUser) { %>
-          <h2>
-            <%=name%>
-          </h2>
-          <h4>@<%=username%>
-          </h4>
-          <% if(user.id===profileUser) { %>
-            <div class="buttons">
-              <a href="../../flat/register">
-                <button class="button-3">
-                  <strong class="fas fa-plus"></strong>
-                  Add Flat
-                </button></a>
-              <a href="../edit/<%= profileUser %> ">
-                <button class="button-3">
-                  <i class="fas fa-edit"></i> Edit Profile
-                </button></a>
-            </div>
-            <% } %>
-      </div>
-
-      <% if (profile.description) { %>
-        <div class="details">
-          <p>
-            <%=profile.description %>
-          </p>
-        </div>
-        <% } %>
-
-          <div class="lol" style="margin-left:33vw">
-            <div class="upper-layer">
-              <div class="all-flats">
-                <%- include ("../partials/showOwnerAllFlats.ejs", {misc, flatList}) %>
+    <a href="../..">Home</a>
+    <div class="container">
+      <div class="blue-container">
+        <div class="profile">
+          <img class="owner-img" src="<%= photo? `../img/${photo}` : "http://bootdey.com/img/Content/avatar/avatar1.png" %>"
+          class="rounded-circle"
+          width="200"
+          />
+          <% if(profileUser) { %>
+            <h2>
+              <%=name%>
+            </h2>
+            <h4>@<%=username%>
+            </h4>
+            <% if(user.id===profileUser) { %>
+              <div class="buttons">
+                <a href="../../flat/register">
+                  <button class="button-3">
+                    <strong class="fas fa-plus"></strong>
+                    Add Flat
+                  </button></a>
+                <a href="../edit/<%= profileUser %> ">
+                  <button class="button-3">
+                    <i class="fas fa-edit"></i> Edit Profile
+                  </button></a>
               </div>
-              <%} else { %>
-                <p>USER NOT FOUND!</p>
-                <% } %>
-            </div>
+              <% } %>
+        </div>
+
+        <% if (profile.description) { %>
+          <div class="details">
+            <p>
+              <%=profile.description %>
+            </p>
           </div>
-    </div>
-    <%#- include("../partials/footer.ejs") %>
+          <% } %>
+
+            <div class="lol" style="margin-left:33vw">
+              <div class="upper-layer">
+                <div class="all-flats">
+                  <%- include ("../partials/showOwnerAllFlats.ejs", {misc, flatList}) %>
+                </div>
+                <%} else { %>
+                  <p>USER NOT FOUND!</p>
+                  <% } %>
+              </div>
+            </div>
+      </div>
+      <%#- include("../partials/footer.ejs") %>
 </body>
 
 </html>

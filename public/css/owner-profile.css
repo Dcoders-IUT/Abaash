@@ -145,6 +145,8 @@ a {
 
 .owner-img {
   border-radius: 50%;
+  max-width: 250px;
+  max-height: 250px;
 }
 
 .container {
