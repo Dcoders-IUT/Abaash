@@ -48,6 +48,5 @@
 * Owner Description during register/edit
 * Males can see female flats
 
-## Decisions:
-* Owner Profile Button Location
-* Description vs Message
+## Suggestion
+* Adding Background behind flats in homepage
