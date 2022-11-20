@@ -28,6 +28,7 @@
 </head>
 
 <body>
+  <%- include("../partials/navbar.ejs") %>
   <% if(user.id===flat.owner) { %>
     <div class="container">
       <form id="register" method="post" enctype="multipart/form-data">
@@ -120,6 +121,7 @@
     <% } else { %>
       <p>USER NOT FOUND!</p>
       <% } %>
+  <%#- include("../partials/footer.ejs") %>
 </body>
 
 </html>
