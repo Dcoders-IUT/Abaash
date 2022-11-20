@@ -28,11 +28,12 @@
 
 ## Page Redesigns:
 * Student Profile
+* Flat Profile
 * New Flat
+* Flat Edit
 * Flat Cards (Description)
 * Send Flat Request (Flat/Request)
 * View Requests (Owner/Requests)
-* Flat Edit
 
 ## Bugs:
 * Lift/Generator Button
