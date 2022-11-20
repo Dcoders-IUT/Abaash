@@ -3,7 +3,7 @@
 ## New Features:
 * Search by Coordinates             ->100
 * Photo Gallery for Flats           ->100
-* Change Password
+* ~~Change Password~~
 * Delete Stuff                      ->100
 * Remove NID
 * Verification
