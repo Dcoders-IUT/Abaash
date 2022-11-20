@@ -128,7 +128,7 @@ html {
 /**
  * A very simple reset that sits on top of Normalize.css.
  */
-body,
+/* body,
 h1,
 h2,
 h3,
@@ -148,15 +148,15 @@ fieldset,
 legend {
   margin: 0;
   padding: 0;
-}
+} */
 
 /**
  * Remove trailing margins from nested lists.
  */
-li>ol,
+/* li>ol,
 li>ul {
   margin-bottom: 0;
-}
+} */
 
 /**
  * Remove default table spacing.
@@ -181,6 +181,7 @@ button {
   background: none;
   border: none;
   font-family: inherit;
+  cursor: pointer;
 }
 
 /* ==========================================================================
@@ -192,13 +193,13 @@ button {
   height: 100vh;
 }
 
-body {
+.body {
   font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
   font-weight: 400;
   font-size: 14px;
 }
 
-h1,
+/* h1,
 h2,
 h3,
 h4,
@@ -229,14 +230,14 @@ h5 {
 
 h6 {
   font-size: 13px;
-}
+} */
 
-img {
+/* img {
   max-width: 100%;
   height: auto;
-}
+} */
 
-a {
+/* a {
   display: inline-block;
   text-decoration: none;
   -webkit-transition: all 0.4s ease;
@@ -259,7 +260,7 @@ a:hover {
 
 a:active {
   text-decoration: none;
-}
+} */
 
 /* ==========================================================================
    #BACKGROUND
@@ -565,10 +566,6 @@ input:disabled {
 
 textarea {
   resize: none;
-}
-
-button {
-  cursor: pointer;
 }
 
 .input-group {
