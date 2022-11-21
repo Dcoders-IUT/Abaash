@@ -13,14 +13,12 @@
   <link rel="stylesheet" href="/css/flat-register.css" type="text/css" />
   <title>New Flat</title>
   <style>
-    .container{
-      margin-top: 5%;
-    }
+    
   </style>
 </head>
 
 <body>
-  <%- include("../partials/navbar.ejs") %>
+  <%#- include("../partials/navbar.ejs") %>
 
   <!-- bootstrap start -->
   <div class="container">
@@ -89,14 +87,13 @@
                                       <% } %>
                                   </select>
                               </div>
-                            
                           </div>
 
                           <div class="row gx-3 mb-3">
                             <!-- Form Group (phone number)-->
                             <div class="col-md-6">
                               <label class="small mb-1" >Lift</label>
-                              <input  type="checkbox" name="generator" />
+                              <input  type="checkbox" name="lift" />
                             </div>
                             <!-- Form Group (birthday)-->
                             <div class="col-md-6">
@@ -105,34 +102,8 @@
                             </div>
                         </div>
 
-                            <div class="row gx-3 mb-3">
-                              <!-- Form Group (phone number)-->
-                              <div class="col-md-6">
-                                <label class="small mb-1" >Latitude</label>
-                                <input class="form-control" type="text" name="x" id="x" placeholder="x" />
-                              </div>
-                              <!-- Form Group (birthday)-->
-                              <div class="col-md-6">
-                                  <label class="small mb-1" >Longitude</label>
-                                  <input class="form-control"  type="text" name="y" id="y" placeholder="y" />
-                              </div>
-                          </div>
-                          <button class="btn btn-info" onclick="getlocation()" type="button" style="background-color:#2dc653; border: none; ">
-                            Set Current Location
-                          </button>
-                          <button class="btn btn-info" type="button" style="background-color:#2dc653; border: none; ">Set From Map</button>
-                          <script>
-                            var x = document.getElementById("location");
-                            function getlocation() {
-                              xy = navigator.geolocation.getCurrentPosition(setXY);
-                              console.log(xy);
-                            }
-                
-                            function setXY(location) {
-                              document.getElementById("x").value = location.coords.latitude;
-                              document.getElementById("y").value = location.coords.longitude;
-                            }
-                          </script>
+                           
+                          
 
                             <div class="row gx-3 mb-3">
                               <!-- Form Group (phone number)-->
@@ -200,9 +171,13 @@
                     </div>
                     <!-- <button class="btn btn-primary" type="button">Save changes</button> -->
                 </div>
+                </div>
+                </div>
+                </div>
                 <% } else { %>
                   <p>USER NOT FOUND!</p>
                   <% } %>
+  </div>
   <!-- bootstrap end -->
 
   

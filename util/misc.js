@@ -43,7 +43,7 @@ obj.academicInfo = (studentID) => {
     temp = Math.floor((studentID%100000)/1000)
     let dept;
     if(temp === 11) dept = "Mechanical Engineering"
-    if(temp === 41) dept = "Computer Science and Engineering"
+    if(temp === 41) dept = "CSE"
     if(temp === 42) dept = "Software Engineering"
 
     temp = Math.floor((studentID%1000)/100)
