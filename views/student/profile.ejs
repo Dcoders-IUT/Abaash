@@ -25,11 +25,11 @@
     .profile {
       margin-left: 9%;
       margin-right: 7%;
-      margin-top: 4%;
+      margin-top: 8%;
       padding-top: 4%;
       box-shadow: 0 5px 20px -6px #000;
       border-radius: 8px;
-      height: 82vh;
+      height: 91vh;
       width: 40vw;
       text-align: center;
       display: flex;
@@ -57,7 +57,7 @@
 </head>
 
 <body>
-  <%#- include("../partials/navbar.ejs") %>
+  <%- include("../partials/navbar.ejs") %>
   <div class="container">
     <div class="profile">
       <% if(profile.studentID) { %>
@@ -67,7 +67,6 @@
 
           
 
-        <% if(Number(user.id)===Number(profile.studentID)) { %>
 
           
           <div class="col-md-10" style="margin-left: 3vw ;">
@@ -93,7 +92,7 @@
                 <hr>
                 <div class="row">
                   <div class="col-sm-3">
-                    <h6 class="mb-0">Department</h6>
+                    <h6 class="mb-0">Dept</h6>
                   </div>
                   <div class="col-sm-9 text-secondary">
                     <%= misc.academicInfo(profile.studentID).dept %>
@@ -132,12 +131,10 @@
                 </div>
               </div>
             </div>
-            <!-- </div> -->
-            <% } %>
-              <% } else { %>
-                <p>USER NOT FOUND!</p>
-                <% } %>
           </div>
+          <% } else { %>
+            <p>USER NOT FOUND!</p>
+            <% } %>
     </div>
 </body>
 
