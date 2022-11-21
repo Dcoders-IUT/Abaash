@@ -101,6 +101,22 @@
       margin-right: 1rem;
 
     }
+
+    ::placeholder{
+      padding: 10px;
+    }
+
+    input{
+      margin-bottom: 10px;
+    }
+
+    .container{
+      margin-left: 23vw;
+    }
+
+    .buttons{
+      margin-top:10px;
+    }
   </style>
 </head>
 
@@ -120,8 +136,10 @@
                       <p><a href="/<%=user.mode%>/<%=user.id%>"><%=profile.name%></a>, 
                         Are you sure you want to delete your account?</p>
                       <input type="password" name="pass" placeholder="Password" /> <br/>
-                      <button class="btn btn-info ">Confirm</button>
-                      <a class="btn btn-info " href="../profile/<%=profile.username%>">Cancel</a>
+                      <div class="buttons">
+                        <button class="btn btn-info ">Confirm</button>
+                        <a class="btn btn-info " href="../profile/<%=profile.username%>">Cancel</a>
+                      </div>
                     </div>
                   </form>
                 </div>
