@@ -30,12 +30,6 @@
     <div class="form-container sign-up-container">
       <form name="SReg" action="register" method="post" onsubmit="return validateRegisterStudent()">
         <h1 style="line-height: 0.9;margin-top: 20px;">Create Account</h1>
-        <div class="social-container" style="margin:10px 0px">
-          <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-          <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-        </div>
-        <!-- <span style="color:grey">Or use your email for registration</span> -->
         <input type="text" name="name" placeholder="Name" /><span class="hide">Provide a valid fullname</span><span>
           <label style="color:rgb(157, 157, 157); font-weight:700;">Gender:&emsp;&emsp;&emsp;&emsp;</label>
           <select name="gender">
@@ -71,16 +65,10 @@
     <div class="form-container sign-in-container">
       <form name="Slog" action="login" method="post">
         <h1>Sign in</h1>
-        <div class="social-container">
-          <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-          <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-        </div>
-        <span>or use your account</span>
         <input type="text" name="id" placeholder="Student ID or E-mail or Phone Number" />
         <input type="password" name="password" placeholder="Password" />
         <input type="hidden" name="mode" value="student" />
-        <a href="#">Forgot your password?</a>
+        <!-- <a href="#">Forgot your password?</a> -->
         <button>Sign In</button>
       </form>
     </div>
