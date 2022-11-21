@@ -65,36 +65,11 @@
           src="<%= profile.photo? `../img/${profile.photo}` : 'https://bootdey.com/img/Content/avatar/avatar7.png' %>"
           class="rounded-circle" width="150" />
 
-          <div class="row">
-            <div class="col-sm-3">
-              <h6 class="mb-0">Batch</h6>
-            </div>
-            <div class="col-sm-9 text-secondary">
-              <%= misc.academicInfo(profile.studentID).batch %>
-            </div>
-          </div>
-          <hr>
-          <div class="row">
-            <div class="col-sm-3">
-              <h6 class="mb-0">Department</h6>
-            </div>
-            <div class="col-sm-9 text-secondary">
-              <%= misc.academicInfo(profile.studentID).dept %>
-            </div>
-          </div>
-          <hr>
-          <div class="row">
-            <div class="col-sm-3">
-              <h6 class="mb-0">Section</h6>
-            </div>
-            <div class="col-sm-9 text-secondary">
-              <%= misc.academicInfo(profile.studentID).section %>
-            </div>
-          </div>
-          <hr>
+          
 
         <% if(Number(user.id)===Number(profile.studentID)) { %>
 
+          
           <div class="col-md-10" style="margin-left: 3vw ;">
             <div class="card mb-3" style="background-color:#F1F1E6 ;">
               <div class="card-body" style="background-color:#F1F1E6 ;">
@@ -109,10 +84,28 @@
                 <hr>
                 <div class="row">
                   <div class="col-sm-3">
-                    <h6 class="mb-0">Email</h6>
+                    <h6 class="mb-0">Batch</h6>
                   </div>
                   <div class="col-sm-9 text-secondary">
-                    fip@jukmuh.al
+                    <%= misc.academicInfo(profile.studentID).batch %>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">Department</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <%= misc.academicInfo(profile.studentID).dept %>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">Section</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <%= misc.academicInfo(profile.studentID).section %>
                   </div>
                 </div>
                 <hr>
