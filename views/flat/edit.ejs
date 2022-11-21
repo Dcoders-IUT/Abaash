@@ -5,122 +5,176 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/x-icon" href="/images/favicon.svg">
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
+  <link rel="stylesheet" href="/css/flat-register.css" type="text/css" />
   <!-- <link rel="stylesheet" href="/css/edit.css" type="text/css" /> -->
   <title>Edit Flat</title>
-  <!-- <style>
-      *{
-          margin: 0;
-          padding:0;
-          box-sizing: border-box;
-      }
-
-      .container{
-          width: 100vw;
-          height: 100vh;
-          background-image:  linear-gradient(110deg,
-              rgba(255,255,255,0.7) 50%,
-              transparent 50%),
-           url("/images/home5.jpg");
-          background-size: 100% 100%;
-      }
-
-  </style> -->
 </head>
 
 <body>
-  <%- include("../partials/navbar.ejs") %>
-  <% if(user.id===flat.owner) { %>
-    <div class="container">
-      <form id="register" method="post" enctype="multipart/form-data">
-        <h1>Edit Flat</h1>
+  <%#- include("../partials/navbar.ejs") %>
+  <div class="container">
+    <% if(user.id===flat.owner) { %>
+      <div class="container-xl px-4 mt-4">
+        <!-- Account page navigation-->
+        <hr class="mt-0 mb-4">
+        <div class="row">
+          <div class="col-xl-8">
+              <!-- Account details card-->
+              <div class="card mb-4">
+                  <div class="card-header">Edit Flat</div>
+                  <div class="card-body">
+                    <form id="register" method="post" enctype="multipart/form-data">
+
+        
+          
+         
+          
+         
+          <div class="mb-3">
+            <label class="small mb-1" >Flat Name</label>
+            <input class="form-control"   input type="text" name="name" value="<%= flat.name %>" placeholder="Name" />
+        </div>
+        <div class="mb-3">
+            <label class="small mb-1" >Address</label>
+            <input class="form-control"  input type="text" name="address" value="<%= flat.address %>" placeholder="Address" />
+        </div>
+        
+        <div class="mb-3">
+            <label class="small mb-1" >Description</label>
+            <input class="form-control" type="text" name="description" value=<%=flat.description %> placeholder="Description about the Flat" />
+        </div>
+          
+         
+        </form>
+  
+  
+  
+        <div class="row gx-3 mb-3">
+          <!-- Form Group (phone number)-->
+          <div class="col-md-6">
+            <label class="small mb-1" >Rent</label>
+            <input class="form-control" type="number" name="rent" value="<%=flat.rent %>" placeholder="Rent" />
+          </div>
+          <!-- Form Group (birthday)-->
+          <div class="col-md-6">
+              <label class="small mb-1" >Message</label>
+              <input class="form-control"  type="text" name="msg" value="<%=flat.message %>" placeholder="Message For The Customer" />
+          </div>
+      </div>
+  
+        <div class="row gx-3 mb-3">
+          <!-- Form Group (phone number)-->
+          <div class="col-md-6">
+            <label class="small mb-1" >Gender</label>
+            <select name="gender">
+              <% misc.globalConst.flatGenderList.forEach((gender)=> { %>
+              <option value="<%=gender.value%>" <%=flat.gender===gender.value? 'selected' : '' %>>
+                <%= gender.display %>
+              </option>
+              <% }) %>
+            </select>
+          </div>
+          <!-- Form Group (birthday)-->
+          <div class="col-md-6">
+              <label class="small mb-1" >Level</label>
+              <select name="level">
+                <% for(let i=1; i<=20; i++) { %>
+                  <option value="<%=i%>" <%=i===flat.level? 'selected' : '' %> ><%=i%>
+                  </option>
+                  <% } %>
+              </select>
+          </div>
+      </div>
+  
+         
+        <div class="row gx-3 mb-3">
+          <div class="col-md-6">
+            <label class="small mb-1" >Lift</label>
+            <input type="checkbox" name="lift" <%=flat.lift> 0? 'checked': '' %> />
+          </div>
+          <div class="col-md-6">
+              <label class="small mb-1" >Generator</label>
+              <input  type="checkbox" name="generator" />
+          </div>
+      </div>
+         
+          <div class="row gx-3 mb-3">
+            <div class="col-md-6">
+              <label class="small mb-1" >Bedroom</label>
+              <input class="form-control" input type="number" name="bed" value="<%=rooms.bed%>" placeholder="Bedroom" form="register" />
+            </div>
+            <div class="col-md-6">
+                <label class="small mb-1" >Dining Room</label>
+                <input class="form-control"  type="number" name="din" value="<%=rooms.din%>" placeholder="Dining Room" form="register" />
+            </div>
+        </div>
+          
+          <div class="row gx-3 mb-3">
+            <div class="col-md-6">
+              <label class="small mb-1" >Living Room</label>
+              <input class="form-control" type="number" name="liv" placeholder="Living Room" value="<%=rooms.liv%>" form="register" />
+            </div>
+            <div class="col-md-6">
+                <label class="small mb-1" >Kitchen</label>
+                <input class="form-control"  type="number" name="kit" placeholder="Kitchen" value="<%=rooms.kit%>" form="register" />
+            </div>
+        </div>
+         
+          <div class="row gx-3 mb-3">
+            <div class="col-md-6">
+              <label class="small mb-1" for="inputPhone">Bathroom</label>
+              <input class="form-control" type="number" name="bath" placeholder="Bathroom" value="<%=rooms.bath%>" form="register" />
+            </div>
+            <div class="col-md-6">
+                <label class="small mb-1" for="nid">Balcony</label>
+                <input class="form-control"  type="number" name="balk" placeholder="Balcony" value="<%=rooms.balk%>" form="register" />
+            </div>
+        </div>
+  
+          <div class="row gx-3 mb-3">
+            <div class="col-md-6">
+              <label class="small mb-1" >Area</label>
+              <input class="form-control" type="number" name="area" placeholder="Area in square feet" value="<%=flat.area %>" />
+            </div>
+            <div class="col-md-6">
+                <label class="small mb-1" for="nid">Extra Room</label>
+                <input class="form-control"  type="number" name="xtra" placeholder="Extra Room" value="<%=rooms.xtra%>" form="register" />
+            </div>
+        </div>
+  
         <div>
           <label>Photo (Size Limit = 10 MB)</label>
-          <input name="photo" type="file" accept="image/*">
+          <input name="photo" type="file" accept="image/png, image/jpg">
         </div>
-        <input type="text" name="name" placeholder="Name" value="<%= flat.name %>" />
-        <br />
-        <input type="text" name="address" placeholder="Address" value="<%= flat.address %>" />
-        <br />
-        <div class="edit">
-          <input type="text" name="description" placeholder="Description" value=<%=flat.description %> />
-          <br />
-        </div>
-        <label>Gender</label>
-        <select name="gender">
-          <% misc.globalConst.flatGenderList.forEach((gender)=> { %>
-            <option value="<%=gender.value%>" <%=flat.gender===gender.value? 'selected' : '' %>>
-              <%= gender.display %>
-            </option>
-            <% }) %>
-        </select>
-        <br />
-        <label>Level</label>
-        <select name="level">
-          <% for(let i=1; i<=20; i++) { %>
-            <option value="<%=i%>" <%=i===flat.level? 'selected' : '' %> ><%=i%>
-            </option>
-            <% } %>
-        </select>
-        <br />
-        <div class="edit">
-          <input type="number" name="area" placeholder="Area in square feet" value="<%=flat.area %>" />
-        </div>
-        <label>Lift</label>
-        <input type="checkbox" name="lift" <%=flat.lift> 0? 'checked': '' %> />
-        <label>Generator</label>
-        <input type="checkbox" name="generator" <%=flat.generator> 0? 'checked': '' %> /> <br />
-        <div class="edit">
-          <input type="number" name="rent" placeholder="Rent" value="<%=flat.rent %>" /> <br />
-        </div>
-        <div class="edit">
-          <input type="text" name="msg" placeholder="Message for the Customer" value="<%=flat.message %>" />
-          <br />
-        </div>
-        <a href="../../owner/profile/<%=flat.owner%>">Owner: <%=owner.name%></a>
-        <br />
-        <button>Save</button>
-      </form>
-      <button><a href="../profile/<%=flat.flatID%>">Cancel</a></button>
 
-      <!-- Rooms Added 9/11/2022 -->
-      <div>
-        <div class="edit">
-          <input type="number" name="bed" placeholder="Bedroom" value="<%=rooms.bed%>" form="register" />
+        <div class="owner">
+          <a href="../../owner/profile/<%=flat.owner%>">Owner: <%=owner.name%></a>
+          <input type="hidden" name="owner" value="<%=owner.username%>" />
         </div>
-        <br />
-        <div class="edit">
-          <input type="number" name="din" placeholder="Dining Room" value="<%=rooms.din%>" form="register" />
-        </div>
-        <br />
-        <div class="edit">
-          <input type="number" name="liv" placeholder="Living Room" value="<%=rooms.liv%>" form="register" />
-        </div>
-        <br />
-        <div class="edit">
-          <input type="number" name="kit" placeholder="Kitchen" value="<%=rooms.kit%>" form="register" />
-        </div>
-        <br />
-        <div class="edit">
-          <input type="number" name="bath" placeholder="Bathroom" value="<%=rooms.bath%>" form="register" />
-        </div>
-        <br />
-        <div class="edit">
-          <input type="number" name="balk" placeholder="Balcony" value="<%=rooms.balk%>" form="register" />
-        </div>
-        <br />
-        <div class="edit">
-          <input type="number" name="xtra" placeholder="Extra Room" value="<%=rooms.xtra%>" form="register" />
-        </div>
-        <br />
-      </div>
-      <!-- The End of Rooms -->
+  
+        <!-- Save changes button-->
+        <div class="row">
+          <button class="btn btn-info ">Save changes</button>
+          <a class="btn btn-info " href="../profile/<%=flat.flatID%>">Cancel</a>
     </div>
-
-
-
-    <% } else { %>
-      <p>USER NOT FOUND!</p>
-      <% } %>
+    
+        <!-- The End of Rooms -->
+      </form>
+    </div>
+    <!-- <button class="btn btn-primary" type="button">Save changes</button> -->
+</div>
+</div>
+</div>
+</div>
+      <% } else { %>
+        <p>USER NOT FOUND!</p>
+        <% } %>
+  </div>
+  
   <%#- include("../partials/footer.ejs") %>
 </body>
 
