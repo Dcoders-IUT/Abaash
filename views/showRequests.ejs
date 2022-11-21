@@ -30,6 +30,9 @@
       /* display: flex;
           align-items: center; */
     }
+    a{
+      text-decoration: none;
+    }
 
     .requests{
       margin-left: 2%;
@@ -70,13 +73,13 @@
         <h1>Requests</h1>
         <table border="1">
           <tr>
-            <td align="center">Student</td>
-            <td align="center">Flat</td>
-            <td align="center">Request Date</td>
-            <td align="center">Phone Number</td>
-            <td align="center">E-mail</td>
-            <td align="center">Message</td>
-            <td align="center" colspan="2">Action</td>
+            <td align="center"><h3>Student</h3></td>
+            <td align="center"><h3>Flat</h3> </td>
+            <td align="center"><h3>Request Date</h3> </td>
+            <td align="center"><h3>Phone Number</h3> </td>
+            <td align="center"><h3>E-mail</h3> </td>
+            <td align="center"><h3>Message</h3> </td>
+            <td align="center" colspan="2"><h3>Action</h3> </td>
           </tr>
           <% flatRequestList.forEach(request=> { %>
             <tr>
@@ -90,7 +93,7 @@
                 <%= request.date %>
               </td>
               <td>
-                <%= request.student.phone %>
+                0<%= request.student.phone %>
               </td>
               <td>
                 <%= request.student.email %>
@@ -108,7 +111,7 @@
               <% } else { %>
                 <td>
                   <a href="/flat/request/<%=request.flat.flatID %>">
-                    <button>Change Message</button>
+                    <button class="button-33">Change Message</button>
                   </a>
                 </td>
               <% } %>

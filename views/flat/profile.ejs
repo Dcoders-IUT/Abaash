@@ -23,6 +23,10 @@
       font-family: "Montserrat", sans-serif;
     }
 
+    body{
+      padding-bottom: 2%;
+    }
+
     #mapid {
       width: 25%;
       height: 350px;
@@ -69,7 +73,7 @@
     }
 
     .attribute {
-      width: 88px;
+      width: 114px;
       position: absolute;
     }
 
@@ -144,6 +148,14 @@
     .bb:active {
       background-color: #2c379d;
       box-shadow: rgba(20, 70, 32, 0.2) 0 1px 0 inset;
+    }
+
+    img{
+      width: 40%;
+    }
+    .image{
+      margin-top:5vh ;
+      margin-left: 25vw;
     }
   </style>
 </head>
@@ -255,12 +267,10 @@
             </div>
           <% } %>
 
-          <% if (flat.photo) { %>
-            <div class="form-item">
-              <span class="val"><img src="../img/<%=flat.photo%>"></span>
-            </div>
-          <% } %>
+          
       </div>
+
+      
 
       <% if(user.id===flat.owner) { %>
 
@@ -283,6 +293,8 @@
 
       <!-- map -->
       <div class="map" id="mapid"></div>
+      
+      
 
       <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
         integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
@@ -314,6 +326,14 @@
         // add marker to map
         marker.addTo(map);
       </script>
+    </div>
+
+    <div class="image">
+      <% if (flat.photo) { %>
+        <div class="form-item">
+          <span class="val"><img src="../img/<%=flat.photo%>"></span>
+        </div>
+      <% } %>
     </div>
     <%#- include("../partials/footer.ejs") %>
 </body>
