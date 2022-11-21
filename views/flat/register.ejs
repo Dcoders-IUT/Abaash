@@ -75,6 +75,27 @@
                               </div>
                           </div>
 
+                          <span>
+                            <input type="text" name="x" id="x" placeholder="Latitude" />
+                            <input type="text" name="y" id="y" placeholder="Longitude" />
+                            <br/>
+                            <button onclick="getlocation()" type="button" submit="false">
+                              Set Current Location
+                            </button>
+                            <script>
+                              var x = document.getElementById("location");
+                              function getlocation() {
+                                xy = navigator.geolocation.getCurrentPosition(setXY);
+                                console.log(xy);
+                              }
+                  
+                              function setXY(location) {
+                                document.getElementById("x").value = location.coords.latitude;
+                                document.getElementById("y").value = location.coords.longitude;
+                              }
+                            </script>
+                          </span>
+
                           <div class="row gx-3 mb-3">
                             <!-- Form Group (phone number)-->
                             <div class="col-md-6">

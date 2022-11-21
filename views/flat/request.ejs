@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
 
+<% 
+console.log(flat);
+console.log(user);
+%> 
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,7 +16,7 @@
 
 <body>
   <%- include("../partials/navbar.ejs") %>
-    <% if(flat.rent>0) { %>
+    <% if(flat.rent>0 && (flat.gender === user.gender || flat.gender === 2)) { %>
       <div class="wrapper">
         <div class="container">
           <form method="post">
@@ -43,9 +48,15 @@
           <button class="cancel"><a href="../profile/<%=flat.flatID%>">Cancel</a></button>
         </div>
       </div>
-      <% } else { %>
-        <p>FLAT NOT FOUND!</p>
-        <% } %>
+    <% } else if (flat.gender !== user.gender && flat.gender !== 2) { %>
+      <div class="wrapper">
+        <div class="container">
+          <p>YOU ARE NOT ELIGIBLE FOR THIS FLAT!</p>
+        </div>
+      </div>
+    <% } else { %>
+      <p>FLAT NOT FOUND!</p>
+    <% } %>
           <%#- include("../partials/footer.ejs") %>
 </body>
 

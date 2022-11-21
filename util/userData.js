@@ -28,8 +28,29 @@ obj.nameOfUser = async() => {
     }
 }
 
+obj.gender = async() => {
+    if (obj.missing()) return null
+
+    const mode = obj.mode()
+    const id = obj.id()
+    
+    try{
+        if(mode==='student')
+        {
+            const record = await database.getUnique(`SELECT gender FROM student WHERE studentID=${id}`)
+            return record.gender
+        }
+
+        return null
+    } catch(err)
+    {
+        console.log(err)
+        return null
+    }
+}
+
 obj.allInfo = async() => {
-    return {id: obj.id(), mode: obj.mode(), name: await obj.nameOfUser()}
+    return {id: obj.id(), mode: obj.mode(), name: await obj.nameOfUser(), gender: await obj.gender()}
 }
 
 module.exports = obj
