@@ -5,45 +5,48 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/x-icon" href="/images/favicon.svg">
-  <link rel="stylesheet" href="/css/edit.css" type="text/css" />
+  <link rel="stylesheet" href="/css/request.css" type="text/css" />
   <title>Flat Reservation Request </title>
 </head>
 
 <body>
   <%- include("../partials/navbar.ejs") %>
-  <% if(flat.rent>0) { %>
-    <div class="container">
-      <form method="post">
-        <input type="hidden" name="studentID" value="<%=user.id%>" />
-        <h1>Flat Request for <a href="/flat/profile/<%=flat.id %>">
-            <%=flat.name %>
-          </a> </h1>
-        <br />
-        <h1>Message From <a href="/owner/profile/<%=owner.username %>">
-            <%=owner.name %>
-          </a>
-        </h1>
-          <h2>
-            <%=flat.message %>
-          </h2>
-        <div class="edit">
-          <input type="text" name="msg" placeholder="Request Message" />
+    <% if(flat.rent>0) { %>
+      <div class="wrapper">
+        <div class="container">
+          <form method="post">
+            <input type="hidden" name="studentID" value="<%=user.id%>" />
+            <h1>Flat Request for <a href="/flat/profile/<%=flat.id %>">
+                <%=flat.name %>
+              </a> </h1>
+            <br />
+            <h2>Message From <a href="/owner/profile/<%=owner.username %>">
+                <%=owner.name %>
+              </a>
+            </h2>
+            <p>
+              <%=flat.message %>
+            </p>
+            <div class="edit">
+              <input type="text" name="msg" placeholder="Request Message" />
+              <br />
+            </div>
+            <br />
+            <h2>Your contact info that will be sent to the owner</h2>
+            <h4>Phone Number: <%=phone%>
+            </h4>
+            <h4>Email Address: <%=email%>
+            </h4>
+            <button class="req">Send Request</button>
+          </form>
           <br />
+          <button class="cancel"><a href="../profile/<%=flat.flatID%>">Cancel</a></button>
         </div>
-        <h1>Contact Info</h1>
-          <h2>Phone Number: <%=phone%>
-          </h2>
-          <h2>Email Address: <%=email%>
-          </h2>
-        <button>Send Request</button>
-      </form>
-      <button><a href="../profile/<%=flat.flatID%>">Cancel</a></button>
-    </div>
-
-    <% } else { %>
-      <p>FLAT NOT FOUND!</p>
-      <% } %>
-  <%#- include("../partials/footer.ejs") %>
+      </div>
+      <% } else { %>
+        <p>FLAT NOT FOUND!</p>
+        <% } %>
+          <%#- include("../partials/footer.ejs") %>
 </body>
 
 </html>
