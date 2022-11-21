@@ -33,7 +33,7 @@
           
          
           
-         
+  
           <div class="mb-3">
             <label class="small mb-1" >Flat Name</label>
             <input class="form-control"   input type="text" name="name" value="<%= flat.name %>" placeholder="Name" />
@@ -50,21 +50,6 @@
           
          
         </form>
-  
-  
-  
-        <div class="row gx-3 mb-3">
-          <!-- Form Group (phone number)-->
-          <div class="col-md-6">
-            <label class="small mb-1" >Rent</label>
-            <input class="form-control" type="number" name="rent" value="<%=flat.rent %>" placeholder="Rent" />
-          </div>
-          <!-- Form Group (birthday)-->
-          <div class="col-md-6">
-              <label class="small mb-1" >Message</label>
-              <input class="form-control"  type="text" name="msg" value="<%=flat.message %>" placeholder="Message For The Customer" />
-          </div>
-      </div>
   
         <div class="row gx-3 mb-3">
           <!-- Form Group (phone number)-->
@@ -146,6 +131,21 @@
             </div>
         </div>
   
+  
+  
+        <div class="row gx-3 mb-3">
+          <!-- Form Group (phone number)-->
+          <div class="col-md-6">
+            <label class="small mb-1" >Rent</label>
+            <input class="form-control" type="number" name="rent" value="<%=flat.rent %>" placeholder="Rent" />
+          </div>
+          <!-- Form Group (birthday)-->
+          <div class="col-md-6">
+              <label class="small mb-1" >Message</label>
+              <input class="form-control"  type="text" name="msg" value="<%=flat.message %>" placeholder="Message For The Customer" />
+          </div>
+      </div>
+  
         <div>
           <label>Photo (Size Limit = 10 MB)</label>
           <input name="photo" type="file" accept="image/png, image/jpg">
@@ -158,7 +158,7 @@
   
         <!-- Save changes button-->
         <div class="row">
-          <button class="btn btn-info ">Save changes</button>
+          <button type="submit" class="btn btn-info ">Save Changes</button>
           <a class="btn btn-info " href="../profile/<%=flat.flatID%>">Cancel</a>
     </div>
     

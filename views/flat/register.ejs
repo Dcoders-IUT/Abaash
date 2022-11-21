@@ -50,20 +50,6 @@
                                 <label class="small mb-1" >Description</label>
                                 <input class="form-control" type="text" name="description" placeholder="Description about the Flat" />
                             </div>
-
-                            
-                            <div class="row gx-3 mb-3">
-                              <!-- Form Group (phone number)-->
-                              <div class="col-md-6">
-                                <label class="small mb-1" >Rent</label>
-                                <input class="form-control" type="number" name="rent" placeholder="Rent" />
-                              </div>
-                              <!-- Form Group (birthday)-->
-                              <div class="col-md-6">
-                                  <label class="small mb-1" >Message For The Customer</label>
-                                  <input class="form-control"  type="text" name="msg" placeholder="Message" />
-                              </div>
-                          </div>
                             <!-- Form Row-->
 
                             <div class="row gx-3 mb-3">
@@ -185,6 +171,22 @@
                                 <input class="form-control"  type="number" name="xtra" placeholder="Extra Room" form="register" />
                             </div>
                         </div>
+
+                            
+                        <div class="row gx-3 mb-3">
+                          <!-- Form Group (phone number)-->
+                          <div class="col-md-6">
+                            <label class="small mb-1" >Rent</label>
+                            <input class="form-control" type="number" name="rent" placeholder="Rent" />
+                          </div>
+                          <!-- Form Group (birthday)-->
+                          <div class="col-md-6">
+                              <label class="small mb-1" >Message For The Customer</label>
+                              <input class="form-control"  type="text" name="msg" placeholder="Message" />
+                          </div>
+                      </div>
+
+
                         <div class="owner">
                           <a href="../../owner/profile/<%=owner.username%>">Owner: <%=owner.name%></a>
                           <input type="hidden" name="owner" value="<%=owner.username%>" />
