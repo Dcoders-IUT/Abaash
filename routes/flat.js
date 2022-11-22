@@ -118,7 +118,7 @@ app.post('/request/delete', async (req, res) => {
         if (userID !== flat.owner && Number(userID) !== Number(studentID)) throw new Error('USER NOT FOUND!')
         await database.exec(`DELETE FROM flatrequest WHERE studentID=${studentID} AND flatID=${flatID}`)
 
-        res.redirect('../../owner/requests')
+        res.redirect(`../../${userData.mode()}/requests`)
     } catch (err) {
         console.log(err)
         res.redirect('../../')

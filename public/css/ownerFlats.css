@@ -230,6 +230,8 @@ figcaption {
   height: 200px;
   font-size: 14px;
   background-color: white;
+  height: fit-content;
+  /* width:fit-content; */
 }
 
 .card-content p {
