@@ -44,7 +44,7 @@ input::placeholder {
 }
 
 .req {
-    background-color: cyan;
+    background-color:  #29bf12;
     color: white;
     border-radius: 15px;
     height: 60px;
@@ -53,7 +53,7 @@ input::placeholder {
 }
 
 .cancel {
-    background-color: cyan;
+    background-color:  #29bf12;
     color: white;
     border-radius: 15px;
     margin-top: 20px;

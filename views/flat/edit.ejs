@@ -47,9 +47,6 @@
             <label class="small mb-1" >Description</label>
             <input class="form-control" type="text" name="description" value=<%=flat.description %> placeholder="Description about the Flat" />
         </div>
-          
-         
-        </form>
   
         <div class="row gx-3 mb-3">
           <!-- Form Group (phone number)-->
@@ -73,6 +70,7 @@
                   <% } %>
               </select>
           </div>
+
       </div>
   
          
@@ -148,7 +146,7 @@
   
         <div>
           <label>Photo (Size Limit = 10 MB)</label>
-          <input name="photo" type="file" accept="image/png, image/jpg">
+          <input name="photo" type="file" accept="image/*">
         </div>
 
         <div class="owner">
@@ -160,7 +158,7 @@
         <div class="row">
           <button type="submit" class="btn btn-info ">Save Changes</button>
           <a class="btn btn-info " href="../profile/<%=flat.flatID%>">Cancel</a>
-    </div>
+        </div>
     
         <!-- The End of Rooms -->
       </form>

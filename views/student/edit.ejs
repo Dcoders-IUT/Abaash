@@ -165,33 +165,12 @@ body{
                                     value="<%=profile.phone%>">
                                 </div>
                                 <!-- Form Row-->
-                                <div class="row gx-3 mb-3">
-                                    <!-- Form Group (phone number)-->
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" >Gender</label>
-                                        <div class="col-sm-9 text-secondary">
-                                          <select name="gender">
-                                            <% misc.globalConst.genderList.forEach((gender)=> { %>
-                                              <option value="<%=gender.value%>" <%= profile.gender===gender.value? 'selected': '' %>>
-                                                <%= gender.display %>
-                                              </option>
-                                            <% }) %>
-                                          </select>
-                                        </div>
-                                        <!-- <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="555-123-4567"> -->
-                                    </div>
-                                    <!-- Form Group (birthday)-->
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" >Blood Group</label>
-                                        <div class="col-sm-9 text-secondary">
-                                          <select name="blg">
-                                            <% misc.globalConst.bloodgroupList.forEach((blg)=> { %>
-                                              <option value="<%=blg.value%>" <%= profile.bloodgroup===blg.value? 'selected': '' %>> <%= blg.display %> </option>
-                                            <% }) %>
-                                          </select>
-                                        </div>
-                                    </div>
-                                </div>
+
+
+                                
+
+
+
                                 <!-- Save changes button-->
                                 <div class="row">
                                   <button class="btn btn-info ">Save Changes</button>
