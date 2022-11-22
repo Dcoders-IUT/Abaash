@@ -75,13 +75,21 @@
                               </div>
                           </div>
 
-                          <span>
-                            <input type="text" name="x" id="x" placeholder="Latitude" />
-                            <input type="text" name="y" id="y" placeholder="Longitude" />
-                            <br/>
-                            <button onclick="getlocation()" type="button" submit="false">
-                              Set Current Location
-                            </button>
+                          <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <input class="form-control" type="text" name="x" id="x" placeholder="Latitude" />
+                            </div>
+                            <div class="col-md-6">
+                                <input class="form-control" type="text" name="y" id="y" placeholder="Longitude" />
+                            </div>
+                          </div>
+
+                          <div class="mb-3">
+                            <!-- <div class="mb-3"> -->
+                              <button class="btn btn-info" onclick="getlocation()" type="button" submit="false" style="background-color: #29bf12">
+                                Set Current Location
+                              </button>
+                            <!-- </div> -->
                             <script>
                               var x = document.getElementById("location");
                               function getlocation() {
@@ -94,7 +102,7 @@
                                 document.getElementById("y").value = location.coords.longitude;
                               }
                             </script>
-                          </span>
+                          </div>
 
                           <div class="row gx-3 mb-3">
                             <!-- Form Group (phone number)-->
