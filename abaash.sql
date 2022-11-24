@@ -70,10 +70,6 @@ CREATE TABLE IF NOT EXISTS `flatrequest` (
 -- Dumping data for table abaash.flatrequest: ~3 rows (approximately)
 DELETE FROM `flatrequest`;
 /*!40000 ALTER TABLE `flatrequest` DISABLE KEYS */;
-INSERT INTO `flatrequest` (`studentID`, `flatID`, `date`, `message`) VALUES
-	(190041112, 1158151, '2022-11-21T5:7:34.141', 'I am from Chittagong.'),
-	(190041129, 1001734, '2022-10-19T16:50:50.881', 'Hello, My name is Jubayer.'),
-	(190041129, 1003432, '2022-11-21T6:54:59.945', 'fhy5jfu6+6');
 /*!40000 ALTER TABLE `flatrequest` ENABLE KEYS */;
 
 -- Dumping structure for table abaash.owner

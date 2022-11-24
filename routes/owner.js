@@ -1,4 +1,5 @@
 const express = require('express')
+const session = require('express-session')
 const store = require('store')
 const fs = require('fs')
 const multer = require('multer')
@@ -18,6 +19,12 @@ const storage = multer.diskStorage({
     },
 })
 const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } })
+
+app.use(session({
+    secret: 'MemoriesAreMadeOfBliss!',
+    saveUninitialized: true,
+    resave: true
+}))
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -74,11 +81,18 @@ app.route('/login')
     .post(async (req, res) => {
         let { id } = req.body
         const pass = req.body.password
+        let session=req.session
 
         try {
             id = await getUser(id, pass)
             store.set('user', id)
             store.set('mode', req.body.mode)
+
+            session.user=id
+            session.mode=req.body.mode
+
+            // sessionStorage.setItem('user', id)
+            // sessionStorage.setItem('mode', req.body.mode)
         } catch (err) {
             console.log(err)
             res.send(err.message)
@@ -92,6 +106,7 @@ app.route('/login')
 app.route('/register')
     .post(async (req, res) => {
         const temp = req.body
+        const session = req.session
 
         const { name } = temp
         const { username } = temp
@@ -112,6 +127,12 @@ app.route('/register')
             )
         store.set('user', username)
         store.set('mode', req.body.mode)
+
+        session.user=username
+        session.mode=req.body.mode
+
+        // sessionStorage.setItem('user', username)
+        // sessionStorage.setItem('mode', req.body.mode)
 
         res.redirect('../profile')
     })
@@ -342,6 +363,8 @@ app.route('/delete/:id')
 
 app.get('/requests', async (req, res) => {
     const userID = userData.id()
+    const session = req.session
+    console.log(session)
 
     try {
         const requestRecords = await database.get(

@@ -1,4 +1,5 @@
 const express = require('express')
+const session = require('express-session')
 const store = require('store')
 const userData = require('./util/userData')
 const database = require('./util/database')
@@ -8,6 +9,12 @@ const hash = require('./util/hash')
 
 const app = express()
 const port = 3001
+
+app.use(session({
+    secret: 'MemoriesAreMadeOfBliss!',
+    saveUninitialized: true,
+    resave: true
+}))
 
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
@@ -46,7 +53,10 @@ async function searchFlats(address, minLevel, maxLevel, gender, lift, generator,
     }
 }
 
-async function openHomeEJS(res) {
+async function openHomeEJS(req, res) {
+    let session=req.session;
+    console.log(session);
+
     res.render('home', {
         misc,
         user: await userData.allInfo(),
@@ -55,24 +65,34 @@ async function openHomeEJS(res) {
 }
 
 app.route('/')
-    .get(async (req, res) => openHomeEJS(res))
-    .post(async (req, res) => openHomeEJS(res))
+    .get(async (req, res) => openHomeEJS(req, res))
+    .post(async (req, res) => openHomeEJS(req, res))
 
 app.get('/logout', (req, res) => {
     store.remove('user')
     store.remove('mode')
+
+    req.session.destroy();
     res.redirect('/')
 })
 
 app.get('/test1', (req, res) => {
     store.set('user', 'ork')
     store.set('mode', 'owner')
+
+    let session=req.session;
+    session.user='ork'
+    session.mode='owner'
     res.redirect('./')
 })
 
 app.get('/test2', (req, res) => {
     store.set('user', '190041129')
     store.set('mode', 'student')
+
+    let session=req.session;
+    session.user='190041129'
+    session.mode='student'
     res.redirect('./')
 })
 

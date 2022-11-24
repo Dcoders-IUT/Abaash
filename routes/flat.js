@@ -1,4 +1,5 @@
 const express = require('express')
+const session = require('express-session')
 const crypto = require('crypto')
 const fs = require('fs')
 const multer = require('multer')
@@ -18,6 +19,12 @@ const storage = multer.diskStorage({
     },
 })
 const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } })
+
+app.use(session({
+    secret: 'MemoriesAreMadeOfBliss!',
+    saveUninitialized: true,
+    resave: true
+}))
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
