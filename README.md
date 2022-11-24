@@ -4,7 +4,7 @@
 * Search by Coordinates             ->100
 * Photo Gallery for Flats           ->100
 * ~~Change Password~~
-* ~~Delete Stuff  ~~                    ->100
+* ~~Delete Stuff~~
 * Remove NID
 * Verification
 * Account Recovery
@@ -12,8 +12,8 @@
 * Buffering Flats and Requests
 * Error Alert
 * Live Sorting Requests and Flats
-* ~~Extract Info from Student ID ~~     ->100
-* Password Checking for Editing and Deleting Flats
+* ~~Extract Info from Student ID      ->100~~
+* ~~Password Checking for Editing and Deleting Flats~~
 * Validations in Edit Pages
 
 ## Extensions:

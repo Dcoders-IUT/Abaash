@@ -45,7 +45,7 @@
               <div class="name-icon">
                 <span>Level</span>
                 <div class="icon">
-                  <i class="fas fa-bed"></i>
+                  <i class="fas fa-stairs"></i>
                   <span>
                     <%= flat.level %>
                   </span>
@@ -54,7 +54,7 @@
               <div class="name-icon">
                 <span>For</span>
                 <div class="icon">
-                  <i class="fas fa-sink"></i>
+                  <i class="<%= flat.gender? 'fa-solid fa-mars': 'fa-solid fa-venus' %>"></i>
                   <span>
                     <%= misc.flatGenderText(flat.gender) %>
                   </span>
