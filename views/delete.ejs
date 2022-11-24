@@ -122,12 +122,18 @@
 </head>
 
 <body>
-  <%- include("../partials/navbar.ejs") %>
+  <%- include("./partials/navbar.ejs") %>
+
+  <%
+  let profileID = null
+  if(user.mode === 'student') profileID = profile.studentID
+  if(user.mode === 'owner') profileID = profile.username
+  %>
 
   <div class="container">
-    <% if(user.id===profile.username) { %>
+    <% if(user.id===profileID || Number(user.id) === Number(profileID)) { %>
       <form method="post">
-        <input type="hidden" name="profileID" value="<%=profile.username%>" /> <br/>
+        <input type="hidden" name="profileID" value="<%= profileID %>" /> <br/>
         <div class="container-xl px-4 mt-4">
           <div class="row">
             <div class="col-xl-8">
@@ -139,7 +145,7 @@
                       <input type="password" name="pass" placeholder="Password" /> <br/>
                       <div class="buttons">
                         <button class="btn btn-info ">Confirm</button>
-                        <a class="btn btn-info " href="../profile/<%=profile.username%>">Cancel</a>
+                        <a class="btn btn-info " href="../profile/<%=profileID%>">Cancel</a>
                       </div>
                     </div>
                   </form>
@@ -154,7 +160,7 @@
       <p>USER NOT FOUND!</p>
     <% } %>
 
-    <%- include("../partials/footer.ejs") %>
+    <%- include("./partials/footer.ejs") %>
 </body>
 
 </html>

@@ -37,6 +37,7 @@ async function getUser(id, pass) {
 
         return username
     } catch (err) {
+        console.log(err)
         if (err.message === wrongpass) throw err
         throw new Error('USER NOT FOUND!')
     }
@@ -79,6 +80,7 @@ app.route('/login')
             store.set('user', id)
             store.set('mode', req.body.mode)
         } catch (err) {
+            console.log(err)
             res.send(err.message)
             return
         }
@@ -134,6 +136,7 @@ app.get('/profile/:id', async (req, res) => {
             flatList
         })
     } catch (err) {
+        console.log(err)
         res.redirect('/')
         return
     }
@@ -153,6 +156,7 @@ app.get('/edit/:id', async (req, res) => {
     try {
         profile = await database.getUnique(`SELECT * FROM owner WHERE username='${id}'`)
     } catch (err) {
+        console.log(err)
         res.redirect('../../')
         return
     }
@@ -204,6 +208,7 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
 
         res.redirect('../profile')
     } catch (err) {
+        console.log(err)
         res.redirect('../../')
         return
     }
@@ -224,6 +229,7 @@ app.route('/password/:id')
         try {
             profile = await database.getUnique(`SELECT * FROM owner WHERE username='${id}'`)
         } catch (err) {
+            console.log(err)
             res.redirect('../../')
             return
         }
@@ -233,7 +239,7 @@ app.route('/password/:id')
             return
         }
 
-        res.render('owner/password', { misc, user: await userData.allInfo(), profile })
+        res.render('password', { misc, user: await userData.allInfo(), profile })
     })
     .post(async (req, res) => {
         const temp = req.body
@@ -267,6 +273,7 @@ app.route('/password/:id')
 
             res.redirect('../profile')
         } catch (err) {
+            console.log(err)
             res.redirect('/')
             return
         }
@@ -287,6 +294,7 @@ app.route('/delete/:id')
         try {
             profile = await database.getUnique(`SELECT * FROM owner WHERE username='${id}'`)
         } catch (err) {
+            console.log(err)
             res.redirect('../../')
             return
         }
@@ -296,7 +304,7 @@ app.route('/delete/:id')
             return
         }
 
-        res.render('owner/delete', { misc, user: await userData.allInfo(), profile })
+        res.render('delete', { misc, user: await userData.allInfo(), profile })
     })
     .post(async (req, res) => {
         const temp = req.body
@@ -346,6 +354,7 @@ app.get('/requests', async (req, res) => {
             flatRequestList: await flatRequestList(requestRecords)
         })
     } catch (err) {
+        console.log(err)
         res.redirect('../../')
     }
 })

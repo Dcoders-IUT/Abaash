@@ -95,7 +95,7 @@ body{
   </head>
   <body>
     <%- include("../partials/navbar.ejs") %>
-    <% if(user.id === profile.studentID) { %>
+    <% if(Number(user.id) === Number(profile.studentID)) { %>
       
         <form method="post" enctype="multipart/form-data">
         

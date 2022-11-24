@@ -37,6 +37,7 @@ async function getUser(id, pass) {
 
         return username
     } catch (err) {
+        console.log(err)
         if (err.message === wrongpass) throw err
         throw new Error('USER NOT FOUND!')
     }
@@ -196,6 +197,7 @@ app.route('/register')
                 `SELECT username, name FROM owner WHERE username='${userID}'`,
             )
         } catch (err) {
+            console.log(err)
             res.redirect('../')
             return
         }
@@ -209,6 +211,7 @@ app.route('/register')
         try {
             flatID = await newFlatID()
         } catch (err) {
+            console.log(err)
             res.redirect('../')
             return
         }
@@ -265,6 +268,7 @@ app.get('/edit/:id', async (req, res) => {
         rooms = await database.getUnique(`SELECT * FROM room WHERE flatID=${id}`)
         owner = await database.getUnique(`SELECT name FROM owner WHERE username='${flat.owner}'`)
     } catch (err) {
+        console.log(err)
         res.redirect('../../')
         return
     }
@@ -350,6 +354,7 @@ app.route('/delete/:id')
                 flat
             })
         } catch (err) {
+            console.log(err)
             res.redirect('/')
         }
     })

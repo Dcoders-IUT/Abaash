@@ -20,6 +20,7 @@ async function allFlats() {
     try {
         return await database.get('SELECT * FROM flat WHERE rent > 0')
     } catch (err) {
+        console.log(err)
         return {}
     }
 }
@@ -63,9 +64,15 @@ app.get('/logout', (req, res) => {
     res.redirect('/')
 })
 
-app.get('/test', (req, res) => {
+app.get('/test1', (req, res) => {
     store.set('user', 'ork')
     store.set('mode', 'owner')
+    res.redirect('./')
+})
+
+app.get('/test2', (req, res) => {
+    store.set('user', '190041129')
+    store.set('mode', 'student')
     res.redirect('./')
 })
 

@@ -34,6 +34,7 @@ async function getUser(id, pass) {
 
         return studentID
     } catch (err) {
+        console.log(err)
         if (err.message === wrongpass) throw err
         throw new Error('USER NOT FOUND!')
     }
@@ -77,6 +78,7 @@ app.route('/login')
             store.set('user', id)
             store.set('mode', req.body.mode)
         } catch (err) {
+            console.log(err)
             res.send(err.message)
             return
         }
@@ -151,11 +153,12 @@ app.route('/edit/:id')
         try {
             profile = await database.getUnique(`SELECT * FROM student WHERE studentID=${id}`)
         } catch (err) {
+            console.log(err)
             res.redirect('../../')
             return
         }
 
-        if (userID !== profile.studentID) {
+        if (Number(userID) !== Number(profile.studentID)) {
             res.redirect('../../')
             return
         }
@@ -226,16 +229,17 @@ app.route('/password/:id')
     try {
         profile = await database.getUnique(`SELECT * FROM student WHERE studentID=${id}`)
     } catch (err) {
+        console.log(err)
         res.redirect('../../')
         return
     }
 
-    if (userID !== profile.studentID) {
+    if (Number(userID) !== Number(profile.studentID)) {
         res.redirect('../../')
         return
     }
 
-    res.render('student/password', { misc, user: await userData.allInfo(), profile })
+    res.render('password', { misc, user: await userData.allInfo(), profile })
 })
 .post(async (req, res) => {
     const temp = req.body
@@ -253,7 +257,7 @@ app.route('/password/:id')
     const pass2 = hash.create(`${temp.pass2 + plc}Home Is Where The Start Is!`)
     const pass3 = hash.create(`${temp.pass3 + plc}Home Is Where The Start Is!`)
     
-    if (userID !== profileID || pass2 !== pass3) {
+    if (Number(userID) !== Number(profileID) || pass2 !== pass3) {
         res.redirect('../../')
         return
     }
@@ -269,6 +273,7 @@ app.route('/password/:id')
 
         res.redirect('../profile')
     } catch (err) {
+        console.log(err)
         res.redirect('/')
         return
     }
@@ -289,16 +294,17 @@ app.route('/delete/:id')
     try {
         profile = await database.getUnique(`SELECT * FROM student WHERE studentID=${id}`)
     } catch (err) {
+        console.log(err);
         res.redirect('../../')
         return
     }
 
-    if (userID !== profile.studentID) {
+    if (Number(userID) !== Number(profile.studentID)) {
         res.redirect('../../')
         return
     }
 
-    res.render('student/delete', { misc, user: await userData.allInfo(), profile })
+    res.render('delete', { misc, user: await userData.allInfo(), profile })
 })
 .post(async (req, res) => {
     const temp = req.body
@@ -348,6 +354,7 @@ app.get('/requests', async (req, res) => {
             flatRequestList: await flatRequestList(requestRecords)
         })
     } catch (err) {
+        console.log(err)
         res.redirect('../../')
     }
 })
