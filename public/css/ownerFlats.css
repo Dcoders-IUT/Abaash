@@ -232,6 +232,7 @@ figcaption {
   background-color: white;
   height: fit-content;
   /* width:fit-content; */
+  width:25vw;
 }
 
 .card-content p {
