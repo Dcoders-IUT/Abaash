@@ -109,7 +109,7 @@ body{
                         <div class="card-header">Profile Picture</div>
                         <div class="card-body text-center">
                             <!-- Profile picture image-->
-                            <img class="img-account-profile rounded-circle mb-2" src="http://bootdey.com/img/Content/avatar/avatar7.png" alt="">
+                            <img class="img-account-profile rounded-circle mb-2" src="<%= profile.photo? `../img/${profile.photo}` : 'https://bootdey.com/img/Content/avatar/avatar7.png' %>" class="rounded-circle" width="150">
                             
                             <!-- Profile picture help block-->
                             <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 10 MB</div>

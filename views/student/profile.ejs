@@ -126,9 +126,11 @@
                   </div>
                 </div>
                 <hr>
-                <div class="row">
-                  <a class="btn btn-info " href="../edit/<%= profile.studentID %> ">Edit</a>
-                </div>
+                <% if(Number(user.id) === Number(profile.studentID)) { %>
+                  <div class="row">
+                    <a class="btn btn-info " href="../edit/<%= profile.studentID %> ">Edit</a>
+                  </div>
+                <% } %>
               </div>
             </div>
           </div>
