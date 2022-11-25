@@ -54,12 +54,11 @@ async function searchFlats(address, minLevel, maxLevel, gender, lift, generator,
 }
 
 async function openHomeEJS(req, res) {
-    let session=req.session;
-    console.log(session);
+    console.log(req.session);
 
     res.render('home', {
         misc,
-        user: await userData.allInfo(),
+        user: await userData.allInfo(req.session),
         flatList: misc.shuffle(await allFlats()),
     })
 }
@@ -97,10 +96,11 @@ app.get('/test2', (req, res) => {
 })
 
 app.get('/profile', (req, res) => {
-    if (userData.missing()) res.redirect('./')
+    if (userData.missing(req.session)) res.redirect('./')
+    
     else {
-        const userID = userData.id()
-        const mode = userData.mode()
+        const userID = userData.id(req.session)
+        const mode = userData.mode(req.session)
 
         res.redirect(`${mode}/profile/${userID}`)
     }
@@ -120,7 +120,7 @@ app.post('/search', async (req, res) => {
 
     res.render('searchResults', {
         misc,
-        user: await userData.allInfo(),
+        user: await userData.allInfo(req.session),
         flatList: await searchFlats(
             address,
             minLevel,

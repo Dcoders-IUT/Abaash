@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
         cb(null, 'public/owner/img')
     },
     filename(req, file, cb) {
-        cb(null, userData.id() + Date.now() + path.extname(file.originalname))
+        cb(null, userData.id(req.session) + Date.now() + path.extname(file.originalname))
     },
 })
 const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } })
@@ -139,7 +139,7 @@ app.route('/register')
     .get((req, res) => res.redirect('./login'))
 
 app.get('/profile', (req, res) => {
-    const userID = userData.id()
+    const userID = userData.id(req.session)
     res.redirect(`profile/${userID}`)
 })
 
@@ -152,7 +152,7 @@ app.get('/profile/:id', async (req, res) => {
 
         res.render('owner/profile', {
             misc,
-            user: await userData.allInfo(),
+            user: await userData.allInfo(req.session),
             profile,
             flatList
         })
@@ -165,8 +165,8 @@ app.get('/profile/:id', async (req, res) => {
 
 app.get('/edit/:id', async (req, res) => {
     const { id } = req.params
-    const userID = userData.id()
-    const mode = userData.mode()
+    const userID = userData.id(req.session)
+    const mode = userData.mode(req.session)
 
     if (mode !== 'owner') {
         res.redirect('../../')
@@ -187,13 +187,13 @@ app.get('/edit/:id', async (req, res) => {
         return
     }
 
-    res.render('owner/edit', { misc, user: await userData.allInfo(), profile })
+    res.render('owner/edit', { misc, user: await userData.allInfo(req.session), profile })
 })
 
 app.post('/edit/:id', upload.single('photo'), async (req, res) => {
     const temp = req.body
-    const userID = userData.id()
-    const mode = userData.mode()
+    const userID = userData.id(req.session)
+    const mode = userData.mode(req.session)
 
     if (mode !== 'owner') {
         res.redirect('../../')
@@ -238,8 +238,8 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
 app.route('/password/:id')
     .get(async (req, res) => {
         const { id } = req.params
-        const userID = userData.id()
-        const mode = userData.mode()
+        const userID = userData.id(req.session)
+        const mode = userData.mode(req.session)
 
         if (mode !== 'owner') {
             res.redirect('../../')
@@ -260,12 +260,12 @@ app.route('/password/:id')
             return
         }
 
-        res.render('password', { misc, user: await userData.allInfo(), profile })
+        res.render('password', { misc, user: await userData.allInfo(req.session), profile })
     })
     .post(async (req, res) => {
         const temp = req.body
-        const userID = userData.id()
-        const mode = userData.mode()
+        const userID = userData.id(req.session)
+        const mode = userData.mode(req.session)
 
         if (mode !== 'owner') {
             res.redirect('../../')
@@ -303,8 +303,8 @@ app.route('/password/:id')
 app.route('/delete/:id')
     .get(async (req, res) => {
         const { id } = req.params
-        const userID = userData.id()
-        const mode = userData.mode()
+        const userID = userData.id(req.session)
+        const mode = userData.mode(req.session)
 
         if (mode !== 'owner') {
             res.redirect('../../')
@@ -325,12 +325,12 @@ app.route('/delete/:id')
             return
         }
 
-        res.render('delete', { misc, user: await userData.allInfo(), profile })
+        res.render('delete', { misc, user: await userData.allInfo(req.session), profile })
     })
     .post(async (req, res) => {
         const temp = req.body
-        const userID = userData.id()
-        const mode = userData.mode()
+        const userID = userData.id(req.session)
+        const mode = userData.mode(req.session)
 
         if (mode !== 'owner') {
             res.redirect('../../')
@@ -362,9 +362,8 @@ app.route('/delete/:id')
     })
 
 app.get('/requests', async (req, res) => {
-    const userID = userData.id()
-    const session = req.session
-    console.log(session)
+    const userID = userData.id(req.session)
+    console.log(req.session)
 
     try {
         const requestRecords = await database.get(
@@ -373,7 +372,7 @@ app.get('/requests', async (req, res) => {
 
         res.render('showRequests', {
             misc,
-            user: await userData.allInfo(),
+            user: await userData.allInfo(req.session),
             flatRequestList: await flatRequestList(requestRecords)
         })
     } catch (err) {

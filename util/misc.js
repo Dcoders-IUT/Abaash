@@ -34,7 +34,7 @@ obj.flatGenderText = (num) => {
     return ans
 }
 
-obj.userExists = () => !userData.missing()
+obj.userExists = (session) => !userData.missing(session)
 
 obj.academicInfo = (studentID) => {
     let temp = Math.floor(studentID/10000000)

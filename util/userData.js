@@ -3,15 +3,15 @@ const database = require('./database')
 
 const obj = {}
 
-obj.id = () => store.get('user')? store.get('user') : null
-obj.mode = () => store.get('mode')? store.get('mode') : null
-obj.missing = () => !obj.mode() || !obj.id()
+obj.id = (session) => session.user? session.user : null
+obj.mode = (session) => session.mode? session.mode : null
+obj.missing = (session) => !obj.mode(session) || !obj.id(session)
 
-obj.nameOfUser = async() => {
-    if (obj.missing()) return null
+obj.name = async(session) => {
+    if (obj.missing(session)) return null
 
-    const mode = obj.mode()
-    const id = obj.id()
+    const mode = obj.mode(session)
+    const id = obj.id(session)
     
     try{
         const record = await database.getUnique(
@@ -28,11 +28,11 @@ obj.nameOfUser = async() => {
     }
 }
 
-obj.gender = async() => {
-    if (obj.missing()) return null
+obj.gender = async(session) => {
+    if (obj.missing(session)) return null
 
-    const mode = obj.mode()
-    const id = obj.id()
+    const mode = obj.mode(session)
+    const id = obj.id(session)
     
     try{
         if(mode==='student')
@@ -49,8 +49,8 @@ obj.gender = async() => {
     }
 }
 
-obj.allInfo = async() => {
-    return {id: obj.id(), mode: obj.mode(), name: await obj.nameOfUser(), gender: await obj.gender()}
+obj.allInfo = async(session) => {
+    return {id: obj.id(session), mode: obj.mode(session), name: await obj.name(session), gender: await obj.gender(session)}
 }
 
 module.exports = obj

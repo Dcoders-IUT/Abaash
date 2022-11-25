@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
         cb(null, 'public/flat/img')
     },
     filename(req, file, cb) {
-        cb(null, userData.id() + Date.now() + path.extname(file.originalname))
+        cb(null, userData.id(req.session) + Date.now() + path.extname(file.originalname))
     },
 })
 const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } })
@@ -68,7 +68,7 @@ async function newFlatID() {
 
 app.get('/profile/:id', async (req, res) => {
     const { id } = req.params
-    const mode = userData.mode()
+    const mode = userData.mode(req.session)
     let flat
     let owner
     let rooms
@@ -81,7 +81,7 @@ app.get('/profile/:id', async (req, res) => {
         console.log(err)
         res.render('flat/profile', {
             misc,
-            user: await userData.allInfo(),
+            user: await userData.allInfo(req.session),
             flat: null,
             rooms: null,
             owner: null
@@ -91,7 +91,7 @@ app.get('/profile/:id', async (req, res) => {
 
     res.render('flat/profile', {
         misc,
-        user: await userData.allInfo(),
+        user: await userData.allInfo(req.session),
         flat,
         rooms,
         owner
@@ -100,7 +100,7 @@ app.get('/profile/:id', async (req, res) => {
 
 app.post('/request/approve', async (req, res) => {
     const { flatID } = req.body
-    const userID = userData.id()
+    const userID = userData.id(req.session)
 
     try {
         const flat = await database.getUnique(`SELECT * FROM flat WHERE flatID=${flatID}`)
@@ -119,14 +119,14 @@ app.post('/request/approve', async (req, res) => {
 app.post('/request/delete', async (req, res) => {
     const { studentID } = req.body
     const { flatID } = req.body
-    const userID = userData.id()
+    const userID = userData.id(req.session)
 
     try {
         const flat = await database.getUnique(`SELECT * FROM flat WHERE flatID=${flatID}`)
         if (userID !== flat.owner && Number(userID) !== Number(studentID)) throw new Error('USER NOT FOUND!')
         await database.exec(`DELETE FROM flatrequest WHERE studentID=${studentID} AND flatID=${flatID}`)
 
-        res.redirect(`../../${userData.mode()}/requests`)
+        res.redirect(`../../${userData.mode(req.session)}/requests`)
     } catch (err) {
         console.log(err)
         res.redirect('../../')
@@ -137,7 +137,7 @@ app.post('/request/delete', async (req, res) => {
 app.route('/request/:id')
     .get(async (req, res) => {
         const { id } = req.params
-        const mode = userData.mode()
+        const mode = userData.mode(req.session)
 
         if (mode !== 'student') {
             res.redirect('../../')
@@ -148,11 +148,11 @@ app.route('/request/:id')
             const flat = await database.getUnique(`SELECT * FROM flat WHERE flatID=${id}`)
             const rooms = await database.getUnique(`SELECT * FROM room WHERE flatID=${id}`)
             const owner = await database.getUnique(`SELECT name FROM owner WHERE username='${flat.owner}'`)
-            const contactInfo = await database.getUnique(`SELECT phone, email FROM student WHERE studentID=${userData.id()}`)
+            const contactInfo = await database.getUnique(`SELECT phone, email FROM student WHERE studentID=${userData.id(req.session)}`)
 
             res.render('flat/request', {
                 misc,
-                user: await userData.allInfo(),
+                user: await userData.allInfo(req.session),
                 flat,
                 rooms,
                 owner,
@@ -169,7 +169,7 @@ app.route('/request/:id')
         const { id } = req.params
         const { studentID } = req.body
         const { msg } = req.body
-        const userID = userData.id()
+        const userID = userData.id(req.session)
 
         if (Number(userID) !== Number(studentID)) {
             console.log(userID)
@@ -190,8 +190,8 @@ app.route('/request/:id')
 
 app.route('/register')
     .get(async (req, res) => {
-        const userID = userData.id()
-        const mode = userData.mode()
+        const userID = userData.id(req.session)
+        const mode = userData.mode(req.session)
         let owner
 
         if (mode !== 'owner') {
@@ -209,11 +209,13 @@ app.route('/register')
             return
         }
 
-        res.render('flat/register', { misc, user: await userData.allInfo(), owner })
+        res.render('flat/register', { misc, user: await userData.allInfo(req.session), owner })
     })
     .post(async (req, res) => {
         const temp = req.body
         let flatID
+
+        console.log(temp)
 
         try {
             flatID = await newFlatID()
@@ -234,7 +236,7 @@ app.route('/register')
         const y = Number(temp.y)
         const lift = temp.lift === 'on'
         const generator = temp.generator === 'on'
-        const { rent } = temp
+        const rent = Number(temp.rent)
         const { msg } = temp
 
         const bed = Number(temp.bed)
@@ -260,7 +262,7 @@ app.route('/register')
 
 app.get('/edit/:id', async (req, res) => {
     const { id } = req.params
-    const mode = userData.mode()
+    const mode = userData.mode(req.session)
     let flat
     let rooms
     let owner
@@ -282,7 +284,7 @@ app.get('/edit/:id', async (req, res) => {
 
     res.render('flat/edit', {
         misc,
-        user: await userData.allInfo(),
+        user: await userData.allInfo(req.session),
         flat,
         rooms,
         owner,
@@ -293,6 +295,8 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
     const temp = req.body
     const flatID = req.params.id
 
+    console.log(temp)
+
     const { name } = temp
     const { address } = temp
     const { description } = temp
@@ -301,7 +305,7 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
     const area = Number(temp.area)
     const lift = temp.lift === 'on'
     const generator = temp.generator === 'on'
-    const { rent } = temp
+    const rent = Number(temp.rent)
     const { msg } = temp
 
     const photo = req.file ? `'${req.file.filename}'` : 'NULL'
@@ -345,7 +349,7 @@ app.post('/edit/:id', upload.single('photo'), async (req, res) => {
 app.route('/delete/:id')
     .get(async (req, res) => {
         const { id } = req.params
-        const mode = userData.mode()
+        const mode = userData.mode(req.session)
 
         if (mode !== 'owner') {
             res.redirect('/')
@@ -357,7 +361,7 @@ app.route('/delete/:id')
 
             res.render('flat/delete', {
                 misc,
-                user: await userData.allInfo(),
+                user: await userData.allInfo(req.session),
                 flat
             })
         } catch (err) {
@@ -369,8 +373,8 @@ app.route('/delete/:id')
         const flatID = req.params.id
         const temp = req.body
 
-        const userID = userData.id()
-        const mode = userData.mode()
+        const userID = userData.id(req.session)
+        const mode = userData.mode(req.session)
         const { pass } = temp
 
         if (mode !== 'owner') {
