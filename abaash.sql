@@ -47,10 +47,9 @@ DELETE FROM `flat`;
 INSERT INTO `flat` (`flatID`, `name`, `address`, `description`, `owner`, `gender`, `x`, `y`, `level`, `area`, `lift`, `generator`, `rent`, `message`, `photo`) VALUES
 	(1001734, 'Sanctuary', 'Kolemeshor', 'Best', 'ork', 1, 23.947587604209236, 90.37590189795455, 2, 800, 0, 0, 2000, 'Please include your hometown in your message.', NULL),
 	(1003432, 'Sanctuary', 'Mita Park', 'Best male residence outside IUT.', 'ork', 1, 23.94886359529383, 90.3756187977774, 2, 800, 0, 1, 3000, 'Please include your hometown in your message.', NULL),
-	(1004979, 'Glorious Housing', 'Kathora', 'Best female residence outside IUT.', 'ork', 0, 23.94897163115608, 90.3798185760795, 3, 1350, 0, 1, 8000, 'Please include your hometown in your message.', NULL),
+	(1004979, 'Glorious Housing', 'Kathora', 'Best female residence outside IUT.', 'ork', 0, 23.94897163115608, 90.3798185760795, 3, 1350, 0, 0, 8000, 'Please include your hometown in your message.', 'ork1669366259867.jpg'),
 	(1129304, 'Sattar House', 'Opposite of IUT', 'You can wake up at 7:55 and reach class on time!', 'ork', 0, 23.9489922, 90.3797594, 6, 1700, 0, 0, 4000, 'Please include your hometown in your message.', NULL),
-	(1158151, 'New Home', 'Board Bazar', 'Just beside the mosque.', 'arifin', 0, 23.94462222232767, 90.38188038666934, 8, 850, 1, 1, 3500, 'Please include your hometown in your message.', NULL),
-	(1276633, '', '', '', 'arifin', 1, 0, 0, 1, 0, 0, 0, 0, '', NULL),
+	(1158151, 'New Home', 'Board Bazar', 'Just beside the mosque.', 'arifin', 0, 23.94462222232767, 90.38188038666934, 8, 850, 1, 0, 3500, 'Please include your hometown in your message.', 'arifin1669366469280.jpg'),
 	(1438758, 'MAA Tower', 'Kathora', 'You wont feel your mother\'s absense!', 'ork', 0, 23.94897163115608, 90.3798185760795, 19, 1500, 1, 1, 7000, 'Please include your hometown in your message.', NULL),
 	(1556134, 'Housing Complex', 'Bashundhara', 'Best', 'arifin', 1, 23.815276, 90.448183, 20, 22000, 0, 0, 85000, 'You must have CGPA 3.9 or above to rent this flat.', 'arifin1669012891745.jpg');
 /*!40000 ALTER TABLE `flat` ENABLE KEYS */;
@@ -68,11 +67,9 @@ CREATE TABLE IF NOT EXISTS `flatrequest` (
   CONSTRAINT `flatrequest_ibfk_2` FOREIGN KEY (`flatID`) REFERENCES `flat` (`flatID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table abaash.flatrequest: ~1 rows (approximately)
+-- Dumping data for table abaash.flatrequest: ~0 rows (approximately)
 DELETE FROM `flatrequest`;
 /*!40000 ALTER TABLE `flatrequest` DISABLE KEYS */;
-INSERT INTO `flatrequest` (`studentID`, `flatID`, `date`, `message`) VALUES
-	(190041129, 1556134, '2022-11-25T4:35:0.296', 'Parle theke dekhao');
 /*!40000 ALTER TABLE `flatrequest` ENABLE KEYS */;
 
 -- Dumping structure for table abaash.owner
@@ -117,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `room` (
   CONSTRAINT `room_ibfk_1` FOREIGN KEY (`flatid`) REFERENCES `flat` (`flatID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table abaash.room: ~7 rows (approximately)
+-- Dumping data for table abaash.room: ~8 rows (approximately)
 DELETE FROM `room`;
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
 INSERT INTO `room` (`flatid`, `bed`, `din`, `liv`, `kit`, `bath`, `balk`, `xtra`) VALUES
@@ -126,7 +123,6 @@ INSERT INTO `room` (`flatid`, `bed`, `din`, `liv`, `kit`, `bath`, `balk`, `xtra`
 	(1004979, 0, 0, 0, 0, 0, 0, 0),
 	(1129304, 3, 1, 1, 1, 2, 2, 0),
 	(1158151, 0, 0, 0, 0, 0, 0, 0),
-	(1276633, 0, 0, 0, 0, 0, 0, 0),
 	(1438758, 0, 0, 0, 0, 0, 0, 0),
 	(1556134, 5, 1, 2, 1, 4, 3, 0);
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
