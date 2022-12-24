@@ -34,8 +34,9 @@ async function getUser(id, pass) {
 
     try {
         const record = await database.getUnique(
-            `SELECT studentID, password, passwordLastChanged FROM student WHERE studentID=${id} OR email='${id}' OR phone=${id}`,
+            `SELECT studentID, password, passwordLastChanged FROM student WHERE studentID=CAST('${id}' AS INT) OR email='${id}' OR phone=CAST('${id}' AS INT)`,
         )
+
         const { studentID } = record
 
         const plc = record.passwordLastChanged
