@@ -1,4 +1,4 @@
-# Aabash
+# Abaash
 Abaash is a web application that helps IUT students find and rent flats according to their preferences, while allowing flat owners to manage their properties and tenants easily. This README file provides an overview of the app's features, technologies used, and how to use it.
 
 ## Features
