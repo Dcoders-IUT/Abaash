@@ -1,49 +1,27 @@
-# TO DO LIST
+# Aabash
+Aabash is a web application that helps IUT students find and rent flats according to their preferences, while allowing flat owners to manage their properties and tenants easily. This README file provides an overview of the app's features, technologies used, and how to use it.
 
-## New Features:
-* Search by Coordinates             ->100
-* Photo Gallery for Flats           ->100
-* ~~Change Password~~
-* ~~Delete Stuff~~
-* Remove NID
-* Verification
-* Account Recovery
-* MLR
-* Buffering Flats and Requests
-* Error Alert
-* Live Sorting Requests and Flats
-* ~~Extract Info from Student ID      ->100~~
-* ~~Password Checking for Editing and Deleting Flats~~
-* Validations in Edit Pages
+## Features
+Aabash provides the following features for IUT students and flat owners:
 
-## Extensions:
-* Prompt/Label for each form field
-* Layout for each page
-* Titles and Headings
-* Set Character Limit and Max Width in form and table fields
-* Display Room Information in the Flat Profile Page
-* Catching Exception in all DB Operations
-* Using numbers for checking Student ID and Flat ID
-* Tick and Cross Mark instead of YES and NO
+- **Student Accounts**: IUT students can create accounts and login to search for flats based on their preferences, such as location, rent, number of rooms, and amenities.
+- **Flat Owner Accounts**: Flat owners can create accounts and login to manage their flats, such as adding new flats, setting rent, and updating availability.
+- **Search and Filter**: Students can search for flats based on various criteria and filter the results based on their preferences.
+- **Flat Details**: Students can view detailed information about each flat, such as its photos, description, location, rent, and amenities.
+- **Reservation Requests**: Students can send reservation requests to flat owners for the flats they are interested in, and owners can accept or reject the requests.
+- **Messaging System**: Students and owners can communicate with each other using a built-in messaging system to discuss flat details and arrange visits.
+- **Dashboard and Analytics**: Flat owners can view their flats, bookings, and occupancy rates using a dashboard and analytics tools.
 
-## Page Redesigns:
-* Student Profile
-* Flat Profile
-* New Flat
-* Flat Edit
-* Flat Cards (Description)
-* Send Flat Request (Flat/Request)
-* View Requests (Owner/Requests)
+## Technologies Used
+Aabash is built using the following technologies:
 
-## Bugs:
-* ~~Can't view OLD HOME~~
-* ~~Shows Wrong Month in hash.salt()~~
-* ~~Deleted Photo Problem~~
-* Fix Edit Pages
-* ~~Owner Description during register/edit~~
-* Flat profile style
-* Student profile navbar doesnt work
-* Pages under settings needs slight touchup
+- **HTML**: For creating the structure of the web pages.
+- **CSS**: For styling the web pages.
+- **JavaScript**: For adding interactivity to the web pages.
+- **EJS**: For templating and rendering dynamic content.
+- **MariaDB**: For storing and retrieving data.
 
-## Suggestion
-* Adding Background behind flats in homepage
+## Feedback and Contributions
+If you have any feedback or suggestions for improving Aabash, please feel free to contact us using the contact form on the website or by sending an email to orkhasnat@iut-dhaka.edu.
+
+### Thank you for using Aabash!
