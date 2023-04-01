@@ -18,6 +18,8 @@ Abaash is built using the following technologies:
 - **HTML**: For creating the structure of the web pages.
 - **CSS**: For styling the web pages.
 - **JavaScript**: For adding interactivity to the web pages.
+- **Node.js**: The runtime environment for the application, allowing for server-side JavaScript execution.
+- **Express.js **: For handling HTTP requests and responses, as well as providing server-side functionality like routing, middleware management, managing authentication and user sessions and integrating with the database layer and other third-party APIs.
 - **EJS**: For templating and rendering dynamic content.
 - **MariaDB**: For storing and retrieving data.
 
