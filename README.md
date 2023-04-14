@@ -24,6 +24,6 @@ Abaash is built using the following technologies:
 - **MariaDB**: For storing and retrieving data.
 
 ## Feedback and Contributions
-If you have any feedback or suggestions for improving Abaash, please feel free to contact us using the contact form on the website or by sending an email to orkhasnat@iut-dhaka.edu.
+If you have any feedback or suggestions for improving Abaash, please feel free to contact us using the contact form on the website or by sending an email to tasnimulhasnat@iut-dhaka.edu.
 
 ### Thank you for using Abaash!
